@@ -8,27 +8,15 @@
 <style>
 /* ===== V2 DESIGN TOKENS ===== */
 :root {
-  --bg: #0b0f1a;
-  --surface: #111827;
-  --card: #1a2236;
-  --card-border: rgba(255,255,255,0.06);
-  --card-hover: #1f2a42;
-  --text: #e8eaf0;
-  --text-secondary: #8b95a8;
-  --text-muted: #5a6478;
-  --green: #22c55e;
-  --green-dim: rgba(34,197,94,0.12);
-  --blue: #3b82f6;
-  --blue-dim: rgba(59,130,246,0.12);
-  --amber: #f59e0b;
-  --amber-dim: rgba(245,158,11,0.12);
-  --red: #ef4444;
-  --red-dim: rgba(239,68,68,0.12);
-  --purple: #a855f7;
-  --purple-dim: rgba(168,85,247,0.12);
-  --radius: 12px;
-  --radius-sm: 8px;
-  --radius-pill: 999px;
+  --bg: #0b0f1a; --surface: #111827; --card: #1a2236;
+  --card-border: rgba(255,255,255,0.06); --card-hover: #1f2a42;
+  --text: #e8eaf0; --text-secondary: #8b95a8; --text-muted: #5a6478;
+  --green: #22c55e; --green-dim: rgba(34,197,94,0.12);
+  --blue: #3b82f6; --blue-dim: rgba(59,130,246,0.12);
+  --amber: #f59e0b; --amber-dim: rgba(245,158,11,0.12);
+  --red: #ef4444; --red-dim: rgba(239,68,68,0.12);
+  --purple: #a855f7; --purple-dim: rgba(168,85,247,0.12);
+  --radius: 12px; --radius-sm: 8px; --radius-pill: 999px;
   --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
   color-scheme: dark;
@@ -53,33 +41,17 @@
   --purple-dim: rgba(168,85,247,0.08);
   color-scheme: light;
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+  font-family: var(--font); background: var(--bg); color: var(--text);
+  min-height: 100vh; line-height: 1.5; -webkit-font-smoothing: antialiased;
 }
 
-/* ===== SVG ICON SYSTEM ===== */
-.icon {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 1em; height: 1em; flex-shrink: 0;
-}
-.icon svg {
-  width: 100%; height: 100%;
-  fill: none; stroke: currentColor;
-  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-}
+/* ===== ICONS ===== */
+.icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; flex-shrink: 0; }
+.icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .icon-filled svg { fill: currentColor; stroke: none; }
-.icon-box {
-  width: 32px; height: 32px; border-radius: var(--radius-sm);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px; flex-shrink: 0;
-}
+.icon-box { width: 32px; height: 32px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
 .icon-box.green { background: var(--green-dim); color: var(--green); }
 .icon-box.blue { background: var(--blue-dim); color: var(--blue); }
 .icon-box.amber { background: var(--amber-dim); color: var(--amber); }
@@ -89,388 +61,260 @@ body {
 .screen { display: none; }
 .screen.active { display: flex; }
 
-/* ===== CARD SYSTEM ===== */
-.card {
-  background: var(--card);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.card-head {
-  display: flex; align-items: center; gap: 10px;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--card-border);
-}
-.card-head-title {
-  font-size: 12px; font-weight: 700;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-}
+/* ===== CARD ===== */
+.card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; }
+.card-head { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--card-border); }
+.card-head-title { font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px; }
 .card-body { padding: 18px; }
 
 /* ===== AUTH ===== */
-.auth-screen {
-  min-height: 100vh; align-items: center; justify-content: center;
-  flex-direction: column; padding: 16px; background: var(--bg);
-}
-.auth-logo {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 6px;
-}
-.auth-logo-icon {
-  width: 48px; height: 48px; border-radius: var(--radius);
-  background: var(--green-dim); color: var(--green);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px;
-}
-.auth-title {
-  font-size: clamp(1.5rem, 5vw, 2rem);
-  font-weight: 800; letter-spacing: -0.5px;
-}
-.auth-sub {
-  font-size: 14px; color: var(--text-secondary);
-  margin-bottom: 32px; text-align: center;
-}
+.auth-screen { min-height: 100vh; align-items: center; justify-content: center; flex-direction: column; padding: 16px; background: var(--bg); }
+.auth-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.auth-logo-icon { width: 48px; height: 48px; border-radius: var(--radius); background: var(--green-dim); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.auth-title { font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 800; letter-spacing: -0.5px; }
+.auth-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 32px; text-align: center; }
 .auth-box { width: 100%; max-width: 400px; }
 .auth-tabs { display: flex; gap: 2px; margin-bottom: 2px; }
-.auth-tab {
-  flex: 1; padding: 12px; font-family: var(--font);
-  font-size: 13px; font-weight: 600;
-  background: var(--surface); border: 1px solid var(--card-border);
-  border-bottom: none; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  color: var(--text-muted); cursor: pointer; transition: all 0.2s;
-}
-.auth-tab.active {
-  background: var(--card); color: var(--green);
-  border-color: var(--card-border);
-}
-.auth-form-wrap {
-  background: var(--card); border: 1px solid var(--card-border);
-  border-radius: 0 0 var(--radius) var(--radius); padding: 24px;
-}
+.auth-tab { flex: 1; padding: 12px; font-family: var(--font); font-size: 13px; font-weight: 600; background: var(--surface); border: 1px solid var(--card-border); border-bottom: none; border-radius: var(--radius-sm) var(--radius-sm) 0 0; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
+.auth-tab.active { background: var(--card); color: var(--green); border-color: var(--card-border); }
+.auth-form-wrap { background: var(--card); border: 1px solid var(--card-border); border-radius: 0 0 var(--radius) var(--radius); padding: 24px; }
 .auth-form { display: none; }
 .auth-form.active { display: block; }
 .form-group { margin-bottom: 16px; }
-.form-group label {
-  display: block; font-size: 12px; font-weight: 600;
-  color: var(--text-secondary); margin-bottom: 6px; letter-spacing: 0.3px;
+.form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; letter-spacing: 0.3px; }
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"] {
+  width: 100%; font-family: var(--font); font-size: 14px; padding: 11px 14px; background: var(--surface);
+  border: 1px solid var(--card-border); border-radius: var(--radius-sm); color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s;
 }
-input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
-  width: 100%; font-family: var(--font); font-size: 14px;
-  padding: 11px 14px; background: var(--surface);
-  border: 1px solid var(--card-border); border-radius: var(--radius-sm);
-  color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-}
-input:focus {
-  border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(34,197,94,0.15);
-}
+input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,0.15); }
 input::placeholder { color: var(--text-muted); }
 .auth-error { font-size: 13px; color: var(--red); margin-top: 10px; min-height: 20px; }
 
 /* ===== BUTTONS ===== */
-.btn {
-  font-family: var(--font); font-size: 13px; font-weight: 600;
-  padding: 9px 18px; border: 1px solid var(--card-border);
-  border-radius: var(--radius-sm); background: var(--surface);
-  color: var(--text); cursor: pointer; transition: all 0.15s;
-  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-}
+.btn { font-family: var(--font); font-size: 13px; font-weight: 600; padding: 9px 18px; border: 1px solid var(--card-border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 .btn:hover { background: var(--card-hover); border-color: rgba(255,255,255,0.1); }
 .btn:active { transform: scale(0.97); }
-.btn-primary {
-  background: var(--green); border-color: var(--green); color: #fff; font-weight: 700;
-}
+.btn-primary { background: var(--green); border-color: var(--green); color: #fff; font-weight: 700; }
 .btn-primary:hover { background: #1aab50; border-color: #1aab50; }
-.btn-danger {
-  border-color: rgba(239,68,68,0.2); color: var(--red); background: var(--red-dim);
-}
+.btn-danger { border-color: rgba(239,68,68,0.2); color: var(--red); background: var(--red-dim); }
 .btn-danger:hover { background: rgba(239,68,68,0.18); }
 .btn-sm { font-size: 12px; padding: 7px 14px; }
 .btn-block { width: 100%; }
 
 /* ===== APP LAYOUT ===== */
 .app-screen { flex-direction: column; min-height: 100vh; }
-.app-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 20px; background: var(--surface);
-  border-bottom: 1px solid var(--card-border);
-  position: sticky; top: 0; z-index: 50;
-  flex-wrap: wrap; gap: 8px;
-}
-.app-logo {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 15px; font-weight: 700; color: var(--text);
-}
+.app-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; background: var(--surface); border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 50; }
+.app-logo { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: var(--text); }
 .app-logo .icon { font-size: 20px; color: var(--green); }
-.app-user { display: flex; align-items: center; gap: 12px; }
-.app-user span { font-size: 13px; color: var(--text-secondary); }
-.dashboard {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 16px; padding: 20px; max-width: 960px;
-  margin: 0 auto; width: 100%;
-}
-@media (max-width: 700px) {
-  .dashboard { grid-template-columns: 1fr; padding: 12px; gap: 12px; }
-}
-.win-full { grid-column: 1 / -1; }
+.app-user-mini { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.app-user-mini .av-circle { width: 32px; height: 32px; border-radius: 50%; overflow: hidden; border: 2px solid var(--green); flex-shrink: 0; }
+.app-user-mini .av-circle svg { width: 100%; height: 100%; display: block; }
+.app-user-mini span { font-size: 13px; color: var(--text-secondary); }
+
+/* ===== TAB BAR ===== */
+.tab-bar { display: flex; background: var(--surface); border-bottom: 1px solid var(--card-border); position: sticky; top: 48px; z-index: 40; overflow-x: auto; }
+.tab-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 8px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-muted); background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.2s; white-space: nowrap; min-width: 0; }
+.tab-btn .icon { font-size: 18px; }
+.tab-btn.active { color: var(--green); border-bottom-color: var(--green); }
+.tab-btn:hover:not(.active) { color: var(--text-secondary); }
+.tab-btn .tmr-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 1.5s infinite; display: none; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* ===== TAB PANELS ===== */
+.tab-panel { display: none; padding: 16px; max-width: 700px; margin: 0 auto; width: 100%; }
+.tab-panel.active { display: block; }
+.tab-panel .card { margin-bottom: 16px; }
 
 /* ===== TIMER ===== */
-.timer-display {
-  font-family: var(--font-mono);
-  font-size: clamp(2.4rem, 10vw, 3.4rem);
-  font-weight: 700; text-align: center; padding: 12px 0 4px;
-  letter-spacing: 2px; color: var(--text);
-  font-variant-numeric: tabular-nums;
-}
-.timer-presets {
-  display: flex; gap: 6px; justify-content: center;
-  margin-bottom: 12px; flex-wrap: wrap;
-}
-.timer-presets .btn.sel {
-  background: var(--green); border-color: var(--green); color: #fff;
-}
-.timer-input-row {
-  display: flex; gap: 8px; align-items: center;
-  justify-content: center; margin-bottom: 8px;
-}
-.timer-input-row input[type="number"] {
-  width: 80px; text-align: center;
-  font-family: var(--font-mono); font-weight: 600;
-}
+.timer-mode-toggle { display: flex; gap: 4px; margin-bottom: 14px; justify-content: center; }
+.timer-mode-toggle .btn.sel { background: var(--green); border-color: var(--green); color: #fff; }
+.timer-display { font-family: var(--font-mono); font-size: clamp(2.4rem, 10vw, 3.4rem); font-weight: 700; text-align: center; padding: 12px 0 4px; letter-spacing: 2px; color: var(--text); font-variant-numeric: tabular-nums; }
+.timer-presets { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+.timer-presets .btn.sel { background: var(--green); border-color: var(--green); color: #fff; }
+.timer-input-row { display: flex; gap: 8px; align-items: center; justify-content: center; margin-bottom: 8px; }
+.timer-input-row input[type="number"] { width: 80px; text-align: center; font-family: var(--font-mono); font-weight: 600; }
 .timer-input-row span { font-size: 13px; color: var(--text-secondary); }
-.timer-progress {
-  width: 100%; height: 5px; background: rgba(255,255,255,0.05);
-  border-radius: 3px; margin: 12px 0 16px; overflow: hidden;
-}
-.timer-progress-fill {
-  height: 100%; background: var(--green);
-  border-radius: 3px; transition: width 1s linear; width: 0%;
-}
-.timer-btns {
-  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
-}
-.mxh-row {
-  display: flex; align-items: center; gap: 10px;
-  justify-content: center; margin-top: 14px;
-  font-size: 13px; color: var(--text-secondary);
-}
-.mxh-row input[type="checkbox"] {
-  width: 18px; height: 18px; accent-color: var(--green); border-radius: 4px;
-}
+.timer-progress { width: 100%; height: 5px; background: rgba(255,255,255,0.05); border-radius: 3px; margin: 12px 0 16px; overflow: hidden; }
+.timer-progress-fill { height: 100%; background: var(--green); border-radius: 3px; transition: width 1s linear; width: 0%; }
+.timer-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.mxh-row { display: flex; align-items: center; gap: 10px; justify-content: center; margin-top: 14px; font-size: 13px; color: var(--text-secondary); }
+.mxh-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--green); border-radius: 4px; }
 
-/* ===== LEADERBOARD ===== */
-.lb-tabs {
-  display: flex; gap: 2px; margin-bottom: 14px;
-  background: var(--surface); border-radius: var(--radius-sm); padding: 3px;
-}
-.lb-tab {
-  font-family: var(--font); font-size: 12px; font-weight: 600;
-  padding: 7px 14px; border: none; border-radius: 6px;
-  background: transparent; color: var(--text-muted);
-  cursor: pointer; transition: all 0.15s; flex: 1; text-align: center;
-}
-.lb-tab.active { background: var(--green-dim); color: var(--green); }
-.lb-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 12px; border-radius: var(--radius-sm);
-  margin-bottom: 4px; font-size: 14px; background: var(--surface);
-}
-.lb-item.lb-first {
-  background: var(--green-dim);
-  border: 1px solid rgba(34,197,94,0.15);
-}
-.lb-rank {
-  width: 30px; height: 30px; border-radius: var(--radius-sm);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; flex-shrink: 0;
-  background: var(--surface); color: var(--text-muted);
-  font-family: var(--font-mono);
-}
-.lb-name {
-  flex: 1; min-width: 0; font-weight: 500;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.lb-pts {
-  font-family: var(--font-mono); font-weight: 700; font-size: 14px;
-  color: var(--green); min-width: 50px; text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-.lb-streak {
-  font-size: 12px; color: var(--amber); min-width: 40px; text-align: right;
-  display: flex; align-items: center; gap: 3px; justify-content: flex-end;
-}
+/* Circular Timer */
+.circular-wrap { display: none; position: relative; width: 220px; height: 220px; margin: 10px auto 16px; }
+.circular-wrap.active { display: block; }
+.digital-wrap { display: block; }
+.digital-wrap.hidden { display: none; }
+.circular-bg { fill: none; stroke: var(--surface); stroke-width: 8; }
+.circular-fg { fill: none; stroke: var(--green); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1s linear, stroke 0.5s; transform: rotate(-90deg); transform-origin: center; }
+.circular-fg.warn { stroke: var(--red); }
+.circular-time { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--font-mono); font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 
 /* ===== TODAY ===== */
-.today-stat {
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 14px; padding: 10px 0;
-  border-bottom: 1px solid var(--card-border);
-}
+.today-stat { display: flex; justify-content: space-between; align-items: center; font-size: 14px; padding: 10px 0; border-bottom: 1px solid var(--card-border); }
 .today-stat:last-of-type { border-bottom: none; }
-.today-stat .val {
-  font-family: var(--font-mono); font-weight: 700; color: var(--green);
-  font-variant-numeric: tabular-nums;
-}
+.today-stat .val { font-family: var(--font-mono); font-weight: 700; color: var(--green); font-variant-numeric: tabular-nums; }
 .session-list { margin-top: 10px; }
-.session-item {
-  font-size: 12px; color: var(--text-secondary);
-  padding: 6px 10px; border-radius: 6px;
-  background: var(--surface); margin-bottom: 4px;
-}
+.session-item { font-size: 12px; color: var(--text-secondary); padding: 6px 10px; border-radius: 6px; background: var(--surface); margin-bottom: 4px; }
+
+/* ===== LEADERBOARD ===== */
+.lb-tabs { display: flex; gap: 2px; margin-bottom: 14px; background: var(--surface); border-radius: var(--radius-sm); padding: 3px; }
+.lb-tab { font-family: var(--font); font-size: 12px; font-weight: 600; padding: 7px 14px; border: none; border-radius: 6px; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s; flex: 1; text-align: center; }
+.lb-tab.active { background: var(--green-dim); color: var(--green); }
+.lb-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--radius-sm); margin-bottom: 4px; font-size: 14px; background: var(--surface); cursor: pointer; transition: background 0.15s; }
+.lb-item:hover { background: var(--card-hover); }
+.lb-item.lb-first { background: var(--green-dim); border: 1px solid rgba(34,197,94,0.15); }
+.lb-rank { width: 30px; height: 30px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; background: var(--surface); color: var(--text-muted); font-family: var(--font-mono); }
+.lb-av { width: 28px; height: 28px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+.lb-av svg { width: 100%; height: 100%; display: block; }
+.lb-name { flex: 1; min-width: 0; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lb-pts { font-family: var(--font-mono); font-weight: 700; font-size: 14px; color: var(--green); min-width: 50px; text-align: right; font-variant-numeric: tabular-nums; }
+.lb-streak { font-size: 12px; color: var(--amber); min-width: 40px; text-align: right; display: flex; align-items: center; gap: 3px; justify-content: flex-end; }
+
+/* ===== CONTRIBUTION GRAPH ===== */
+.contrib-wrap { overflow-x: auto; padding: 8px 0; }
+.contrib-grid { display: inline-block; }
+.contrib-legend { display: flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 11px; color: var(--text-muted); justify-content: flex-end; }
+.contrib-legend .cbox { width: 10px; height: 10px; border-radius: 2px; }
+.contrib-tooltip { position: fixed; background: var(--surface); border: 1px solid var(--card-border); border-radius: 6px; padding: 6px 10px; font-size: 11px; color: var(--text); pointer-events: none; z-index: 200; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: none; }
+
+/* ===== BAR CHART ===== */
+.chart-filters { display: flex; gap: 2px; margin-bottom: 14px; background: var(--surface); border-radius: var(--radius-sm); padding: 3px; }
+.chart-filter { font-family: var(--font); font-size: 12px; font-weight: 600; padding: 7px 14px; border: none; border-radius: 6px; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s; flex: 1; text-align: center; }
+.chart-filter.active { background: var(--blue-dim); color: var(--blue); }
+.chart-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.chart-nav-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+.chart-nav .btn { padding: 5px 10px; }
+.chart-summary { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; padding: 8px 12px; background: var(--surface); border-radius: var(--radius-sm); }
+.chart-summary strong { color: var(--green); font-weight: 700; }
+.chart-wrap { overflow-x: auto; }
+.bar-label { font-size: 10px; fill: var(--text-muted); font-family: var(--font-mono); }
+.bar-val { font-size: 9px; fill: var(--text-secondary); font-family: var(--font-mono); font-weight: 600; }
+
+/* ===== ACHIEVEMENTS ===== */
+.ach-section { margin-bottom: 20px; }
+.ach-section:last-child { margin-bottom: 0; }
+.ach-section-title { font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
+.ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
+.ach-badge { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px; border: 1px solid var(--card-border); border-radius: var(--radius); background: var(--surface); text-align: center; transition: all 0.3s; }
+.ach-badge.locked { opacity: 0.35; filter: grayscale(0.8); }
+.ach-badge.unlocked { border-color: rgba(34,197,94,0.25); }
+.ach-badge .ach-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.ach-badge .ach-name { font-size: 11px; font-weight: 600; color: var(--text); line-height: 1.3; }
+.ach-badge .ach-desc { font-size: 10px; color: var(--text-muted); line-height: 1.2; }
+.ach-badge.locked .ach-icon { background: var(--surface); color: var(--text-muted); }
+@keyframes badgeUnlock { 0% { transform: scale(0.7); opacity: 0; } 60% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
 
 /* ===== STREAK ===== */
-.streak-big {
-  font-family: var(--font-mono);
-  font-size: clamp(2.2rem, 8vw, 3.2rem);
-  font-weight: 700; text-align: center; padding: 8px 0 2px;
-  color: var(--amber); font-variant-numeric: tabular-nums;
-}
-.streak-label {
-  text-align: center; font-size: 13px;
-  color: var(--text-secondary); margin-bottom: 14px;
-}
-.streak-next {
-  font-size: 13px; text-align: center; color: var(--text-secondary);
-  border-top: 1px solid var(--card-border);
-  padding-top: 12px; margin-top: 8px;
-}
+.streak-big { font-family: var(--font-mono); font-size: clamp(2.2rem, 8vw, 3.2rem); font-weight: 700; text-align: center; padding: 8px 0 2px; color: var(--amber); font-variant-numeric: tabular-nums; }
+.streak-label { text-align: center; font-size: 13px; color: var(--text-secondary); margin-bottom: 14px; }
+.streak-next { font-size: 13px; text-align: center; color: var(--text-secondary); border-top: 1px solid var(--card-border); padding-top: 12px; margin-top: 8px; }
 .streak-next .hl { color: var(--green); font-weight: 600; }
-.streak-bar {
-  height: 5px; background: rgba(255,255,255,0.05);
-  border-radius: 3px; margin-top: 8px; overflow: hidden;
-}
-.streak-bar-fill {
-  height: 100%; background: var(--green);
-  border-radius: 3px; transition: width 0.4s ease;
-}
+.streak-bar { height: 5px; background: rgba(255,255,255,0.05); border-radius: 3px; margin-top: 8px; overflow: hidden; }
+.streak-bar-fill { height: 100%; background: var(--green); border-radius: 3px; transition: width 0.4s ease; }
 
 /* ===== ROUND ===== */
 .round-info { font-size: 14px; }
-.round-info .row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 8px 0; border-bottom: 1px solid var(--card-border);
-}
+.round-info .row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--card-border); }
 .round-info .row:last-of-type { border-bottom: none; }
-.round-info .val {
-  font-family: var(--font-mono); font-weight: 600; color: var(--blue);
-  font-variant-numeric: tabular-nums;
-}
+.round-info .val { font-family: var(--font-mono); font-weight: 600; color: var(--blue); font-variant-numeric: tabular-nums; }
+.round-countdown { text-align: center; padding: 14px 0; }
+.round-countdown .big { font-family: var(--font-mono); font-size: 1.8rem; font-weight: 700; color: var(--amber); }
+.round-countdown .sub { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+.round-history-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: var(--surface); border-radius: var(--radius-sm); margin-bottom: 6px; font-size: 13px; }
+.round-history-item .rh-num { font-family: var(--font-mono); font-weight: 700; color: var(--purple); min-width: 40px; }
+.round-history-item .rh-winner { color: var(--green); font-weight: 600; flex: 1; }
+.round-history-item .rh-loser { color: var(--red); font-size: 12px; }
+.shame-card { text-align: center; padding: 18px; }
+.shame-card .shame-name { font-size: 1.4rem; font-weight: 800; color: var(--red); margin: 8px 0 4px; }
+.shame-card .shame-count { font-family: var(--font-mono); font-weight: 700; color: var(--amber); font-size: 1.1rem; }
 
-/* ===== MILESTONES ===== */
-.ms-section { margin-bottom: 16px; }
-.ms-section:last-child { margin-bottom: 0; }
-.ms-section-title {
-  font-size: 12px; font-weight: 600; color: var(--text-secondary);
-  margin-bottom: 10px; letter-spacing: 0.3px;
-}
-.ms-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-.ms-badge {
-  width: 60px; height: 60px; border: 1px solid var(--card-border);
-  border-radius: var(--radius-sm); display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  font-size: 11px; color: var(--text-muted); gap: 2px;
-  background: var(--surface); transition: all 0.2s;
-}
-.ms-badge.reached {
-  border-color: rgba(34,197,94,0.3); color: var(--green);
-  background: var(--green-dim);
-}
-.ms-badge .ms-num {
-  font-family: var(--font-mono); font-size: 16px; font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
+/* ===== PROFILE ===== */
+.profile-header { text-align: center; padding: 24px 18px; }
+.profile-av { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; margin: 0 auto 12px; border: 3px solid var(--green); cursor: pointer; transition: transform 0.2s; }
+.profile-av:hover { transform: scale(1.05); }
+.profile-av svg { width: 100%; height: 100%; display: block; }
+.profile-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.profile-email { font-size: 13px; color: var(--text-muted); }
+.profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--card-border); margin: 18px 0; border-radius: var(--radius-sm); overflow: hidden; }
+.profile-stat { background: var(--surface); padding: 14px 8px; text-align: center; }
+.profile-stat .ps-val { font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700; color: var(--green); font-variant-numeric: tabular-nums; }
+.profile-stat .ps-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.profile-section { padding: 14px 18px; border-top: 1px solid var(--card-border); }
+.profile-section-title { font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+.profile-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; }
+.profile-row label { font-size: 14px; color: var(--text-secondary); }
 
-/* ===== VOTE ===== */
-.vote-wrap { text-align: center; }
-.vote-title {
-  font-size: 16px; font-weight: 700;
-  color: var(--amber); margin-bottom: 12px;
-}
-.vote-opts {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  justify-content: center; margin-bottom: 14px;
-}
-.vote-status {
-  font-size: 13px; color: var(--text-secondary);
-  margin-top: 10px; line-height: 1.8;
-}
+/* Avatar Picker Modal */
+.av-picker-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 8px; }
+.av-pick { width: 100%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 3px solid transparent; cursor: pointer; transition: all 0.2s; position: relative; }
+.av-pick:hover { transform: scale(1.08); }
+.av-pick.selected { border-color: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,0.3); }
+.av-pick.locked { opacity: 0.3; cursor: not-allowed; }
+.av-pick.locked::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.av-pick svg { width: 100%; height: 100%; display: block; }
+.av-pick-label { font-size: 10px; text-align: center; color: var(--text-muted); margin-top: 4px; }
+
+/* ===== STALK PANEL ===== */
+.stalk-panel { position: fixed; top: 0; right: -380px; width: 360px; max-width: 90vw; height: 100vh; background: var(--surface); border-left: 1px solid var(--card-border); z-index: 100; transition: right 0.3s ease; overflow-y: auto; box-shadow: -4px 0 24px rgba(0,0,0,0.3); }
+.stalk-panel.open { right: 0; }
+.stalk-close { position: absolute; top: 12px; right: 12px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 20px; padding: 4px; }
+.stalk-header { text-align: center; padding: 32px 20px 16px; border-bottom: 1px solid var(--card-border); }
+.stalk-av { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; margin: 0 auto 10px; border: 2px solid var(--green); }
+.stalk-av svg { width: 100%; height: 100%; display: block; }
+.stalk-name { font-size: 18px; font-weight: 700; }
+.stalk-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--card-border); margin: 16px; border-radius: var(--radius-sm); overflow: hidden; }
+.stalk-stat { background: var(--card); padding: 12px 6px; text-align: center; }
+.stalk-stat .ss-val { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; color: var(--green); }
+.stalk-stat .ss-label { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+.stalk-section { padding: 14px 16px; }
+.stalk-section-title { font-size: 11px; font-weight: 700; color: var(--text-secondary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+.stalk-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; display: none; }
+.stalk-overlay.open { display: block; }
 
 /* ===== MODAL ===== */
-.modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-  display: none; align-items: center; justify-content: center;
-  z-index: 999; padding: 16px;
-}
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 999; padding: 16px; }
 .modal-overlay.show { display: flex; }
-.modal {
-  background: var(--surface); border: 1px solid var(--card-border);
-  border-radius: var(--radius); max-width: 440px; width: 100%; overflow: hidden;
-}
+.modal { background: var(--surface); border: 1px solid var(--card-border); border-radius: var(--radius); max-width: 440px; width: 100%; overflow: hidden; max-height: 90vh; overflow-y: auto; }
 .modal .card-body { text-align: center; }
 .modal p { font-size: 14px; margin-bottom: 10px; color: var(--text); }
-.modal .cost {
-  font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700;
-  color: var(--red); margin: 14px 0;
-}
-.modal .modal-btns {
-  display: flex; gap: 10px; justify-content: center; margin-top: 18px;
-}
+.modal .cost { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; color: var(--red); margin: 14px 0; }
+.modal .modal-btns { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
 
 /* ===== TOAST ===== */
-.toast {
-  position: fixed; bottom: 24px; right: 24px;
-  background: var(--surface); color: var(--text);
-  padding: 12px 20px; border: 1px solid var(--card-border);
-  border-radius: var(--radius-sm); font-family: var(--font);
-  font-size: 13px; font-weight: 500; z-index: 1000;
-  transform: translateY(80px); opacity: 0;
-  transition: all 0.3s ease; max-width: 340px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  display: flex; align-items: center; gap: 8px;
-}
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--surface); color: var(--text); padding: 12px 20px; border: 1px solid var(--card-border); border-radius: var(--radius-sm); font-family: var(--font); font-size: 13px; font-weight: 500; z-index: 1000; transform: translateY(80px); opacity: 0; transition: all 0.3s ease; max-width: 340px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 8px; }
 .toast.show { transform: translateY(0); opacity: 1; }
 
 /* ===== RULES ===== */
-.rules-btn {
-  position: fixed; bottom: 20px; left: 20px;
-  z-index: 50; border-radius: var(--radius-pill); padding: 9px 16px;
-}
-.rules-content {
-  font-size: 13px; text-align: left;
-  max-height: 60vh; overflow-y: auto; line-height: 1.7;
-}
-.rules-content h3 {
-  color: var(--green); margin: 18px 0 8px;
-  font-size: 14px; font-weight: 700;
-}
+.rules-btn { position: fixed; bottom: 20px; left: 20px; z-index: 50; border-radius: var(--radius-pill); padding: 9px 16px; }
+.rules-content { font-size: 13px; text-align: left; max-height: 60vh; overflow-y: auto; line-height: 1.7; }
+.rules-content h3 { color: var(--green); margin: 18px 0 8px; font-size: 14px; font-weight: 700; }
 .rules-content table { width: 100%; border-collapse: collapse; margin: 8px 0; }
-.rules-content th, .rules-content td {
-  border: 1px solid var(--card-border); padding: 8px 10px;
-  text-align: left; font-size: 12px;
-}
+.rules-content th, .rules-content td { border: 1px solid var(--card-border); padding: 8px 10px; text-align: left; font-size: 12px; }
 .rules-content th { background: var(--green-dim); color: var(--green); font-weight: 600; }
 .rules-content td { color: var(--text-secondary); }
 .rules-content p { color: var(--text-secondary); margin: 6px 0; }
 
-.setup-warn {
-  background: var(--amber-dim); border: 1px solid rgba(245,158,11,0.2);
-  border-radius: var(--radius-sm); padding: 16px 20px;
-  margin: 16px 20px; font-size: 14px; color: var(--amber); text-align: center;
-}
+.setup-warn { background: var(--amber-dim); border: 1px solid rgba(245,158,11,0.2); border-radius: var(--radius-sm); padding: 16px 20px; margin: 16px 20px; font-size: 14px; color: var(--amber); text-align: center; }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.12); }
+@media (max-width: 500px) {
+  .tab-btn { font-size: 12px; gap: 4px; padding: 12px 4px; }
+  .tab-btn .icon { font-size: 16px; }
+  .tab-panel { padding: 12px; }
+  .ach-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+  .profile-stats { grid-template-columns: repeat(3, 1fr); }
+}
 </style>
 </head>
 <body>
 
-<!-- ===== SVG ICON SPRITE ===== -->
+<!-- ===== SVG SPRITE ===== -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <!-- UI Icons -->
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
   <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></symbol>
   <symbol id="i-chart" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
@@ -489,6 +333,50 @@ input::placeholder { color: var(--text-muted); }
   <symbol id="i-vote" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
   <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></symbol>
   <symbol id="i-log-out" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+  <symbol id="i-chevL" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
+  <symbol id="i-chevR" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></symbol>
+  <symbol id="i-hash" viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l4 2"/></symbol>
+
+  <!-- AVATARS (flat geometric, 80×80) -->
+  <symbol id="av-cat" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#f59e0b"/><polygon points="18,30 28,10 34,28" fill="#fff" opacity=".9"/><polygon points="62,30 52,10 46,28" fill="#fff" opacity=".9"/><circle cx="40" cy="42" r="18" fill="#fff" opacity=".85"/><circle cx="33" cy="38" r="3" fill="#1a2236"/><circle cx="47" cy="38" r="3" fill="#1a2236"/><ellipse cx="40" cy="44" rx="2.5" ry="2" fill="#f59e0b"/><path d="M36,47 Q40,51 44,47" fill="none" stroke="#1a2236" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="40" x2="28" y2="42" stroke="#fff" stroke-width="1.2" opacity=".6"/><line x1="52" y1="42" x2="64" y2="40" stroke="#fff" stroke-width="1.2" opacity=".6"/></symbol>
+
+  <symbol id="av-dog" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#3b82f6"/><circle cx="40" cy="42" r="18" fill="#fff" opacity=".85"/><ellipse cx="22" cy="34" rx="10" ry="16" fill="#fff" opacity=".7" transform="rotate(-15,22,34)"/><ellipse cx="58" cy="34" rx="10" ry="16" fill="#fff" opacity=".7" transform="rotate(15,58,34)"/><circle cx="34" cy="38" r="3" fill="#1a2236"/><circle cx="46" cy="38" r="3" fill="#1a2236"/><ellipse cx="40" cy="45" rx="4" ry="3" fill="#1a2236"/><path d="M37,49 Q40,53 43,49" fill="#ef4444" stroke="none"/></symbol>
+
+  <symbol id="av-panda" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#6b7280"/><circle cx="26" cy="22" r="10" fill="#1a2236"/><circle cx="54" cy="22" r="10" fill="#1a2236"/><circle cx="40" cy="44" r="20" fill="#fff" opacity=".9"/><ellipse cx="32" cy="38" rx="7" ry="6" fill="#1a2236" opacity=".8"/><ellipse cx="48" cy="38" rx="7" ry="6" fill="#1a2236" opacity=".8"/><circle cx="32" cy="38" r="2.5" fill="#fff"/><circle cx="48" cy="38" r="2.5" fill="#fff"/><ellipse cx="40" cy="48" rx="3" ry="2.5" fill="#1a2236"/></symbol>
+
+  <symbol id="av-penguin" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#0ea5e9"/><ellipse cx="40" cy="44" rx="20" ry="24" fill="#1a2236"/><ellipse cx="40" cy="48" rx="14" ry="18" fill="#fff" opacity=".9"/><circle cx="34" cy="34" r="3" fill="#fff"/><circle cx="46" cy="34" r="3" fill="#fff"/><circle cx="34" cy="34" r="1.5" fill="#1a2236"/><circle cx="46" cy="34" r="1.5" fill="#1a2236"/><polygon points="40,40 36,46 44,46" fill="#f59e0b"/></symbol>
+
+  <symbol id="av-rabbit" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#ec4899"/><ellipse cx="30" cy="18" rx="6" ry="16" fill="#fff" opacity=".85"/><ellipse cx="50" cy="18" rx="6" ry="16" fill="#fff" opacity=".85"/><ellipse cx="30" cy="18" rx="3" ry="12" fill="#ec4899" opacity=".5"/><ellipse cx="50" cy="18" rx="3" ry="12" fill="#ec4899" opacity=".5"/><circle cx="40" cy="46" r="18" fill="#fff" opacity=".85"/><circle cx="34" cy="42" r="3" fill="#1a2236"/><circle cx="46" cy="42" r="3" fill="#1a2236"/><ellipse cx="40" cy="50" rx="2" ry="1.5" fill="#ec4899"/></symbol>
+
+  <symbol id="av-fox" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#f97316"/><polygon points="16,32 26,8 32,30" fill="#fff" opacity=".9"/><polygon points="64,32 54,8 48,30" fill="#fff" opacity=".9"/><polygon points="16,32 26,8 32,30" fill="#f97316" opacity=".4"/><polygon points="64,32 54,8 48,30" fill="#f97316" opacity=".4"/><circle cx="40" cy="46" r="18" fill="#fff" opacity=".85"/><circle cx="33" cy="40" r="2.5" fill="#1a2236"/><circle cx="47" cy="40" r="2.5" fill="#1a2236"/><polygon points="40,46 37,50 43,50" fill="#1a2236"/></symbol>
+
+  <symbol id="av-owl" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#8b5cf6"/><polygon points="20,28 26,14 30,28" fill="#fff" opacity=".7"/><polygon points="60,28 54,14 50,28" fill="#fff" opacity=".7"/><circle cx="40" cy="44" r="20" fill="#fff" opacity=".85"/><circle cx="32" cy="40" r="8" fill="#8b5cf6" opacity=".3"/><circle cx="48" cy="40" r="8" fill="#8b5cf6" opacity=".3"/><circle cx="32" cy="40" r="4" fill="#1a2236"/><circle cx="48" cy="40" r="4" fill="#1a2236"/><circle cx="33" cy="39" r="1.5" fill="#fff"/><circle cx="49" cy="39" r="1.5" fill="#fff"/><polygon points="40,48 38,52 42,52" fill="#f59e0b"/></symbol>
+
+  <symbol id="av-lion" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#eab308"/><circle cx="40" cy="42" r="26" fill="#ca8a04" opacity=".5"/><path d="M14,42 Q14,16 40,14 Q66,16 66,42 Q66,68 40,70 Q14,68 14,42" fill="#eab308" opacity=".6"/><circle cx="40" cy="44" r="16" fill="#fff" opacity=".85"/><circle cx="34" cy="40" r="2.5" fill="#1a2236"/><circle cx="46" cy="40" r="2.5" fill="#1a2236"/><ellipse cx="40" cy="47" rx="3" ry="2" fill="#1a2236"/><path d="M36,50 Q40,54 44,50" fill="none" stroke="#1a2236" stroke-width="1.5" stroke-linecap="round"/></symbol>
+
+  <symbol id="av-bear" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#92400e"/><circle cx="24" cy="22" r="9" fill="#fff" opacity=".5"/><circle cx="56" cy="22" r="9" fill="#fff" opacity=".5"/><circle cx="24" cy="22" r="5" fill="#92400e"/><circle cx="56" cy="22" r="5" fill="#92400e"/><circle cx="40" cy="44" r="20" fill="#fff" opacity=".8"/><circle cx="34" cy="38" r="3" fill="#1a2236"/><circle cx="46" cy="38" r="3" fill="#1a2236"/><ellipse cx="40" cy="46" rx="5" ry="4" fill="#1a2236" opacity=".8"/><ellipse cx="40" cy="45" rx="2.5" ry="1.5" fill="#92400e"/></symbol>
+
+  <symbol id="av-wolf" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#64748b"/><polygon points="18,34 24,10 32,30" fill="#fff" opacity=".8"/><polygon points="62,34 56,10 48,30" fill="#fff" opacity=".8"/><circle cx="40" cy="46" r="18" fill="#fff" opacity=".8"/><path d="M30,38 L34,36 L34,42 Z" fill="#1a2236"/><path d="M50,38 L46,36 L46,42 Z" fill="#1a2236"/><ellipse cx="40" cy="49" rx="4" ry="3" fill="#1a2236"/></symbol>
+
+  <symbol id="av-eagle" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#b91c1c"/><circle cx="40" cy="42" r="18" fill="#fff" opacity=".85"/><circle cx="33" cy="38" r="3.5" fill="#1a2236"/><circle cx="47" cy="38" r="3.5" fill="#1a2236"/><circle cx="34" cy="37" r="1" fill="#fff"/><circle cx="48" cy="37" r="1" fill="#fff"/><polygon points="40,44 34,52 46,52" fill="#f59e0b"/><path d="M28,30 Q40,24 52,30" fill="#b91c1c" stroke="#fff" stroke-width="1.5" opacity=".8"/></symbol>
+
+  <symbol id="av-dragon" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#dc2626"/><polygon points="28,16 32,28 24,28" fill="#fff" opacity=".8"/><polygon points="52,16 48,28 56,28" fill="#fff" opacity=".8"/><circle cx="40" cy="46" r="18" fill="#fff" opacity=".8"/><path d="M30,40 L36,36 L36,44 Z" fill="#dc2626"/><path d="M50,40 L44,36 L44,44 Z" fill="#dc2626"/><circle cx="34" cy="40" r="1.5" fill="#1a2236"/><circle cx="46" cy="40" r="1.5" fill="#1a2236"/><path d="M34,50 Q37,48 40,50 Q43,48 46,50" fill="none" stroke="#1a2236" stroke-width="1.5"/></symbol>
+
+  <symbol id="av-shark" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#0284c7"/><ellipse cx="40" cy="44" rx="22" ry="16" fill="#fff" opacity=".8"/><polygon points="40,10 36,28 44,28" fill="#fff" opacity=".9"/><circle cx="30" cy="40" r="2.5" fill="#1a2236"/><circle cx="50" cy="40" r="2.5" fill="#1a2236"/><path d="M32,50 L36,48 L40,50 L44,48 L48,50" fill="none" stroke="#1a2236" stroke-width="1.5" stroke-linecap="round"/></symbol>
+
+  <symbol id="av-phoenix" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#ea580c"/><path d="M20,20 Q30,10 40,22 Q50,10 60,20" fill="#f59e0b" opacity=".8"/><path d="M24,16 Q34,6 40,18 Q46,6 56,16" fill="#fbbf24" opacity=".6"/><circle cx="40" cy="44" r="18" fill="#fff" opacity=".85"/><circle cx="34" cy="40" r="3" fill="#1a2236"/><circle cx="46" cy="40" r="3" fill="#1a2236"/><polygon points="40,46 36,52 44,52" fill="#ea580c"/></symbol>
+
+  <symbol id="av-unicorn" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#d946ef"/><polygon points="40,4 36,24 44,24" fill="#fbbf24"/><circle cx="40" cy="46" r="18" fill="#fff" opacity=".85"/><path d="M20,30 Q24,22 30,30" fill="#d946ef" opacity=".5"/><path d="M24,28 Q28,20 34,28" fill="#a855f7" opacity=".4"/><circle cx="34" cy="42" r="3" fill="#1a2236"/><circle cx="46" cy="42" r="3" fill="#1a2236"/><path d="M36,50 Q40,54 44,50" fill="none" stroke="#d946ef" stroke-width="1.5"/></symbol>
+
+  <symbol id="av-crown-av" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#ca8a04"/><path d="M16,50 L22,30 L32,42 L40,26 L48,42 L58,30 L64,50 Z" fill="#fbbf24"/><rect x="16" y="50" width="48" height="8" rx="2" fill="#fbbf24"/><circle cx="40" cy="36" r="3" fill="#fff" opacity=".8"/><circle cx="28" cy="40" r="2" fill="#fff" opacity=".6"/><circle cx="52" cy="40" r="2" fill="#fff" opacity=".6"/></symbol>
 </svg>
 
 <!-- ===== AUTH SCREEN ===== -->
@@ -505,30 +393,15 @@ input::placeholder { color: var(--text-muted); }
     </div>
     <div class="auth-form-wrap">
       <form id="loginForm" class="auth-form active" onsubmit="return handleLogin(event)">
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="loginEmail" required placeholder="email@example.com">
-        </div>
-        <div class="form-group">
-          <label>Mật khẩu</label>
-          <input type="password" id="loginPass" required placeholder="••••••">
-        </div>
+        <div class="form-group"><label>Email</label><input type="email" id="loginEmail" required placeholder="email@example.com"></div>
+        <div class="form-group"><label>Mật khẩu</label><input type="password" id="loginPass" required placeholder="••••••"></div>
         <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
         <div id="loginError" class="auth-error"></div>
       </form>
       <form id="registerForm" class="auth-form" onsubmit="return handleRegister(event)">
-        <div class="form-group">
-          <label>Tên hiển thị</label>
-          <input type="text" id="regName" required maxlength="20" placeholder="Tên của bạn">
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="regEmail" required placeholder="email@example.com">
-        </div>
-        <div class="form-group">
-          <label>Mật khẩu</label>
-          <input type="password" id="regPass" required minlength="6" placeholder="Tối thiểu 6 ký tự">
-        </div>
+        <div class="form-group"><label>Tên hiển thị</label><input type="text" id="regName" required maxlength="20" placeholder="Tên của bạn"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="regEmail" required placeholder="email@example.com"></div>
+        <div class="form-group"><label>Mật khẩu</label><input type="password" id="regPass" required minlength="6" placeholder="Tối thiểu 6 ký tự"></div>
         <button type="submit" class="btn btn-primary btn-block">Đăng ký</button>
         <div id="regError" class="auth-error"></div>
       </form>
@@ -539,29 +412,41 @@ input::placeholder { color: var(--text-muted); }
 <!-- ===== APP SCREEN ===== -->
 <div id="appScreen" class="screen app-screen">
   <header class="app-header">
-    <div class="app-logo">
-      <span class="icon"><svg><use href="#i-flame"/></svg></span>
-      Study Streak Battle
-    </div>
-    <div class="app-user">
+    <div class="app-logo"><span class="icon"><svg><use href="#i-flame"/></svg></span> Study Streak Battle</div>
+    <div class="app-user-mini" onclick="switchTab('profile')">
       <span id="userName"></span>
-      <button class="btn btn-sm btn-danger" onclick="handleLogout()">
-        <span class="icon"><svg><use href="#i-log-out"/></svg></span> Thoát
-      </button>
+      <div class="av-circle" id="headerAvatar"></div>
     </div>
   </header>
-  <div id="setupWarn" class="setup-warn" style="display:none">
-    Chưa cấu hình Firebase! Mở file README.md để xem hướng dẫn cài đặt.
-  </div>
-  <div class="dashboard">
+  <div id="setupWarn" class="setup-warn" style="display:none">Chưa cấu hình Firebase!</div>
 
-    <!-- TIMER -->
+  <nav class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('lockin')" data-tab="lockin">
+      <span class="icon"><svg><use href="#i-clock"/></svg></span> Lock-in <span class="tmr-dot" id="tmrDot"></span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('performance')" data-tab="performance">
+      <span class="icon"><svg><use href="#i-chart"/></svg></span> Performance
+    </button>
+    <button class="tab-btn" onclick="switchTab('round')" data-tab="round">
+      <span class="icon"><svg><use href="#i-trophy"/></svg></span> Vòng đấu
+    </button>
+    <button class="tab-btn" onclick="switchTab('profile')" data-tab="profile">
+      <span class="icon"><svg><use href="#i-user"/></svg></span> Hồ sơ
+    </button>
+  </nav>
+
+  <!-- TAB: LOCK-IN -->
+  <div id="tabLockin" class="tab-panel active">
     <div class="card">
       <div class="card-head">
         <div class="icon-box blue"><span class="icon"><svg><use href="#i-clock"/></svg></span></div>
         <div class="card-head-title">Đồng hồ học bài</div>
       </div>
       <div class="card-body">
+        <div class="timer-mode-toggle">
+          <button class="btn btn-sm sel" onclick="setTimerMode('digital')">Số</button>
+          <button class="btn btn-sm" onclick="setTimerMode('circular')">Tròn</button>
+        </div>
         <div class="timer-presets">
           <button class="btn btn-sm" onclick="setPreset(this,30)">30p</button>
           <button class="btn btn-sm" onclick="setPreset(this,60)">60p</button>
@@ -572,8 +457,17 @@ input::placeholder { color: var(--text-muted); }
           <input type="number" id="timerInput" value="30" min="1" max="480">
           <span>phút</span>
         </div>
-        <div id="timerDisplay" class="timer-display">00:00</div>
-        <div class="timer-progress"><div id="timerProgress" class="timer-progress-fill"></div></div>
+        <div class="digital-wrap" id="digitalWrap">
+          <div id="timerDisplay" class="timer-display">00:00</div>
+          <div class="timer-progress"><div id="timerProgress" class="timer-progress-fill"></div></div>
+        </div>
+        <div class="circular-wrap" id="circularWrap">
+          <svg viewBox="0 0 220 220" width="220" height="220">
+            <circle cx="110" cy="110" r="96" class="circular-bg"/>
+            <circle cx="110" cy="110" r="96" class="circular-fg" id="circFg" stroke-dasharray="603.19" stroke-dashoffset="0"/>
+          </svg>
+          <div class="circular-time" id="circTime">00:00</div>
+        </div>
         <div class="mxh-row">
           <input type="checkbox" id="mxhPledge">
           <label for="mxhPledge">Cam kết không mở MXH</label>
@@ -585,37 +479,22 @@ input::placeholder { color: var(--text-muted); }
         </div>
       </div>
     </div>
-
-    <!-- LEADERBOARD -->
-    <div class="card">
-      <div class="card-head">
-        <div class="icon-box amber"><span class="icon"><svg><use href="#i-trophy"/></svg></span></div>
-        <div class="card-head-title">Bảng xếp hạng</div>
-      </div>
-      <div class="card-body">
-        <div class="lb-tabs">
-          <button class="lb-tab active" onclick="showLbTab(this,'round')">Vòng này</button>
-          <button class="lb-tab" onclick="showLbTab(this,'all')">Tích luỹ</button>
-        </div>
-        <div id="lbList"><div style="font-size:13px;color:var(--text-secondary)">Đang tải...</div></div>
-      </div>
-    </div>
-
-    <!-- TODAY -->
     <div class="card">
       <div class="card-head">
         <div class="icon-box green"><span class="icon"><svg><use href="#i-chart"/></svg></span></div>
         <div class="card-head-title">Hôm nay</div>
       </div>
       <div class="card-body">
-        <div class="today-stat"><span>Tổng thời gian</span><span class="val" id="todayMin">0 phút</span></div>
+        <div class="today-stat"><span>Tổng thời gian</span><span class="val" id="todayMin">0 phut</span></div>
         <div class="today-stat"><span>Sections</span><span class="val" id="todaySec">0</span></div>
         <div class="today-stat"><span>Điểm hôm nay</span><span class="val" id="todayPts">0</span></div>
         <div id="sessionList" class="session-list"></div>
       </div>
     </div>
+  </div>
 
-    <!-- STREAK -->
+  <!-- TAB: PERFORMANCE -->
+  <div id="tabPerformance" class="tab-panel">
     <div class="card">
       <div class="card-head">
         <div class="icon-box red"><span class="icon"><svg><use href="#i-flame"/></svg></span></div>
@@ -627,52 +506,159 @@ input::placeholder { color: var(--text-muted); }
         <div id="streakNext" class="streak-next"></div>
       </div>
     </div>
-
-    <!-- ROUND -->
-    <div class="card win-full">
+    <div class="card">
       <div class="card-head">
-        <div class="icon-box purple"><span class="icon"><svg><use href="#i-target"/></svg></span></div>
-        <div class="card-head-title">Vòng đấu</div>
+        <div class="icon-box green"><span class="icon"><svg><use href="#i-target"/></svg></span></div>
+        <div class="card-head-title">Biểu đồ hoạt động</div>
       </div>
       <div class="card-body">
+        <div class="contrib-wrap" id="contribWrap"></div>
+        <div class="contrib-legend">
+          <span>Ít</span>
+          <span class="cbox" style="background:rgba(34,197,94,0.1)"></span>
+          <span class="cbox" style="background:rgba(34,197,94,0.3)"></span>
+          <span class="cbox" style="background:rgba(34,197,94,0.6)"></span>
+          <span class="cbox" style="background:rgba(34,197,94,0.9)"></span>
+          <span>Nhiều</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="icon-box blue"><span class="icon"><svg><use href="#i-chart"/></svg></span></div>
+        <div class="card-head-title">Thời gian học</div>
+      </div>
+      <div class="card-body">
+        <div class="chart-filters">
+          <button class="chart-filter active" onclick="setChartFilter('day')">Ngày</button>
+          <button class="chart-filter" onclick="setChartFilter('week')">Tuần</button>
+          <button class="chart-filter" onclick="setChartFilter('month')">Tháng</button>
+        </div>
+        <div class="chart-nav">
+          <button class="btn btn-sm" onclick="chartPrev()"><span class="icon"><svg><use href="#i-chevL"/></svg></span></button>
+          <span class="chart-nav-label" id="chartLabel">Hôm nay</span>
+          <button class="btn btn-sm" onclick="chartNext()"><span class="icon"><svg><use href="#i-chevR"/></svg></span></button>
+        </div>
+        <div class="chart-summary" id="chartSummary"></div>
+        <div class="chart-wrap" id="chartWrap"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="icon-box amber"><span class="icon"><svg><use href="#i-award"/></svg></span></div>
+        <div class="card-head-title">Thành tựu</div>
+      </div>
+      <div class="card-body" id="achievementsWrap"></div>
+    </div>
+  </div>
+
+  <!-- TAB: ROUND -->
+  <div id="tabRound" class="tab-panel">
+    <div class="card">
+      <div class="card-head">
+        <div class="icon-box purple"><span class="icon"><svg><use href="#i-target"/></svg></span></div>
+        <div class="card-head-title">Vòng hiện tại</div>
+      </div>
+      <div class="card-body">
+        <div id="roundCountdown" class="round-countdown"></div>
         <div id="roundContent" style="font-size:13px;color:var(--text-secondary)">Đang tải...</div>
       </div>
     </div>
-
-    <!-- MILESTONES -->
-    <div class="card win-full">
+    <div class="card">
       <div class="card-head">
-        <div class="icon-box amber"><span class="icon"><svg><use href="#i-award"/></svg></span></div>
-        <div class="card-head-title">Cột mốc</div>
+        <div class="icon-box amber"><span class="icon"><svg><use href="#i-trophy"/></svg></span></div>
+        <div class="card-head-title">Bảng xếp hạng</div>
       </div>
       <div class="card-body">
-        <div class="ms-section">
-          <div class="ms-section-title">Chuỗi ngày (Streak)</div>
-          <div id="streakMs" class="ms-grid"></div>
+        <div class="lb-tabs">
+          <button class="lb-tab active" onclick="showLbTab(this,'round')">Vòng này</button>
+          <button class="lb-tab" onclick="showLbTab(this,'all')">Tích lũy</button>
         </div>
-        <div class="ms-section">
-          <div class="ms-section-title">Tổng sections tích luỹ</div>
-          <div id="sectionMs" class="ms-grid"></div>
-        </div>
+        <div id="lbList"><div style="font-size:13px;color:var(--text-secondary)">Đang tải...</div></div>
       </div>
     </div>
-
+    <div class="card">
+      <div class="card-head">
+        <div class="icon-box blue"><span class="icon"><svg><use href="#i-edit"/></svg></span></div>
+        <div class="card-head-title">Tạo vòng mới</div>
+      </div>
+      <div class="card-body">
+        <div class="form-group"><label>Ngày bắt đầu</label><input type="date" id="propStart"></div>
+        <div class="form-group"><label>Ngày kết thúc</label><input type="date" id="propEnd"></div>
+        <button class="btn btn-primary btn-block" onclick="proposeRound()"><span class="icon"><svg><use href="#i-play"/></svg></span> Đề xuất</button>
+        <div id="proposalStatus" style="font-size:12px;color:var(--text-secondary);margin-top:10px"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="icon-box red"><span class="icon"><svg><use href="#i-history"/></svg></span></div>
+        <div class="card-head-title">Lịch sử & Hall of Shame</div>
+      </div>
+      <div class="card-body">
+        <div id="shameSection" class="shame-card" style="display:none"></div>
+        <div id="roundHistoryList" style="font-size:13px;color:var(--text-secondary)">Chưa có lịch sử</div>
+      </div>
+    </div>
   </div>
-  <button class="btn btn-sm rules-btn" onclick="toggleRules()">
-    <span class="icon"><svg><use href="#i-scroll"/></svg></span> Luật chơi
-  </button>
+
+  <!-- TAB: PROFILE -->
+  <div id="tabProfile" class="tab-panel">
+    <div class="card">
+      <div class="profile-header">
+        <div class="profile-av" id="profileAvatar" onclick="openAvatarPicker()"></div>
+        <div class="profile-name" id="profileName"></div>
+        <div class="profile-email" id="profileEmail"></div>
+        <div class="profile-stats">
+          <div class="profile-stat"><div class="ps-val" id="psTotalMin">0</div><div class="ps-label">phút</div></div>
+          <div class="profile-stat"><div class="ps-val" id="psTotalSec">0</div><div class="ps-label">sections</div></div>
+          <div class="profile-stat"><div class="ps-val" id="psLongest">0</div><div class="ps-label">streak max</div></div>
+        </div>
+      </div>
+      <div class="profile-section">
+        <div class="profile-section-title">Chỉnh sửa hồ sơ</div>
+        <div class="form-group"><label>Tên hiển thị</label>
+          <div style="display:flex;gap:8px"><input type="text" id="editName" maxlength="20"><button class="btn btn-sm" onclick="changeName()">Lưu</button></div>
+        </div>
+        <div class="form-group"><label>Mật khẩu mới</label>
+          <div style="display:flex;gap:8px"><input type="password" id="editPass" minlength="6" placeholder="Tối thiểu 6 ký tự"><button class="btn btn-sm" onclick="changePass()">Đổi</button></div>
+        </div>
+        <div id="profileMsg" style="font-size:12px;margin-top:8px;min-height:18px"></div>
+      </div>
+      <div class="profile-section">
+        <button class="btn btn-danger btn-block" onclick="handleLogout()"><span class="icon"><svg><use href="#i-log-out"/></svg></span> Đăng xuất</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-sm rules-btn" onclick="toggleRules()"><span class="icon"><svg><use href="#i-scroll"/></svg></span> Luật chơi</button>
 </div>
 
-<!-- ===== MODALS ===== -->
+<!-- STALK PANEL -->
+<div id="stalkOverlay" class="stalk-overlay" onclick="closeStalk()"></div>
+<div id="stalkPanel" class="stalk-panel">
+  <button class="stalk-close" onclick="closeStalk()"><span class="icon" style="font-size:20px"><svg><use href="#i-x"/></svg></span></button>
+  <div class="stalk-header">
+    <div class="stalk-av" id="stalkAvatar"></div>
+    <div class="stalk-name" id="stalkName"></div>
+  </div>
+  <div class="stalk-stats" id="stalkStats"></div>
+  <div class="stalk-section">
+    <div class="stalk-section-title">Biểu đồ hoạt động</div>
+    <div id="stalkContrib"></div>
+  </div>
+  <div class="stalk-section">
+    <div class="stalk-section-title">Khung giờ học</div>
+    <div id="stalkHourly"></div>
+  </div>
+</div>
+
+<!-- MODALS -->
 <div id="recoveryModal" class="modal-overlay">
   <div class="modal">
-    <div class="card-head">
-      <div class="icon-box red"><span class="icon"><svg><use href="#i-shield"/></svg></span></div>
-      <div class="card-head-title">Streak Recovery</div>
-    </div>
+    <div class="card-head"><div class="icon-box red"><span class="icon"><svg><use href="#i-shield"/></svg></span></div><div class="card-head-title">Streak Recovery</div></div>
     <div class="card-body" style="text-align:center">
       <p>Bạn đã bỏ lỡ 1 ngày học!</p>
-      <p>Chuỗi hiện tại: <span id="recStreak" style="color:var(--amber);font-weight:700"></span> ngày</p>
+      <p>Chuỗi hiện tại: <span id="recStreak" style="color:var(--amber);font-weight:700"></span> ngay</p>
       <p>Chi phí chuộc:</p>
       <div class="cost" id="recCost"></div>
       <p style="font-size:12px;color:var(--text-muted)" id="recExplain"></p>
@@ -685,46 +671,40 @@ input::placeholder { color: var(--text-muted); }
 </div>
 <div id="voteModal" class="modal-overlay">
   <div class="modal">
-    <div class="card-head">
-      <div class="icon-box green"><span class="icon"><svg><use href="#i-vote"/></svg></span></div>
-      <div class="card-head-title">Bỏ phiếu vòng mới</div>
-    </div>
-    <div class="card-body vote-wrap">
-      <div class="vote-title" id="voteTitle">Vòng đã kết thúc!</div>
+    <div class="card-head"><div class="icon-box green"><span class="icon"><svg><use href="#i-vote"/></svg></span></div><div class="card-head-title">Bỏ phiếu vòng mới</div></div>
+    <div class="card-body vote-wrap" style="text-align:center">
+      <div id="voteTitle" style="font-size:16px;font-weight:700;color:var(--amber);margin-bottom:12px">Vòng đã kết thúc!</div>
       <p>Chọn thời lượng vòng tiếp:</p>
-      <div class="vote-opts">
-        <button class="btn btn-sm" onclick="castVote(3)">3 ngày</button>
-        <button class="btn btn-sm" onclick="castVote(5)">5 ngày</button>
-        <button class="btn btn-sm" onclick="castVote(7)">7 ngày</button>
-        <button class="btn btn-sm" onclick="castVote(10)">10 ngày</button>
-        <button class="btn btn-sm" onclick="castVote(14)">14 ngày</button>
-        <button class="btn btn-sm" onclick="castVote(21)">21 ngày</button>
-        <button class="btn btn-sm" onclick="castVote(30)">30 ngày</button>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0">
+        <button class="btn btn-sm" onclick="castVote(3)">3 ngay</button>
+        <button class="btn btn-sm" onclick="castVote(5)">5 ngay</button>
+        <button class="btn btn-sm" onclick="castVote(7)">7 ngay</button>
+        <button class="btn btn-sm" onclick="castVote(10)">10 ngay</button>
+        <button class="btn btn-sm" onclick="castVote(14)">14 ngay</button>
+        <button class="btn btn-sm" onclick="castVote(21)">21 ngay</button>
+        <button class="btn btn-sm" onclick="castVote(30)">30 ngay</button>
       </div>
-      <div class="vote-status" id="voteStatus"></div>
+      <div id="voteStatus" style="font-size:13px;color:var(--text-secondary);margin-top:10px;line-height:1.8"></div>
     </div>
   </div>
 </div>
 <div id="rulesModal" class="modal-overlay">
   <div class="modal" style="max-width:520px">
-    <div class="card-head">
-      <div class="icon-box blue"><span class="icon"><svg><use href="#i-scroll"/></svg></span></div>
-      <div class="card-head-title">Luật chơi</div>
-    </div>
+    <div class="card-head"><div class="icon-box blue"><span class="icon"><svg><use href="#i-scroll"/></svg></span></div><div class="card-head-title">Luật chơi</div></div>
     <div class="card-body rules-content">
       <h3>Tính điểm</h3>
       <table><tr><th>Hành động</th><th>Điểm</th></tr>
       <tr><td>1 section (30 phút)</td><td>+10</td></tr>
       <tr><td>Cam kết không MXH</td><td>+5/section</td></tr>
-      <tr><td>Phút lẻ cuối ngày</td><td>(phút÷30) × 10</td></tr></table>
+      <tr><td>Phút lẻ cuối ngày</td><td>(phut/30) x 10</td></tr></table>
       <h3>Chuỗi ngày (Streak)</h3>
       <table><tr><th>Ngày</th><th>Bonus</th></tr>
       <tr><td>2</td><td>+5</td></tr><tr><td>5</td><td>+15</td></tr>
       <tr><td>7</td><td>+30</td></tr><tr><td>14</td><td>+60</td></tr>
       <tr><td>30</td><td>+120</td></tr><tr><td>40</td><td>+200</td></tr>
       <tr><td>50</td><td>+350</td></tr><tr><td>60</td><td>+550</td></tr>
-      <tr><td>Sau 60</td><td>+20/ngày</td></tr></table>
-      <p>Recovery: bỏ lỡ 1 ngày → trả 1.2× bonus gần nhất để giữ streak. Bỏ 2+ ngày → mất streak.</p>
+      <tr><td>Sau 60</td><td>+20/ngay</td></tr></table>
+      <p>Recovery: bỏ lỡ 1 ngày = trả 1.2x bonus gần nhất để giữ streak. Bỏ 2+ ngày = mất streak.</p>
       <h3>Cột mốc sections</h3>
       <table><tr><th>Tổng</th><th>Bonus</th></tr>
       <tr><td>1</td><td>+5</td></tr><tr><td>10</td><td>+30</td></tr>
@@ -732,23 +712,31 @@ input::placeholder { color: var(--text-muted); }
       <tr><td>75</td><td>+180</td></tr><tr><td>100</td><td>+300</td></tr>
       <tr><td>150</td><td>+450</td></tr><tr><td>200</td><td>+700</td></tr></table>
       <h3>Vòng đấu</h3>
-      <p>Mặc định 5 ngày. Cuối vòng cả 3 bỏ phiếu thời lượng vòng mới. Đa số thắng, nếu khác hết thì lấy trung vị. Người cuối bảng mua cà phê!</p>
-      <div style="margin-top:20px;text-align:center">
-        <button class="btn btn-sm" onclick="toggleRules()">Đóng</button>
-      </div>
+      <p>Bất kỳ ai cũng có thể đề xuất vòng mới với ngày bắt đầu/kết thúc. Cuối vòng, người cuối bảng mua cà phê!</p>
+      <div style="margin-top:20px;text-align:center"><button class="btn btn-sm" onclick="toggleRules()">Đóng</button></div>
+    </div>
+  </div>
+</div>
+<div id="avatarModal" class="modal-overlay">
+  <div class="modal" style="max-width:400px">
+    <div class="card-head"><div class="icon-box green"><span class="icon"><svg><use href="#i-user"/></svg></span></div><div class="card-head-title">Chọn avatar</div></div>
+    <div class="card-body">
+      <div class="av-picker-grid" id="avPickerGrid"></div>
+      <div style="margin-top:14px;text-align:center"><button class="btn btn-sm" onclick="closeAvatarPicker()">Đóng</button></div>
     </div>
   </div>
 </div>
 <div id="toast" class="toast"></div>
+<div id="contribTooltip" class="contrib-tooltip"></div>
 
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
-/* ════════════════════════════════════════════
+/* ================================================================
    FIREBASE CONFIG
-   ════════════════════════════════════════════ */
+   ================================================================ */
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyB_8Cuo9cc6eVH5v9k-CDU3E2XTn-VQpMs",
   authDomain: "study-together-647ec.firebaseapp.com",
@@ -758,7 +746,7 @@ const FIREBASE_CONFIG = {
   appId: "1:1075376638093:web:36444fdbcb6377d495fac4"
 };
 
-/* ═══ CONSTANTS ═══ */
+/* ===== CONSTANTS ===== */
 const STREAK_MS = [
   {days:2,bonus:5},{days:5,bonus:15},{days:7,bonus:30},{days:14,bonus:60},
   {days:30,bonus:120},{days:40,bonus:200},{days:50,bonus:350},{days:60,bonus:550}
@@ -769,8 +757,56 @@ const SECTION_MS = [
   {sec:75,bonus:180},{sec:100,bonus:300},{sec:150,bonus:450},{sec:200,bonus:700}
 ];
 const DEFAULT_ROUND = 5;
+const CIRC = 2 * Math.PI * 96; // ~603.19 for circular timer
 
-/* ═══ SVG ICON HELPERS ═══ */
+/* ===== AVATARS ===== */
+const AVATARS = [
+  {id:'cat',name:'Mèo',color:'#f59e0b',unlockAt:0},
+  {id:'dog',name:'Chó',color:'#3b82f6',unlockAt:0},
+  {id:'panda',name:'Gấu trúc',color:'#6b7280',unlockAt:0},
+  {id:'penguin',name:'Chim cánh cụt',color:'#0ea5e9',unlockAt:0},
+  {id:'rabbit',name:'Thỏ',color:'#ec4899',unlockAt:0},
+  {id:'fox',name:'Cáo',color:'#f97316',unlockAt:3},
+  {id:'owl',name:'Cú',color:'#8b5cf6',unlockAt:3},
+  {id:'bear',name:'Gấu',color:'#92400e',unlockAt:3},
+  {id:'lion',name:'Sư tử',color:'#eab308',unlockAt:6},
+  {id:'wolf',name:'Sói',color:'#64748b',unlockAt:6},
+  {id:'eagle',name:'Đại bàng',color:'#b91c1c',unlockAt:6},
+  {id:'dragon',name:'Rồng',color:'#dc2626',unlockAt:10},
+  {id:'shark',name:'Cá mập',color:'#0284c7',unlockAt:10},
+  {id:'phoenix',name:'Phượng hoàng',color:'#ea580c',unlockAt:10},
+  {id:'unicorn',name:'Kỳ lân',color:'#d946ef',unlockAt:15},
+  {id:'crown-av',name:'Vương miện',color:'#ca8a04',unlockAt:20}
+];
+
+/* ===== ACHIEVEMENTS ===== */
+const ACHIEVEMENTS = [
+  // Streak
+  {id:'s2',cat:'streak',name:'Khởi đầu',desc:'Streak 2 ngày',icon:'flame',color:'amber',check:d=>d.currentStreak>=2},
+  {id:'s5',cat:'streak',name:'Kiên trì',desc:'Streak 5 ngày',icon:'flame',color:'amber',check:d=>d.currentStreak>=5||d.longestStreak>=5},
+  {id:'s7',cat:'streak',name:'Một tuần',desc:'Streak 7 ngày',icon:'flame',color:'amber',check:d=>d.longestStreak>=7},
+  {id:'s14',cat:'streak',name:'Hai tuần',desc:'Streak 14 ngày',icon:'flame',color:'amber',check:d=>d.longestStreak>=14},
+  {id:'s30',cat:'streak',name:'Kỷ luật',desc:'Streak 30 ngày',icon:'flame',color:'red',check:d=>d.longestStreak>=30},
+  {id:'s50',cat:'streak',name:'Huyền thoại',desc:'Streak 50 ngày',icon:'flame',color:'red',check:d=>d.longestStreak>=50},
+  {id:'s60',cat:'streak',name:'Bất tử',desc:'Streak 60 ngày',icon:'crown',color:'amber',check:d=>d.longestStreak>=60},
+  // Sections
+  {id:'x1',cat:'section',name:'Phiên đầu',desc:'1 section',icon:'star',color:'green',check:d=>d.totalSections>=1},
+  {id:'x10',cat:'section',name:'Chạy đà',desc:'10 sections',icon:'star',color:'green',check:d=>d.totalSections>=10},
+  {id:'x25',cat:'section',name:'Tăng tốc',desc:'25 sections',icon:'star',color:'green',check:d=>d.totalSections>=25},
+  {id:'x50',cat:'section',name:'Nửa trăm',desc:'50 sections',icon:'star',color:'blue',check:d=>d.totalSections>=50},
+  {id:'x100',cat:'section',name:'Trăm phiên',desc:'100 sections',icon:'star',color:'blue',check:d=>d.totalSections>=100},
+  {id:'x200',cat:'section',name:'Bậc thầy',desc:'200 sections',icon:'crown',color:'green',check:d=>d.totalSections>=200},
+  // Special
+  {id:'night',cat:'special',name:'Cú đêm',desc:'5 phiên sau 22h',icon:'moon',color:'purple',check:d=>(d.nightSessions||0)>=5},
+  {id:'early',cat:'special',name:'Chim sớm',desc:'5 phiên trước 8h',icon:'sun',color:'amber',check:d=>(d.earlySessions||0)>=5},
+  {id:'marathon',cat:'special',name:'Marathon',desc:'3h+ trong 1 ngày',icon:'zap',color:'red',check:d=>(d.maxDayMinutes||0)>=180},
+  {id:'diligent',cat:'special',name:'Chăm chỉ',desc:'4+ sections/ngày',icon:'target',color:'green',check:d=>(d.maxDaySections||0)>=4},
+  {id:'nomxh',cat:'special',name:'Kháng MXH',desc:'20 phiên no MXH',icon:'shield',color:'blue',check:d=>(d.mxhSessions||0)>=20},
+  {id:'winner',cat:'special',name:'Bất bại',desc:'Thắng 3 vòng',icon:'trophy',color:'amber',check:d=>(d.roundsWon||0)>=3},
+  {id:'loser',cat:'special',name:'Kẻ thua',desc:'Thua 3 vòng',icon:'coffee',color:'red',check:d=>(d.roundsLost||0)>=3},
+];
+
+/* ===== SVG HELPERS ===== */
 function svgIcon(name, sz) {
   sz = sz || 14;
   return '<svg style="width:'+sz+'px;height:'+sz+'px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px"><use href="#i-'+name+'"/></svg>';
@@ -779,30 +815,38 @@ function svgIconFilled(name, sz) {
   sz = sz || 14;
   return '<svg style="width:'+sz+'px;height:'+sz+'px;fill:currentColor;stroke:none;vertical-align:-2px"><use href="#i-'+name+'"/></svg>';
 }
+function avatarSvg(avId) {
+  var id = avId || 'cat';
+  return '<svg viewBox="0 0 80 80"><use href="#av-'+id+'"/></svg>';
+}
 
-/* ═══ STATE ═══ */
-let me = null, myData = null, users = [], round = null;
-let tmrInterval = null, tmrRunning = false, tmrPaused = false;
-let tmrRemain = 0, tmrTotal = 0, tmrElapsed = 0;
-let recoveryDone = false, lbMode = 'round', unsubs = [];
+/* ===== STATE ===== */
+var me = null, myData = null, users = [], round = null;
+var tmrInterval = null, tmrRunning = false, tmrPaused = false;
+var tmrRemain = 0, tmrTotal = 0, tmrElapsed = 0;
+var recoveryDone = false, lbMode = 'round', unsubs = [];
+var timerMode = 'digital'; // 'digital' or 'circular'
+var chartFilter = 'day', chartOffset = 0;
+var cachedDays = null, cachedDaysUid = null;
+var roundHistory = [];
 
-/* ═══ INIT ═══ */
+/* ===== INIT ===== */
 firebase.initializeApp(FIREBASE_CONFIG);
-const auth = firebase.auth();
-const db = firebase.firestore();
+var auth = firebase.auth();
+var db = firebase.firestore();
 
 if (FIREBASE_CONFIG.apiKey.startsWith('YOUR_')) {
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('setupWarn').style.display = 'block';
   });
 }
 
-auth.onAuthStateChanged(async u => {
+auth.onAuthStateChanged(function(u) {
   if (u) {
     me = u;
     showScreen('app');
     document.getElementById('userName').textContent = u.displayName || u.email;
-    await boot();
+    boot();
   } else {
     me = null; myData = null;
     killListeners();
@@ -810,49 +854,49 @@ auth.onAuthStateChanged(async u => {
   }
 });
 
-/* ══════════ AUTH ══════════ */
+/* ===== AUTH ===== */
 function showAuthTab(tab) {
-  document.querySelectorAll('.auth-tab').forEach((t,i) => {
-    t.classList.toggle('active', (tab==='login'?i===0:i===1));
+  document.querySelectorAll('.auth-tab').forEach(function(t,i) {
+    t.classList.toggle('active', tab==='login'?i===0:i===1);
   });
   document.getElementById('loginForm').classList.toggle('active', tab==='login');
   document.getElementById('registerForm').classList.toggle('active', tab==='register');
 }
 
-async function handleLogin(e) {
+function handleLogin(e) {
   e.preventDefault();
-  const el = document.getElementById('loginError'); el.textContent = '';
-  try {
-    await auth.signInWithEmailAndPassword(
-      document.getElementById('loginEmail').value.trim(),
-      document.getElementById('loginPass').value);
-  } catch(err) {
-    el.textContent = err.code==='auth/invalid-credential'
-      ? 'Sai email hoặc mật khẩu' : err.message;
-  }
+  var el = document.getElementById('loginError'); el.textContent = '';
+  auth.signInWithEmailAndPassword(
+    document.getElementById('loginEmail').value.trim(),
+    document.getElementById('loginPass').value
+  ).catch(function(err) {
+    el.textContent = err.code==='auth/invalid-credential' ? 'Sai email hoặc mật khẩu' : err.message;
+  });
   return false;
 }
 
-async function handleRegister(e) {
+function handleRegister(e) {
   e.preventDefault();
-  const el = document.getElementById('regError'); el.textContent = '';
-  const name = document.getElementById('regName').value.trim();
-  try {
-    const c = await auth.createUserWithEmailAndPassword(
-      document.getElementById('regEmail').value.trim(),
-      document.getElementById('regPass').value);
-    await c.user.updateProfile({displayName: name});
-    await db.collection('users').doc(c.user.uid).set({
-      displayName: name, email: c.user.email,
-      totalMinutes:0, totalSections:0, currentStreak:0, longestStreak:0,
-      lastStudyDate:null, streakMs:[], sectionMs:[], bonusPts:0,
-      roundVote:null,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  var el = document.getElementById('regError'); el.textContent = '';
+  var name = document.getElementById('regName').value.trim();
+  auth.createUserWithEmailAndPassword(
+    document.getElementById('regEmail').value.trim(),
+    document.getElementById('regPass').value
+  ).then(function(c) {
+    return c.user.updateProfile({displayName: name}).then(function() {
+      return db.collection('users').doc(c.user.uid).set({
+        displayName: name, email: c.user.email, avatarId: 'cat',
+        totalMinutes:0, totalSections:0, currentStreak:0, longestStreak:0,
+        lastStudyDate:null, streakMs:[], sectionMs:[], bonusPts:0,
+        roundVote:null, achievements:[],
+        nightSessions:0, earlySessions:0, mxhSessions:0,
+        maxDayMinutes:0, maxDaySections:0, roundsWon:0, roundsLost:0,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
     });
-  } catch(err) {
-    el.textContent = err.code==='auth/email-already-in-use'
-      ? 'Email đã được sử dụng' : err.message;
-  }
+  }).catch(function(err) {
+    el.textContent = err.code==='auth/email-already-in-use' ? 'Email đã được sử dụng' : err.message;
+  });
   return false;
 }
 
@@ -863,52 +907,72 @@ function handleLogout() {
   auth.signOut();
 }
 
-/* ══════════ BOOT ══════════ */
-async function boot() {
-  recoveryDone = false;
-  const doc = await db.collection('users').doc(me.uid).get();
-  if (doc.exists) myData = doc.data();
-  await loadRound();
-  listen();
-  checkRecovery();
-  renderMs();
+/* ===== TAB NAVIGATION ===== */
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.tab === name); });
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.toggle('active', p.id === 'tab' + name.charAt(0).toUpperCase() + name.slice(1)); });
+  if (name === 'performance') { renderContribGraph(); renderBarChart(); renderAchievements(); }
+  if (name === 'round') { loadRoundHistory(); }
+  if (name === 'profile') { renderProfile(); }
+}
+
+/* ===== BOOT ===== */
+function boot() {
+  recoveryDone = false; cachedDays = null; cachedDaysUid = null;
+  db.collection('users').doc(me.uid).get().then(function(doc) {
+    if (doc.exists) myData = doc.data();
+    renderProfile(); renderHeaderAvatar();
+    loadRound();
+    listen();
+    checkRecovery();
+    renderMs();
+  });
 }
 
 function listen() {
   killListeners();
-  unsubs.push(db.collection('users').onSnapshot(snap => {
-    users = []; snap.forEach(d => users.push({id:d.id,...d.data()}));
+  unsubs.push(db.collection('users').onSnapshot(function(snap) {
+    users = []; snap.forEach(function(d) { users.push({id:d.id, ...d.data()}); });
     renderLb();
-    const m = users.find(u=>u.id===me.uid);
+    var m = users.find(function(u) { return u.id === me.uid; });
     if (m) myData = m;
-    renderMs();
+    renderMs(); renderHeaderAvatar();
   }));
-  unsubs.push(db.collection('users').doc(me.uid)
-    .collection('days').doc(todayStr()).onSnapshot(d => {
-      renderToday(d.exists ? d.data() : null);
-    }));
-  unsubs.push(db.collection('settings').doc('round').onSnapshot(d => {
+  unsubs.push(db.collection('users').doc(me.uid).collection('days').doc(todayStr()).onSnapshot(function(d) {
+    renderToday(d.exists ? d.data() : null);
+  }));
+  unsubs.push(db.collection('settings').doc('round').onSnapshot(function(d) {
     if (d.exists) { round = d.data(); renderRound(); checkRoundEnd(); }
   }));
 }
 
-function killListeners() { unsubs.forEach(f=>f()); unsubs=[]; }
+function killListeners() { unsubs.forEach(function(f) { f(); }); unsubs = []; }
 
-/* ══════════ TIMER ══════════ */
+/* ===== TIMER ===== */
+function setTimerMode(mode) {
+  timerMode = mode;
+  document.querySelectorAll('.timer-mode-toggle .btn').forEach(function(b) { b.classList.toggle('sel', b.textContent.trim() === (mode==='digital'?'Số':'Tròn')); });
+  document.getElementById('digitalWrap').classList.toggle('hidden', mode === 'circular');
+  var cw = document.getElementById('circularWrap');
+  cw.classList.toggle('active', mode === 'circular');
+  if (mode === 'circular') updateCircular();
+}
+
 function setPreset(el, min) {
   if (tmrRunning) return;
   document.getElementById('timerInput').value = min;
-  document.querySelectorAll('.timer-presets .btn').forEach(b=>b.classList.remove('sel'));
+  document.querySelectorAll('.timer-presets .btn').forEach(function(b) { b.classList.remove('sel'); });
   el.classList.add('sel');
 }
 
 function startTimer() {
-  const m = parseInt(document.getElementById('timerInput').value);
-  if (!m || m<=0) return;
-  tmrTotal = m*60; tmrRemain = tmrTotal; tmrElapsed = 0;
+  var m = parseInt(document.getElementById('timerInput').value);
+  if (!m || m <= 0) return;
+  tmrTotal = m * 60; tmrRemain = tmrTotal; tmrElapsed = 0;
   tmrRunning = true; tmrPaused = false;
   updTmrBtns();
   document.getElementById('timerInput').disabled = true;
+  document.getElementById('tmrDot').style.display = 'inline-block';
   tmrInterval = setInterval(tick, 1000);
   showTmr();
 }
@@ -917,13 +981,15 @@ function tick() {
   if (tmrPaused) return;
   tmrRemain--; tmrElapsed++;
   showTmr();
-  const pct = tmrTotal > 0 ? ((tmrTotal - tmrRemain) / tmrTotal * 100) : 0;
+  var pct = tmrTotal > 0 ? ((tmrTotal - tmrRemain) / tmrTotal * 100) : 0;
   document.getElementById('timerProgress').style.width = pct + '%';
+  if (timerMode === 'circular') updateCircular();
   if (tmrRemain <= 0) {
     clearInterval(tmrInterval); tmrRunning = false;
     updTmrBtns();
     document.getElementById('timerInput').disabled = false;
     document.getElementById('timerProgress').style.width = '100%';
+    document.getElementById('tmrDot').style.display = 'none';
     logSession(tmrElapsed);
     beep();
   }
@@ -932,8 +998,8 @@ function tick() {
 function togglePause() {
   tmrPaused = !tmrPaused;
   document.getElementById('btnPause').innerHTML = tmrPaused
-    ? '<span class="icon"><svg><use href="#i-play"/></svg></span> Tiếp tục'
-    : '<span class="icon"><svg><use href="#i-pause"/></svg></span> Tạm dừng';
+    ? '<span class="icon"><svg><use href="#i-play"/></svg></span> Tiep tuc'
+    : '<span class="icon"><svg><use href="#i-pause"/></svg></span> Tam dung';
 }
 
 function endSession() {
@@ -941,16 +1007,27 @@ function endSession() {
   clearInterval(tmrInterval); tmrRunning = false;
   updTmrBtns();
   document.getElementById('timerInput').disabled = false;
+  document.getElementById('tmrDot').style.display = 'none';
   if (tmrElapsed >= 60) logSession(tmrElapsed);
   else toast('Phiên < 1 phút, không ghi nhận.');
   tmrRemain = 0; showTmr();
   document.getElementById('timerProgress').style.width = '0%';
+  if (timerMode === 'circular') updateCircular();
 }
 
 function showTmr() {
-  const s = Math.max(0, tmrRemain);
-  document.getElementById('timerDisplay').textContent =
-    String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+  var s = Math.max(0, tmrRemain);
+  var txt = String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+  document.getElementById('timerDisplay').textContent = txt;
+  document.getElementById('circTime').textContent = txt;
+}
+
+function updateCircular() {
+  var fg = document.getElementById('circFg');
+  if (!tmrRunning && tmrRemain <= 0) { fg.style.strokeDashoffset = 0; fg.classList.remove('warn'); return; }
+  var pct = tmrTotal > 0 ? tmrRemain / tmrTotal : 1;
+  fg.style.strokeDashoffset = CIRC * (1 - pct);
+  fg.classList.toggle('warn', tmrRemain > 0 && tmrRemain <= 300);
 }
 
 function updTmrBtns() {
@@ -958,421 +1035,828 @@ function updTmrBtns() {
   document.getElementById('btnPause').style.display = tmrRunning ? '' : 'none';
   document.getElementById('btnEnd').style.display = tmrRunning ? '' : 'none';
   if (tmrRunning) {
-    document.getElementById('btnPause').innerHTML =
-      '<span class="icon"><svg><use href="#i-pause"/></svg></span> Tạm dừng';
+    document.getElementById('btnPause').innerHTML = '<span class="icon"><svg><use href="#i-pause"/></svg></span> Tam dung';
     tmrPaused = false;
   }
 }
 
 function beep() {
   try {
-    const c = new (window.AudioContext||window.webkitAudioContext)();
-    [0,.2,.4].forEach(t => {
-      const o=c.createOscillator(), g=c.createGain();
+    var c = new (window.AudioContext || window.webkitAudioContext)();
+    var notes = [880, 1046.5, 1318.5, 1046.5, 880];
+    notes.forEach(function(freq, i) {
+      var o = c.createOscillator(), g = c.createGain();
       o.connect(g); g.connect(c.destination);
-      o.frequency.value=880; g.gain.value=.2;
-      o.start(c.currentTime+t); o.stop(c.currentTime+t+.12);
+      o.frequency.value = freq; g.gain.value = 0.15;
+      o.start(c.currentTime + i * 0.15); o.stop(c.currentTime + i * 0.15 + 0.12);
     });
-  } catch(e){}
+  } catch(e) {}
 }
 
-/* ══════════ LOG SESSION ══════════ */
-async function logSession(sec) {
-  const min = Math.floor(sec/60);
-  if (min<=0) return;
-  const today = todayStr();
-  const mxh = document.getElementById('mxhPledge').checked;
-  const ref = db.collection('users').doc(me.uid).collection('days').doc(today);
+/* ===== LOG SESSION ===== */
+function logSession(sec) {
+  var min = Math.floor(sec / 60);
+  if (min <= 0) return;
+  var today = todayStr();
+  var mxh = document.getElementById('mxhPledge').checked;
+  var startHour = new Date().getHours();
+  var ref = db.collection('users').doc(me.uid).collection('days').doc(today);
 
-  await db.runTransaction(async tx => {
-    const snap = await tx.get(ref);
-    const d = snap.exists ? snap.data() : {
-      date:today, minutes:0, sessionCount:0, sessionLog:[], mxhPledge:false,
-      sections:0, basePoints:0, mxhPoints:0, bonusToday:0, dayPoints:0
-    };
-    d.minutes += min;
-    d.sessionCount = (d.sessionCount||0)+1;
-    if (!d.sessionLog) d.sessionLog = [];
-    d.sessionLog.push({min, mxh, time: new Date().toLocaleTimeString('vi-VN')});
-    d.mxhPledge = d.mxhPledge || mxh;
+  db.runTransaction(function(tx) {
+    return tx.get(ref).then(function(snap) {
+      var d = snap.exists ? snap.data() : {
+        date: today, minutes: 0, sessionCount: 0, sessionLog: [], mxhPledge: false,
+        sections: 0, basePoints: 0, mxhPoints: 0, bonusToday: 0, dayPoints: 0
+      };
+      d.minutes += min;
+      d.sessionCount = (d.sessionCount || 0) + 1;
+      if (!d.sessionLog) d.sessionLog = [];
+      d.sessionLog.push({min: min, mxh: mxh, time: new Date().toLocaleTimeString('vi-VN'), startHour: startHour});
+      d.mxhPledge = d.mxhPledge || mxh;
 
-    const full = Math.floor(d.minutes/30);
-    const left = d.minutes % 30;
-    const leftPts = Math.round((left/30)*10*100)/100;
-    d.sections = full;
-    d.basePoints = full*10 + leftPts;
-    d.mxhPoints = d.mxhPledge ? full*5 : 0;
-    d.dayPoints = d.basePoints + d.mxhPoints + (d.bonusToday||0) + (d.recoveryDeduction||0);
-    tx.set(ref, d);
+      var full = Math.floor(d.minutes / 30);
+      var left = d.minutes % 30;
+      var leftPts = Math.round((left / 30) * 10 * 100) / 100;
+      d.sections = full;
+      d.basePoints = full * 10 + leftPts;
+      d.mxhPoints = d.mxhPledge ? full * 5 : 0;
+      d.dayPoints = d.basePoints + d.mxhPoints + (d.bonusToday || 0) + (d.recoveryDeduction || 0);
+      tx.set(ref, d);
+    });
+  }).then(function() {
+    cachedDays = null;
+    return recalc();
+  }).then(function() {
+    toast('+' + min + ' phút đã ghi nhận!');
   });
-  await recalc();
-  toast('+' + min + ' phút đã ghi nhận!');
 }
 
-/* ══════════ RECALC ══════════ */
-async function recalc() {
-  const uid = me.uid;
-  const uRef = db.collection('users').doc(uid);
-  const snap = await uRef.collection('days').get();
-  let totMin=0, totSec=0, dates=[];
-  snap.forEach(d => {
-    const x = d.data();
-    totMin += x.minutes||0;
-    totSec += x.sections||0;
-    if (x.date) dates.push(x.date);
-  });
-  dates.sort();
-  const streak = calcStreak(dates);
-  const uDoc = await uRef.get();
-  const u = uDoc.data();
-  let smsR = u.streakMs||[], secR = u.sectionMs||[], bp = u.bonusPts||0;
-  let newBonus = 0;
+/* ===== RECALC ===== */
+function recalc() {
+  var uid = me.uid;
+  var uRef = db.collection('users').doc(uid);
+  return uRef.collection('days').get().then(function(snap) {
+    var totMin = 0, totSec = 0, dates = [];
+    var nightSessions = 0, earlySessions = 0, mxhSessions = 0;
+    var maxDayMinutes = 0, maxDaySections = 0;
+    snap.forEach(function(d) {
+      var x = d.data();
+      totMin += x.minutes || 0;
+      totSec += x.sections || 0;
+      if (x.date) dates.push(x.date);
+      if (x.minutes > maxDayMinutes) maxDayMinutes = x.minutes;
+      if (x.sections > maxDaySections) maxDaySections = x.sections;
+      var log = x.sessionLog || [];
+      log.forEach(function(s) {
+        var h = s.startHour != null ? s.startHour : parseInt((s.time || '12').split(':')[0]);
+        if (h >= 22 || h < 4) nightSessions++;
+        if (h >= 4 && h < 8) earlySessions++;
+        if (s.mxh) mxhSessions++;
+      });
+    });
+    dates.sort();
+    var streak = calcStreak(dates);
+    return uRef.get().then(function(uDoc) {
+      var u = uDoc.data();
+      var smsR = u.streakMs || [], secR = u.sectionMs || [], bp = u.bonusPts || 0;
+      var newBonus = 0;
 
-  for (const m of STREAK_MS) {
-    if (streak >= m.days && !smsR.includes(m.days)) {
-      smsR.push(m.days); bp += m.bonus; newBonus += m.bonus;
-      toast(svgIcon('flame',14)+' Streak ' + m.days + ' ngày! +' + m.bonus);
-    }
-  }
-  if (streak > 60) {
-    const tRef = uRef.collection('days').doc(todayStr());
-    const td = (await tRef.get()).data() || {};
-    if (!td.streakDaily60) {
-      bp += STREAK_DAILY_POST60; newBonus += STREAK_DAILY_POST60;
-      await tRef.set({streakDaily60:true},{merge:true});
-    }
-  }
-  for (const m of SECTION_MS) {
+      STREAK_MS.forEach(function(m) {
+        if (streak >= m.days && !smsR.includes(m.days)) {
+          smsR.push(m.days); bp += m.bonus; newBonus += m.bonus;
+          toast(svgIcon('flame',14) + ' Streak ' + m.days + ' ngày! +' + m.bonus);
+        }
+      });
+      if (streak > 60) {
+        var tRef2 = uRef.collection('days').doc(todayStr());
+        return tRef2.get().then(function(tdSnap) {
+          var td2 = tdSnap.exists ? tdSnap.data() : {};
+          var p = Promise.resolve();
+          if (!td2.streakDaily60) {
+            bp += STREAK_DAILY_POST60; newBonus += STREAK_DAILY_POST60;
+            p = tRef2.set({streakDaily60: true}, {merge: true});
+          }
+          return p.then(function() {
+            return finishRecalc(uRef, totMin, totSec, streak, smsR, secR, bp, newBonus,
+              nightSessions, earlySessions, mxhSessions, maxDayMinutes, maxDaySections, u);
+          });
+        });
+      }
+      return finishRecalc(uRef, totMin, totSec, streak, smsR, secR, bp, newBonus,
+        nightSessions, earlySessions, mxhSessions, maxDayMinutes, maxDaySections, u);
+    });
+  });
+}
+
+function finishRecalc(uRef, totMin, totSec, streak, smsR, secR, bp, newBonus,
+  nightSessions, earlySessions, mxhSessions, maxDayMinutes, maxDaySections, u) {
+  SECTION_MS.forEach(function(m) {
     if (totSec >= m.sec && !secR.includes(m.sec)) {
       secR.push(m.sec); bp += m.bonus; newBonus += m.bonus;
-      toast(svgIcon('star',14)+' ' + m.sec + ' sections! +' + m.bonus);
+      toast(svgIcon('star',14) + ' ' + m.sec + ' sections! +' + m.bonus);
     }
-  }
-  if (newBonus > 0) {
-    const tRef = uRef.collection('days').doc(todayStr());
-    const td = (await tRef.get()).data() || {};
-    const prev = td.bonusToday||0;
-    await tRef.set({
-      bonusToday: prev+newBonus,
-      dayPoints: (td.basePoints||0)+(td.mxhPoints||0)+(prev+newBonus)+(td.recoveryDeduction||0)
-    },{merge:true});
-  }
-  const longest = Math.max(streak, u.longestStreak||0);
-  await uRef.update({
-    totalMinutes:totMin, totalSections:totSec, currentStreak:streak,
-    longestStreak:longest, lastStudyDate:todayStr(),
-    streakMs:smsR, sectionMs:secR, bonusPts:bp
   });
-  myData = (await uRef.get()).data();
-  renderMs();
+  var p = Promise.resolve();
+  if (newBonus > 0) {
+    var tRef = uRef.collection('days').doc(todayStr());
+    p = tRef.get().then(function(tdSnap) {
+      var td = tdSnap.exists ? tdSnap.data() : {};
+      var prev = td.bonusToday || 0;
+      return tRef.set({
+        bonusToday: prev + newBonus,
+        dayPoints: (td.basePoints||0) + (td.mxhPoints||0) + (prev + newBonus) + (td.recoveryDeduction||0)
+      }, {merge: true});
+    });
+  }
+  return p.then(function() {
+    var longest = Math.max(streak, u.longestStreak || 0);
+    // Check achievements
+    var achData = {
+      currentStreak: streak, longestStreak: longest,
+      totalSections: totSec, totalMinutes: totMin,
+      nightSessions: nightSessions, earlySessions: earlySessions,
+      mxhSessions: mxhSessions, maxDayMinutes: maxDayMinutes,
+      maxDaySections: maxDaySections,
+      roundsWon: u.roundsWon || 0, roundsLost: u.roundsLost || 0
+    };
+    var oldAch = u.achievements || [];
+    var newAch = [];
+    ACHIEVEMENTS.forEach(function(a) {
+      if (a.check(achData) && !oldAch.includes(a.id)) newAch.push(a.id);
+    });
+    var allAch = oldAch.concat(newAch);
+    newAch.forEach(function(aid) {
+      var a = ACHIEVEMENTS.find(function(x) { return x.id === aid; });
+      if (a) toast(svgIcon(a.icon,14) + ' Thành tựu: ' + a.name + '!');
+    });
+
+    return uRef.update({
+      totalMinutes: totMin, totalSections: totSec, currentStreak: streak,
+      longestStreak: longest, lastStudyDate: todayStr(),
+      streakMs: smsR, sectionMs: secR, bonusPts: bp,
+      achievements: allAch,
+      nightSessions: nightSessions, earlySessions: earlySessions,
+      mxhSessions: mxhSessions, maxDayMinutes: maxDayMinutes, maxDaySections: maxDaySections
+    }).then(function() {
+      return uRef.get();
+    }).then(function(doc) {
+      myData = doc.data();
+      renderMs();
+    });
+  });
 }
 
 function calcStreak(dates) {
   if (!dates.length) return 0;
-  const t = todayStr(), y = dateOff(-1);
+  var t = todayStr(), y = dateOff(-1);
   if (!dates.includes(t) && !dates.includes(y)) return 0;
-  let s = 0, c = dates.includes(t) ? t : y;
+  var s = 0, c = dates.includes(t) ? t : y;
   while (dates.includes(c)) { s++; c = dateBefore(c); }
   return s;
 }
 
-/* ══════════ RECOVERY ══════════ */
-async function checkRecovery() {
+/* ===== RECOVERY ===== */
+function checkRecovery() {
   if (recoveryDone || !myData || !myData.lastStudyDate || !myData.currentStreak) return;
-  const diff = daysBtw(myData.lastStudyDate, todayStr());
+  var diff = daysBtw(myData.lastStudyDate, todayStr());
   if (diff === 2) {
-    const cost = recoveryCost(myData.currentStreak);
+    var cost = recoveryCost(myData.currentStreak);
     document.getElementById('recStreak').textContent = myData.currentStreak;
-    document.getElementById('recCost').textContent = '-'+cost+' điểm';
-    const m = lastStreakMs(myData.currentStreak);
-    document.getElementById('recExplain').textContent =
-      '(1.2 × ' + m.bonus + ' bonus mốc ngày ' + m.days + ')';
+    document.getElementById('recCost').textContent = '-' + cost + ' điểm';
+    var m = lastStreakMs(myData.currentStreak);
+    document.getElementById('recExplain').textContent = '(1.2 x ' + m.bonus + ' bonus mốc ngày ' + m.days + ')';
     document.getElementById('recoveryModal').classList.add('show');
   } else if (diff > 2) {
-    const lost = myData.currentStreak;
-    const lostBonus = calcStreakBonus(myData.streakMs||[]);
-    await db.collection('users').doc(me.uid).update({
-      currentStreak:0, streakMs:[],
+    var lost = myData.currentStreak;
+    var lostBonus = calcStreakBonus(myData.streakMs || []);
+    db.collection('users').doc(me.uid).update({
+      currentStreak: 0, streakMs: [],
       bonusPts: firebase.firestore.FieldValue.increment(-lostBonus)
+    }).then(function() {
+      myData.currentStreak = 0; myData.streakMs = [];
+      myData.bonusPts = (myData.bonusPts || 0) - lostBonus;
+      toast('Streak ' + lost + ' ngày đã mất!' + (lostBonus ? (' -' + lostBonus + ' bonus') : ''));
+      renderMs();
     });
-    myData.currentStreak = 0; myData.streakMs = [];
-    myData.bonusPts = (myData.bonusPts||0) - lostBonus;
-    toast('Streak ' + lost + ' ngày đã mất!' + (lostBonus?(' -'+lostBonus+' bonus'):''));
-    renderMs();
   }
   recoveryDone = true;
 }
 
-function lastStreakMs(streak) {
-  let r = {days:2,bonus:5};
-  for (const m of STREAK_MS) { if (streak >= m.days) r = m; }
-  return r;
-}
+function lastStreakMs(streak) { var r = {days:2,bonus:5}; STREAK_MS.forEach(function(m) { if (streak >= m.days) r = m; }); return r; }
 function recoveryCost(streak) { return Math.ceil(lastStreakMs(streak).bonus * 1.2); }
 
-async function useRecovery() {
+function useRecovery() {
   document.getElementById('recoveryModal').classList.remove('show');
-  const cost = recoveryCost(myData.currentStreak);
-  const uid = me.uid;
-  const today = todayStr();
-  const tRef = db.collection('users').doc(uid).collection('days').doc(today);
-  const tSnap = await tRef.get();
-  const td = tSnap.exists ? tSnap.data() : {
-    date:today,minutes:0,sessionCount:0,sessionLog:[],mxhPledge:false,
-    sections:0,basePoints:0,mxhPoints:0,bonusToday:0,dayPoints:0
-  };
-  td.recoveryDeduction = -cost;
-  td.dayPoints = (td.basePoints||0)+(td.mxhPoints||0)+(td.bonusToday||0)-cost;
-  await tRef.set(td,{merge:true});
-  const missed = dateOff(-1);
-  const mRef = db.collection('users').doc(uid).collection('days').doc(missed);
-  if (!(await mRef.get()).exists) {
-    await mRef.set({date:missed,minutes:0,sessionCount:0,sections:0,
-      basePoints:0,mxhPoints:0,bonusToday:0,dayPoints:0,recoveryDay:true,
-      sessionLog:[],mxhPledge:false});
-  }
-  await db.collection('users').doc(uid).update({
-    bonusPts: firebase.firestore.FieldValue.increment(-cost)
+  var cost = recoveryCost(myData.currentStreak);
+  var uid = me.uid, today = todayStr();
+  var tRef = db.collection('users').doc(uid).collection('days').doc(today);
+  tRef.get().then(function(tSnap) {
+    var td = tSnap.exists ? tSnap.data() : {
+      date:today,minutes:0,sessionCount:0,sessionLog:[],mxhPledge:false,
+      sections:0,basePoints:0,mxhPoints:0,bonusToday:0,dayPoints:0
+    };
+    td.recoveryDeduction = -cost;
+    td.dayPoints = (td.basePoints||0)+(td.mxhPoints||0)+(td.bonusToday||0)-cost;
+    return tRef.set(td, {merge:true});
+  }).then(function() {
+    var missed = dateOff(-1);
+    var mRef = db.collection('users').doc(uid).collection('days').doc(missed);
+    return mRef.get().then(function(mSnap) {
+      if (!mSnap.exists) {
+        return mRef.set({date:missed,minutes:0,sessionCount:0,sections:0,
+          basePoints:0,mxhPoints:0,bonusToday:0,dayPoints:0,recoveryDay:true,sessionLog:[],mxhPledge:false});
+      }
+    });
+  }).then(function() {
+    return db.collection('users').doc(uid).update({ bonusPts: firebase.firestore.FieldValue.increment(-cost) });
+  }).then(function() {
+    myData.bonusPts = (myData.bonusPts||0) - cost;
+    toast('Đã chuộc streak! -' + cost + ' điểm');
+    cachedDays = null;
+    return recalc();
   });
-  myData.bonusPts = (myData.bonusPts||0)-cost;
-  toast('Đã chuộc streak! -'+cost+' điểm');
-  await recalc();
 }
 
-async function skipRecovery() {
+function skipRecovery() {
   document.getElementById('recoveryModal').classList.remove('show');
-  const lost = myData.currentStreak;
-  const lostBonus = calcStreakBonus(myData.streakMs||[]);
-  await db.collection('users').doc(me.uid).update({
-    currentStreak:0, streakMs:[],
+  var lost = myData.currentStreak;
+  var lostBonus = calcStreakBonus(myData.streakMs || []);
+  db.collection('users').doc(me.uid).update({
+    currentStreak: 0, streakMs: [],
     bonusPts: firebase.firestore.FieldValue.increment(-lostBonus)
+  }).then(function() {
+    myData.currentStreak = 0; myData.streakMs = [];
+    myData.bonusPts = (myData.bonusPts||0) - lostBonus;
+    toast('Streak ' + lost + ' ngày đã mất.' + (lostBonus ? (' -' + lostBonus + ' bonus') : ''));
+    renderMs();
   });
-  myData.currentStreak = 0; myData.streakMs = [];
-  myData.bonusPts = (myData.bonusPts||0) - lostBonus;
-  toast('Streak ' + lost + ' ngày đã mất.' + (lostBonus?(' -'+lostBonus+' bonus'):''));
-  renderMs();
 }
 
 function calcStreakBonus(reachedDays) {
-  let total = 0;
-  for (const m of STREAK_MS) { if (reachedDays.includes(m.days)) total += m.bonus; }
+  var total = 0;
+  STREAK_MS.forEach(function(m) { if (reachedDays.includes(m.days)) total += m.bonus; });
   return total;
 }
 
-/* ══════════ ROUND ══════════ */
-async function loadRound() {
-  const d = await db.collection('settings').doc('round').get();
-  if (d.exists) { round = d.data(); renderRound(); checkRoundEnd(); }
-  else await createFirst();
+/* ===== ROUND ===== */
+function loadRound() {
+  db.collection('settings').doc('round').get().then(function(d) {
+    if (d.exists) { round = d.data(); renderRound(); checkRoundEnd(); }
+    else createFirst();
+  });
 }
 
-async function createFirst() {
-  const t = todayStr(), e = dateOffFrom(t, DEFAULT_ROUND);
+function createFirst() {
+  var t = todayStr(), e = dateOffFrom(t, DEFAULT_ROUND);
   round = {number:1,startDate:t,endDate:e,duration:DEFAULT_ROUND,status:'active',votes:{}};
-  await db.collection('settings').doc('round').set(round);
-  renderRound();
+  db.collection('settings').doc('round').set(round).then(function() { renderRound(); });
 }
 
 function checkRoundEnd() {
-  if (!round || round.status!=='active') return;
+  if (!round || round.status !== 'active') return;
   if (todayStr() > round.endDate) {
     round.status = 'voting';
-    db.collection('settings').doc('round').update({status:'voting'});
-    document.getElementById('voteTitle').textContent =
-      'Vòng '+round.number+' đã kết thúc!';
+    db.collection('settings').doc('round').update({status: 'voting'});
+    saveRoundResult();
+    document.getElementById('voteTitle').textContent = 'Vòng ' + round.number + ' đã kết thúc!';
     document.getElementById('voteModal').classList.add('show');
     updVoteStatus();
   }
 }
 
-async function castVote(days) {
+function saveRoundResult() {
   if (!round) return;
-  const v = round.votes||{};
+  var promises = users.map(function(u) { return roundPts(u.id).then(function(pts) { return {id:u.id,name:u.displayName,pts:pts}; }); });
+  Promise.all(promises).then(function(scores) {
+    scores.sort(function(a,b) { return b.pts - a.pts; });
+    var winner = scores[0], loser = scores[scores.length - 1];
+    db.collection('roundHistory').doc('r' + round.number).set({
+      number: round.number, startDate: round.startDate, endDate: round.endDate,
+      duration: round.duration, scores: scores,
+      winnerId: winner.id, winnerName: winner.name,
+      loserId: loser.id, loserName: loser.name,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    // Update win/loss counters
+    if (winner.id) db.collection('users').doc(winner.id).update({ roundsWon: firebase.firestore.FieldValue.increment(1) });
+    if (loser.id) db.collection('users').doc(loser.id).update({ roundsLost: firebase.firestore.FieldValue.increment(1) });
+  });
+}
+
+function castVote(days) {
+  if (!round) return;
+  var v = round.votes || {};
   v[me.uid] = days;
-  await db.collection('settings').doc('round').update({votes:v});
-  toast('Đã bỏ phiếu: '+days+' ngày');
-  round.votes = v;
-  const total = users.length, voted = Object.keys(v).length;
-  if (voted >= total && total >= 2) await nextRound(v);
-  else updVoteStatus();
+  db.collection('settings').doc('round').update({votes: v}).then(function() {
+    toast('Đã bỏ phiếu: ' + days + ' ngày');
+    round.votes = v;
+    var total = users.length, voted = Object.keys(v).length;
+    if (voted >= total && total >= 2) nextRound(v);
+    else updVoteStatus();
+  });
 }
 
 function updVoteStatus() {
-  const v = round.votes||{};
-  let h = 'Đã bỏ phiếu: '+Object.keys(v).length+'/'+users.length+'<br>';
-  users.forEach(u => {
-    h += esc(u.displayName)+': '+(v[u.id]?v[u.id]+' ngày':'chưa')+'<br>';
-  });
+  var v = round.votes || {};
+  var h = 'Đã bỏ phiếu: ' + Object.keys(v).length + '/' + users.length + '<br>';
+  users.forEach(function(u) { h += esc(u.displayName) + ': ' + (v[u.id] ? v[u.id] + ' ngày' : 'chưa') + '<br>'; });
   document.getElementById('voteStatus').innerHTML = h;
   if (v[me.uid]) {
-    document.querySelectorAll('.vote-opts .btn').forEach(b=>{b.disabled=true;b.style.opacity='.5';});
+    document.querySelectorAll('#voteModal .btn-sm').forEach(function(b) { b.disabled = true; b.style.opacity = '.5'; });
   }
 }
 
-async function nextRound(v) {
-  const vals = Object.values(v);
-  const win = calcWin(vals);
-  const t = todayStr(), e = dateOffFrom(t, win);
-  round = {number:(round.number||1)+1,startDate:t,endDate:e,duration:win,status:'active',votes:{}};
-  await db.collection('settings').doc('round').set(round);
-  document.getElementById('voteModal').classList.remove('show');
-  document.querySelectorAll('.vote-opts .btn').forEach(b=>{b.disabled=false;b.style.opacity='1';});
-  toast('Vòng '+round.number+' bắt đầu! ('+win+' ngày)');
-  renderRound();
+function nextRound(v) {
+  var vals = Object.values(v);
+  var win = calcWin(vals);
+  var t = todayStr(), e = dateOffFrom(t, win);
+  round = {number: (round.number||1)+1, startDate: t, endDate: e, duration: win, status: 'active', votes: {}};
+  db.collection('settings').doc('round').set(round).then(function() {
+    document.getElementById('voteModal').classList.remove('show');
+    document.querySelectorAll('#voteModal .btn-sm').forEach(function(b) { b.disabled = false; b.style.opacity = '1'; });
+    toast('Vòng ' + round.number + ' bắt đầu! (' + win + ' ngày)');
+    renderRound();
+  });
 }
 
 function calcWin(vals) {
-  const c = {};
-  vals.forEach(v => c[v]=(c[v]||0)+1);
-  for (const [d,n] of Object.entries(c)) { if (n>=2) return parseInt(d); }
-  const s = [...vals].sort((a,b)=>a-b);
-  return s[Math.floor(s.length/2)];
+  var c = {};
+  vals.forEach(function(v) { c[v] = (c[v]||0) + 1; });
+  for (var d in c) { if (c[d] >= 2) return parseInt(d); }
+  var s = vals.slice().sort(function(a,b) { return a - b; });
+  return s[Math.floor(s.length / 2)];
 }
 
-/* ══════════ LEADERBOARD ══════════ */
-function showLbTab(el, mode) {
-  lbMode = mode;
-  document.querySelectorAll('.lb-tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  renderLb();
+function proposeRound() {
+  var s = document.getElementById('propStart').value;
+  var e = document.getElementById('propEnd').value;
+  if (!s || !e) { toast('Chọn ngày bắt đầu và kết thúc'); return; }
+  if (e <= s) { toast('Ngày kết thúc phải sau ngày bắt đầu'); return; }
+  var dur = daysBtw(s, e);
+  round = {number: (round ? (round.number||0) : 0) + 1, startDate: s, endDate: e, duration: dur, status: 'active', votes: {}};
+  db.collection('settings').doc('round').set(round).then(function() {
+    toast('Vòng ' + round.number + ' đã được tạo! (' + dur + ' ngày)');
+    renderRound();
+    document.getElementById('proposalStatus').textContent = 'Đã tạo vòng mới thành công!';
+  });
 }
 
-async function renderLb() {
-  const el = document.getElementById('lbList');
-  if (!users.length) { el.innerHTML='<div style="font-size:13px;color:var(--text-secondary)">Chưa có ai</div>'; return; }
-  const scores = [];
-  for (const u of users) {
-    const pts = lbMode==='round' ? await roundPts(u.id) : await allPts(u.id);
-    scores.push({...u, pts});
+function loadRoundHistory() {
+  db.collection('roundHistory').orderBy('number', 'desc').limit(20).get().then(function(snap) {
+    roundHistory = [];
+    snap.forEach(function(d) { roundHistory.push(d.data()); });
+    renderRoundHistory();
+  });
+}
+
+function renderRoundHistory() {
+  var el = document.getElementById('roundHistoryList');
+  var shame = document.getElementById('shameSection');
+  if (!roundHistory.length) { el.innerHTML = '<div style="font-size:13px;color:var(--text-secondary)">Chưa có lịch sử</div>'; shame.style.display = 'none'; return; }
+
+  // Hall of Shame
+  var loseCounts = {};
+  roundHistory.forEach(function(r) {
+    if (r.loserName) loseCounts[r.loserName] = (loseCounts[r.loserName]||0) + 1;
+  });
+  var shameEntries = Object.entries(loseCounts).sort(function(a,b) { return b[1] - a[1]; });
+  if (shameEntries.length) {
+    shame.style.display = 'block';
+    shame.innerHTML = svgIcon('coffee',20) + '<div class="shame-name">' + esc(shameEntries[0][0]) + '</div>' +
+      '<div class="shame-count">Mua cà phê' + shameEntries[0][1] + ' lần</div>' +
+      '<div style="font-size:11px;color:var(--text-muted);margin-top:6px">Người thua nhiều nhất</div>';
   }
-  scores.sort((a,b)=>b.pts-a.pts);
-  const rankStyles = [
-    {bg:'var(--amber-dim)',color:'var(--amber)'},
-    {bg:'var(--blue-dim)',color:'var(--blue)'},
-    {bg:'var(--green-dim)',color:'var(--green)'}
-  ];
-  el.innerHTML = scores.map((s,i) => {
-    const rs = rankStyles[i];
-    const rstyle = rs ? 'background:'+rs.bg+';color:'+rs.color : '';
-    const rankContent = i===0 ? svgIconFilled('crown',16) : (i+1);
-    return '<div class="lb-item'+(i===0?' lb-first':'')+'">'+
-      '<span class="lb-rank" style="'+rstyle+'">'+rankContent+'</span>'+
-      '<span class="lb-name">'+esc(s.displayName)+(s.id===me.uid?' (bạn)':'')+'</span>'+
-      '<span class="lb-pts">'+fmt(s.pts)+'đ</span>'+
-      '<span class="lb-streak">'+svgIcon('flame',12)+' '+(s.currentStreak||0)+'</span>'+
+
+  el.innerHTML = roundHistory.map(function(r) {
+    return '<div class="round-history-item">' +
+      '<span class="rh-num">V' + r.number + '</span>' +
+      '<span class="rh-winner">' + svgIcon('crown',12) + ' ' + esc(r.winnerName || '?') + '</span>' +
+      '<span class="rh-loser">' + svgIcon('coffee',12) + ' ' + esc(r.loserName || '?') + '</span>' +
       '</div>';
   }).join('');
 }
 
-async function roundPts(uid) {
-  if (!round) return 0;
-  const snap = await db.collection('users').doc(uid).collection('days')
-    .where('date','>=',round.startDate).where('date','<=',round.endDate).get();
-  let p=0; snap.forEach(d=> p += d.data().dayPoints||0); return p;
-}
-async function allPts(uid) {
-  const snap = await db.collection('users').doc(uid).collection('days').get();
-  let p=0; snap.forEach(d=> p += d.data().dayPoints||0); return p;
+/* ===== LEADERBOARD ===== */
+function showLbTab(el, mode) {
+  lbMode = mode;
+  document.querySelectorAll('.lb-tab').forEach(function(t) { t.classList.remove('active'); });
+  el.classList.add('active');
+  renderLb();
 }
 
-/* ══════════ TODAY UI ══════════ */
+function renderLb() {
+  var el = document.getElementById('lbList');
+  if (!users.length) { el.innerHTML = '<div style="font-size:13px;color:var(--text-secondary)">Chưa có ai</div>'; return; }
+  var promises = users.map(function(u) {
+    var fn = lbMode === 'round' ? roundPts : allPts;
+    return fn(u.id).then(function(pts) { return Object.assign({}, u, {pts: pts}); });
+  });
+  Promise.all(promises).then(function(scores) {
+    scores.sort(function(a,b) { return b.pts - a.pts; });
+    var rankStyles = [
+      {bg:'var(--amber-dim)',color:'var(--amber)'},
+      {bg:'var(--blue-dim)',color:'var(--blue)'},
+      {bg:'var(--green-dim)',color:'var(--green)'}
+    ];
+    el.innerHTML = scores.map(function(s, i) {
+      var rs = rankStyles[i];
+      var rstyle = rs ? 'background:'+rs.bg+';color:'+rs.color : '';
+      var rankContent = i === 0 ? svgIconFilled('crown',16) : (i+1);
+      return '<div class="lb-item'+(i===0?' lb-first':'')+'" onclick="openStalk(\''+s.id+'\')">' +
+        '<span class="lb-rank" style="'+rstyle+'">'+rankContent+'</span>' +
+        '<span class="lb-av">' + avatarSvg(s.avatarId) + '</span>' +
+        '<span class="lb-name">'+esc(s.displayName)+(s.id===me.uid?' (bạn)':'')+'</span>' +
+        '<span class="lb-pts">'+fmt(s.pts)+'d</span>' +
+        '<span class="lb-streak">'+svgIcon('flame',12)+' '+(s.currentStreak||0)+'</span>' +
+        '</div>';
+    }).join('');
+  });
+}
+
+function roundPts(uid) {
+  if (!round) return Promise.resolve(0);
+  return db.collection('users').doc(uid).collection('days')
+    .where('date','>=',round.startDate).where('date','<=',round.endDate).get()
+    .then(function(snap) { var p = 0; snap.forEach(function(d) { p += d.data().dayPoints || 0; }); return p; });
+}
+function allPts(uid) {
+  return db.collection('users').doc(uid).collection('days').get()
+    .then(function(snap) { var p = 0; snap.forEach(function(d) { p += d.data().dayPoints || 0; }); return p; });
+}
+
+/* ===== TODAY UI ===== */
 function renderToday(d) {
   if (!d) {
-    document.getElementById('todayMin').textContent='0 phút';
-    document.getElementById('todaySec').textContent='0';
-    document.getElementById('todayPts').textContent='0';
-    document.getElementById('sessionList').innerHTML='';
+    document.getElementById('todayMin').textContent = '0 phút';
+    document.getElementById('todaySec').textContent = '0';
+    document.getElementById('todayPts').textContent = '0';
+    document.getElementById('sessionList').innerHTML = '';
     return;
   }
-  document.getElementById('todayMin').textContent = d.minutes+' phút';
-  const leftMin = d.minutes%30;
-  document.getElementById('todaySec').textContent =
-    d.sections + (leftMin>0?' (+'+leftMin+'p lẻ)':'');
-  document.getElementById('todayPts').textContent = fmt(d.dayPoints||0);
-  const log = d.sessionLog||[];
-  document.getElementById('sessionList').innerHTML = log.map((s,i)=>
-    '<div class="session-item">Phiên '+(i+1)+': '+s.min+' phút'+(s.mxh?' '+svgIcon('check',12)+' MXH':'')+' ('+s.time+')</div>'
-  ).join('');
+  document.getElementById('todayMin').textContent = d.minutes + ' phút';
+  var leftMin = d.minutes % 30;
+  document.getElementById('todaySec').textContent = d.sections + (leftMin > 0 ? ' (+' + leftMin + 'p lẻ)' : '');
+  document.getElementById('todayPts').textContent = fmt(d.dayPoints || 0);
+  var log = d.sessionLog || [];
+  document.getElementById('sessionList').innerHTML = log.map(function(s, i) {
+    return '<div class="session-item">Phiên ' + (i+1) + ': ' + s.min + ' phút' + (s.mxh ? ' ' + svgIcon('check',12) + ' MXH' : '') + ' (' + s.time + ')</div>';
+  }).join('');
 }
 
-/* ══════════ MILESTONES UI ══════════ */
+/* ===== MILESTONES (streak card) ===== */
 function renderMs() {
   if (!myData) return;
-  const streak = myData.currentStreak||0;
+  var streak = myData.currentStreak || 0;
   document.getElementById('streakBig').textContent = streak;
-  const next = STREAK_MS.find(m=>streak<m.days);
-  const nEl = document.getElementById('streakNext');
+  var next = STREAK_MS.find(function(m) { return streak < m.days; });
+  var nEl = document.getElementById('streakNext');
   if (next) {
-    const pct = Math.min(100, Math.round(streak/next.days*100));
-    nEl.innerHTML = 'Tiếp: ngày <span class="hl">'+next.days+'</span> → <span class="hl">+'+next.bonus+'</span>'+
-      '<div class="streak-bar"><div class="streak-bar-fill" style="width:'+pct+'%"></div></div>';
-  } else if (streak>=60) {
-    nEl.innerHTML = '<span class="hl">+'+STREAK_DAILY_POST60+'/ngày</span> (sau ngày 60)';
-  } else { nEl.innerHTML=''; }
-
-  const sR = myData.streakMs||[];
-  document.getElementById('streakMs').innerHTML = STREAK_MS.map(m=>
-    '<div class="ms-badge '+(sR.includes(m.days)?'reached':'')+'">'+
-    '<span class="ms-num">'+m.days+'</span><span>+'+m.bonus+'</span></div>'
-  ).join('');
-
-  const secR = myData.sectionMs||[];
-  document.getElementById('sectionMs').innerHTML = SECTION_MS.map(m=>
-    '<div class="ms-badge '+(secR.includes(m.sec)?'reached':'')+'">'+
-    '<span class="ms-num">'+m.sec+'</span><span>+'+m.bonus+'</span></div>'
-  ).join('');
+    var pct = Math.min(100, Math.round(streak / next.days * 100));
+    nEl.innerHTML = 'Tiếp: ngày <span class="hl">' + next.days + '</span> → <span class="hl">+' + next.bonus + '</span>' +
+      '<div class="streak-bar"><div class="streak-bar-fill" style="width:' + pct + '%"></div></div>';
+  } else if (streak >= 60) {
+    nEl.innerHTML = '<span class="hl">+' + STREAK_DAILY_POST60 + '/ngày</span> (sau ngày 60)';
+  } else { nEl.innerHTML = ''; }
 }
 
-/* ══════════ ROUND UI ══════════ */
+/* ===== ROUND UI ===== */
 function renderRound() {
-  const el = document.getElementById('roundContent');
-  if (!round) { el.innerHTML='Đang tải...'; return; }
-  const passed = daysBtw(round.startDate, todayStr());
-  const rem = Math.max(0, round.duration - passed);
-  const pct = Math.min(100, Math.round(passed/round.duration*100));
-  el.innerHTML =
-    '<div class="round-info">'+
-    '<div class="row"><span>Vòng</span><span class="val">'+round.number+'</span></div>'+
-    '<div class="row"><span>Thời lượng</span><span class="val">'+round.duration+' ngày</span></div>'+
-    '<div class="row"><span>Bắt đầu</span><span class="val">'+fmtD(round.startDate)+'</span></div>'+
-    '<div class="row"><span>Kết thúc</span><span class="val">'+fmtD(round.endDate)+'</span></div>'+
-    '<div class="row"><span>Còn lại</span><span class="val">'+rem+' ngày</span></div>'+
-    '<div class="streak-bar" style="margin-top:8px"><div class="streak-bar-fill" style="width:'+pct+'%"></div></div>'+
+  var el = document.getElementById('roundContent');
+  var cd = document.getElementById('roundCountdown');
+  if (!round) { el.innerHTML = 'Đang tải...'; cd.innerHTML = ''; return; }
+  var passed = daysBtw(round.startDate, todayStr());
+  var rem = Math.max(0, round.duration - passed);
+  var pct = Math.min(100, Math.round(passed / round.duration * 100));
+  cd.innerHTML = '<div class="big">' + rem + ' ngày</div><div class="sub">còn lại trong vòng ' + round.number + '</div>';
+  el.innerHTML = '<div class="round-info">' +
+    '<div class="row"><span>Vòng</span><span class="val">' + round.number + '</span></div>' +
+    '<div class="row"><span>Thời lượng</span><span class="val">' + round.duration + ' ngày</span></div>' +
+    '<div class="row"><span>Bắt đầu</span><span class="val">' + fmtD(round.startDate) + '</span></div>' +
+    '<div class="row"><span>Kết thúc</span><span class="val">' + fmtD(round.endDate) + '</span></div>' +
+    '<div class="streak-bar" style="margin-top:8px"><div class="streak-bar-fill" style="width:' + pct + '%"></div></div>' +
     '</div>';
 }
 
-/* ══════════ UTIL ══════════ */
+/* ===== CONTRIBUTION GRAPH ===== */
+function loadMyDays() {
+  if (cachedDays && cachedDaysUid === me.uid) return Promise.resolve(cachedDays);
+  return db.collection('users').doc(me.uid).collection('days').get().then(function(snap) {
+    var days = {};
+    snap.forEach(function(d) { var x = d.data(); if (x.date) days[x.date] = x; });
+    cachedDays = days; cachedDaysUid = me.uid;
+    return days;
+  });
+}
+
+function renderContribGraph() {
+  loadMyDays().then(function(days) {
+    var weeks = 12, wrap = document.getElementById('contribWrap');
+    var today = new Date(), cellSize = 12, gap = 3, size = cellSize + gap;
+    var rects = [];
+    for (var w = weeks - 1; w >= 0; w--) {
+      for (var d = 0; d < 7; d++) {
+        var dt = new Date(today);
+        dt.setDate(dt.getDate() - (w * 7 + (today.getDay() - d)));
+        if (dt > today) continue;
+        var ds = dt.getFullYear() + '-' + String(dt.getMonth()+1).padStart(2,'0') + '-' + String(dt.getDate()).padStart(2,'0');
+        var day = days[ds];
+        var mins = day ? (day.minutes || 0) : 0;
+        var level = mins === 0 ? 0 : mins < 30 ? 1 : mins < 90 ? 2 : mins < 180 ? 3 : 4;
+        var fills = ['rgba(255,255,255,0.04)', 'rgba(34,197,94,0.15)', 'rgba(34,197,94,0.35)', 'rgba(34,197,94,0.6)', 'rgba(34,197,94,0.9)'];
+        var x = (weeks - 1 - w) * size, y = d * size;
+        rects.push('<rect x="'+x+'" y="'+y+'" width="'+cellSize+'" height="'+cellSize+'" rx="2" fill="'+fills[level]+'" data-date="'+ds+'" data-min="'+mins+'" onmouseenter="showContribTip(event)" onmouseleave="hideContribTip()"/>');
+      }
+    }
+    var svgW = weeks * size, svgH = 7 * size;
+    wrap.innerHTML = '<svg width="'+svgW+'" height="'+svgH+'" class="contrib-grid">' + rects.join('') + '</svg>';
+  });
+}
+
+function showContribTip(e) {
+  var t = document.getElementById('contribTooltip');
+  var r = e.target;
+  t.textContent = r.dataset.date + ': ' + r.dataset.min + ' phút';
+  t.style.display = 'block';
+  t.style.left = (e.clientX + 10) + 'px';
+  t.style.top = (e.clientY - 30) + 'px';
+}
+function hideContribTip() { document.getElementById('contribTooltip').style.display = 'none'; }
+
+/* ===== BAR CHART ===== */
+function setChartFilter(f) {
+  chartFilter = f; chartOffset = 0;
+  document.querySelectorAll('.chart-filter').forEach(function(b) { b.classList.toggle('active', b.textContent.trim() === (f==='day'?'Ngày':f==='week'?'Tuần':'Tháng')); });
+  renderBarChart();
+}
+
+function chartPrev() { chartOffset++; renderBarChart(); }
+function chartNext() { if (chartOffset > 0) { chartOffset--; renderBarChart(); } }
+
+function renderBarChart() {
+  loadMyDays().then(function(days) {
+    var labels = [], values = [], title = '';
+    var today = new Date();
+
+    if (chartFilter === 'day') {
+      var d = new Date(today); d.setDate(d.getDate() - chartOffset);
+      var ds = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+      title = chartOffset === 0 ? 'Hôm nay' : fmtD(ds);
+      var day = days[ds];
+      var hourly = new Array(24).fill(0);
+      if (day && day.sessionLog) {
+        day.sessionLog.forEach(function(s) {
+          var h = s.startHour != null ? s.startHour : parseInt((s.time||'12').split(':')[0]);
+          hourly[h] += s.min;
+        });
+      }
+      for (var h = 0; h < 24; h++) { labels.push(h + 'h'); values.push(hourly[h]); }
+      var maxH = hourly.indexOf(Math.max.apply(null, hourly));
+      document.getElementById('chartSummary').innerHTML = (day && day.minutes) ? 'Tổng: <strong>' + day.minutes + ' phút</strong> | Khung giờ nhiều nhất: <strong>' + maxH + 'h</strong>' : 'Chưa có dữ liệu';
+
+    } else if (chartFilter === 'week') {
+      var weekStart = new Date(today);
+      weekStart.setDate(weekStart.getDate() - weekStart.getDay() + 1 - chartOffset * 7);
+      var dayNames = ['T2','T3','T4','T5','T6','T7','CN'];
+      var totalWeek = 0, maxDay = 0, maxDayName = '';
+      for (var i = 0; i < 7; i++) {
+        var wd = new Date(weekStart); wd.setDate(wd.getDate() + i);
+        var ws = wd.getFullYear()+'-'+String(wd.getMonth()+1).padStart(2,'0')+'-'+String(wd.getDate()).padStart(2,'0');
+        labels.push(dayNames[i]);
+        var dm = days[ws] ? (days[ws].minutes||0) : 0;
+        values.push(dm); totalWeek += dm;
+        if (dm > maxDay) { maxDay = dm; maxDayName = dayNames[i]; }
+      }
+      title = fmtD(weekStart.getFullYear()+'-'+String(weekStart.getMonth()+1).padStart(2,'0')+'-'+String(weekStart.getDate()).padStart(2,'0'));
+      document.getElementById('chartSummary').innerHTML = totalWeek ? 'Tổng: <strong>' + totalWeek + ' phút</strong> | Ngày chăm nhất: <strong>' + maxDayName + '</strong>' : 'Chưa có dữ liệu';
+
+    } else {
+      var year = today.getFullYear() - chartOffset;
+      title = String(year);
+      var monthNames = ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'];
+      var totalYear = 0, maxMonth = 0, maxMonthName = '';
+      for (var m = 0; m < 12; m++) {
+        labels.push(monthNames[m]);
+        var monthMin = 0;
+        Object.keys(days).forEach(function(ds) {
+          if (ds.startsWith(year + '-' + String(m+1).padStart(2,'0'))) monthMin += days[ds].minutes || 0;
+        });
+        values.push(Math.round(monthMin / 60 * 10) / 10);
+        totalYear += monthMin;
+        if (monthMin > maxMonth) { maxMonth = monthMin; maxMonthName = monthNames[m]; }
+      }
+      document.getElementById('chartSummary').innerHTML = totalYear ? 'Tổng: <strong>' + Math.round(totalYear/60) + ' giờ</strong> | Tháng chăm nhất: <strong>' + maxMonthName + '</strong>' : 'Chưa có dữ liệu';
+    }
+
+    document.getElementById('chartLabel').textContent = title;
+    drawBarChart(labels, values, chartFilter === 'month' ? 'giờ' : 'phút');
+  });
+}
+
+function drawBarChart(labels, values, unit) {
+  var w = Math.max(labels.length * 28, 300), h = 160, pad = 30, barW = 16;
+  var maxV = Math.max.apply(null, values.concat([1]));
+  var chartH = h - pad - 10;
+  var bars = labels.map(function(l, i) {
+    var bh = (values[i] / maxV) * chartH;
+    var x = pad + i * ((w - pad) / labels.length) + ((w - pad) / labels.length - barW) / 2;
+    var y = h - pad - bh;
+    var fill = values[i] > 0 ? 'var(--green)' : 'rgba(255,255,255,0.04)';
+    var opacity = values[i] > 0 ? (0.4 + 0.6 * values[i] / maxV) : 1;
+    return '<rect x="'+x+'" y="'+y+'" width="'+barW+'" height="'+Math.max(bh,1)+'" rx="3" fill="'+fill+'" opacity="'+opacity+'"/>' +
+      (values[i] > 0 ? '<text x="'+(x+barW/2)+'" y="'+(y-4)+'" text-anchor="middle" class="bar-val">'+values[i]+'</text>' : '') +
+      '<text x="'+(x+barW/2)+'" y="'+(h-8)+'" text-anchor="middle" class="bar-label">'+l+'</text>';
+  }).join('');
+  // Baseline
+  bars += '<line x1="'+pad+'" y1="'+(h-pad)+'" x2="'+w+'" y2="'+(h-pad)+'" stroke="var(--card-border)" stroke-width="1"/>';
+  document.getElementById('chartWrap').innerHTML = '<svg width="'+w+'" height="'+h+'" style="display:block">' + bars + '</svg>';
+}
+
+/* ===== ACHIEVEMENTS ===== */
+function renderAchievements() {
+  if (!myData) return;
+  var ach = myData.achievements || [];
+  var cats = {streak: 'Chuỗi ngày', section: 'Sections', special: 'Đặc biệt'};
+  var html = '';
+  Object.keys(cats).forEach(function(cat) {
+    var items = ACHIEVEMENTS.filter(function(a) { return a.cat === cat; });
+    html += '<div class="ach-section"><div class="ach-section-title">' + cats[cat] + '</div><div class="ach-grid">';
+    items.forEach(function(a) {
+      var unlocked = ach.includes(a.id);
+      html += '<div class="ach-badge ' + (unlocked ? 'unlocked' : 'locked') + '">' +
+        '<div class="ach-icon" style="background:var(--'+a.color+'-dim);color:var(--'+a.color+')">' +
+        (unlocked ? svgIcon(a.icon,18) : svgIcon('lock',18)) + '</div>' +
+        '<div class="ach-name">' + a.name + '</div>' +
+        '<div class="ach-desc">' + a.desc + '</div></div>';
+    });
+    html += '</div></div>';
+  });
+  document.getElementById('achievementsWrap').innerHTML = html;
+}
+
+/* ===== PROFILE ===== */
+function renderProfile() {
+  if (!me || !myData) return;
+  document.getElementById('profileAvatar').innerHTML = avatarSvg(myData.avatarId);
+  document.getElementById('profileName').textContent = me.displayName || myData.displayName || '';
+  document.getElementById('profileEmail').textContent = me.email || '';
+  document.getElementById('editName').value = me.displayName || myData.displayName || '';
+  document.getElementById('psTotalMin').textContent = myData.totalMinutes || 0;
+  document.getElementById('psTotalSec').textContent = myData.totalSections || 0;
+  document.getElementById('psLongest').textContent = myData.longestStreak || 0;
+}
+
+function renderHeaderAvatar() {
+  if (!myData) return;
+  document.getElementById('headerAvatar').innerHTML = avatarSvg(myData.avatarId);
+}
+
+function openAvatarPicker() {
+  var ach = myData ? (myData.achievements || []) : [];
+  var achCount = ach.length;
+  var grid = document.getElementById('avPickerGrid');
+  grid.innerHTML = AVATARS.map(function(av) {
+    var unlocked = achCount >= av.unlockAt;
+    var selected = myData && myData.avatarId === av.id;
+    return '<div class="av-pick ' + (unlocked ? '' : 'locked') + (selected ? ' selected' : '') + '" ' +
+      (unlocked ? 'onclick="selectAvatar(\''+av.id+'\')"' : '') + '>' +
+      avatarSvg(av.id) + '</div>';
+  }).join('');
+  document.getElementById('avatarModal').classList.add('show');
+}
+
+function closeAvatarPicker() { document.getElementById('avatarModal').classList.remove('show'); }
+
+function selectAvatar(id) {
+  db.collection('users').doc(me.uid).update({avatarId: id}).then(function() {
+    myData.avatarId = id;
+    renderProfile(); renderHeaderAvatar();
+    closeAvatarPicker();
+    toast('Đã đổi avatar!');
+  });
+}
+
+function changeName() {
+  var name = document.getElementById('editName').value.trim();
+  if (!name) return;
+  me.updateProfile({displayName: name}).then(function() {
+    return db.collection('users').doc(me.uid).update({displayName: name});
+  }).then(function() {
+    document.getElementById('userName').textContent = name;
+    document.getElementById('profileName').textContent = name;
+    myData.displayName = name;
+    document.getElementById('profileMsg').innerHTML = '<span style="color:var(--green)">Da doi ten!</span>';
+    setTimeout(function() { document.getElementById('profileMsg').innerHTML = ''; }, 3000);
+  });
+}
+
+function changePass() {
+  var pass = document.getElementById('editPass').value;
+  if (!pass || pass.length < 6) { document.getElementById('profileMsg').innerHTML = '<span style="color:var(--red)">Mật khẩu tối thiểu 6 ký tự</span>'; return; }
+  me.updatePassword(pass).then(function() {
+    document.getElementById('editPass').value = '';
+    document.getElementById('profileMsg').innerHTML = '<span style="color:var(--green)">Da doi mat khau!</span>';
+    setTimeout(function() { document.getElementById('profileMsg').innerHTML = ''; }, 3000);
+  }).catch(function(err) {
+    document.getElementById('profileMsg').innerHTML = '<span style="color:var(--red)">' + err.message + '</span>';
+  });
+}
+
+/* ===== STALK ===== */
+function openStalk(uid) {
+  var u = users.find(function(x) { return x.id === uid; });
+  if (!u) return;
+  document.getElementById('stalkAvatar').innerHTML = avatarSvg(u.avatarId);
+  document.getElementById('stalkName').textContent = u.displayName || '?';
+  document.getElementById('stalkStats').innerHTML =
+    '<div class="stalk-stat"><div class="ss-val">' + (u.totalSections||0) + '</div><div class="ss-label">sections</div></div>' +
+    '<div class="stalk-stat"><div class="ss-val">' + (u.currentStreak||0) + '</div><div class="ss-label">streak</div></div>' +
+    '<div class="stalk-stat"><div class="ss-val">' + (u.totalMinutes||0) + '</div><div class="ss-label">phút</div></div>';
+
+  document.getElementById('stalkPanel').classList.add('open');
+  document.getElementById('stalkOverlay').classList.add('open');
+
+  // Load their days for charts
+  db.collection('users').doc(uid).collection('days').get().then(function(snap) {
+    var days = {};
+    snap.forEach(function(d) { var x = d.data(); if (x.date) days[x.date] = x; });
+    renderStalkContrib(days);
+    renderStalkHourly(days);
+  });
+}
+
+function closeStalk() {
+  document.getElementById('stalkPanel').classList.remove('open');
+  document.getElementById('stalkOverlay').classList.remove('open');
+}
+
+function renderStalkContrib(days) {
+  var weeks = 8, cellSize = 10, gap = 2, sz = cellSize + gap;
+  var today = new Date(), rects = [];
+  for (var w = weeks - 1; w >= 0; w--) {
+    for (var d = 0; d < 7; d++) {
+      var dt = new Date(today);
+      dt.setDate(dt.getDate() - (w * 7 + (today.getDay() - d)));
+      if (dt > today) continue;
+      var ds = dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');
+      var day = days[ds];
+      var mins = day ? (day.minutes||0) : 0;
+      var level = mins === 0 ? 0 : mins < 30 ? 1 : mins < 90 ? 2 : 3;
+      var fills = ['rgba(255,255,255,0.04)','rgba(34,197,94,0.2)','rgba(34,197,94,0.5)','rgba(34,197,94,0.85)'];
+      rects.push('<rect x="'+((weeks-1-w)*sz)+'" y="'+(d*sz)+'" width="'+cellSize+'" height="'+cellSize+'" rx="2" fill="'+fills[level]+'"/>');
+    }
+  }
+  document.getElementById('stalkContrib').innerHTML = '<svg width="'+(weeks*sz)+'" height="'+(7*sz)+'">' + rects.join('') + '</svg>';
+}
+
+function renderStalkHourly(days) {
+  var hourly = new Array(24).fill(0);
+  Object.values(days).forEach(function(day) {
+    (day.sessionLog||[]).forEach(function(s) {
+      var h = s.startHour != null ? s.startHour : parseInt((s.time||'12').split(':')[0]);
+      hourly[h] += s.min;
+    });
+  });
+  var maxV = Math.max.apply(null, hourly.concat([1]));
+  var w = 280, h = 80, barW = 8;
+  var bars = hourly.map(function(v, i) {
+    var bh = (v/maxV) * 60;
+    var x = i * (w/24) + (w/24 - barW)/2;
+    return '<rect x="'+x+'" y="'+(h-10-bh)+'" width="'+barW+'" height="'+Math.max(bh,1)+'" rx="2" fill="var(--green)" opacity="'+(v>0?0.3+0.7*v/maxV:0.1)+'"/>' +
+      (i%4===0 ? '<text x="'+(x+barW/2)+'" y="'+(h-1)+'" text-anchor="middle" style="font-size:8px;fill:var(--text-muted)">'+i+'h</text>' : '');
+  }).join('');
+  document.getElementById('stalkHourly').innerHTML = '<svg width="'+w+'" height="'+h+'" style="display:block">' + bars + '</svg>';
+}
+
+/* ===== UTIL ===== */
 function showScreen(n) {
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(n+'Screen').classList.add('active');
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById(n + 'Screen').classList.add('active');
 }
 function toast(msg) {
-  const t=document.getElementById('toast'); t.innerHTML=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3000);
+  var t = document.getElementById('toast'); t.innerHTML = msg; t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 3000);
 }
 function toggleRules() { document.getElementById('rulesModal').classList.toggle('show'); }
 function todayStr() {
-  const d=new Date();
+  var d = new Date();
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
 function dateOff(n) {
-  const d=new Date(); d.setDate(d.getDate()+n);
+  var d = new Date(); d.setDate(d.getDate()+n);
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
-function dateOffFrom(s,n) {
-  const d=new Date(s+'T00:00:00'); d.setDate(d.getDate()+n);
+function dateOffFrom(s, n) {
+  var d = new Date(s+'T00:00:00'); d.setDate(d.getDate()+n);
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
 function dateBefore(s) {
-  const d=new Date(s+'T00:00:00'); d.setDate(d.getDate()-1);
+  var d = new Date(s+'T00:00:00'); d.setDate(d.getDate()-1);
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
-function daysBtw(a,b) {
-  return Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/864e5);
-}
-function fmtD(s) { const p=s.split('-'); return p[2]+'/'+p[1]; }
-function fmt(n) { return Math.round(n*100)/100; }
-function esc(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function daysBtw(a, b) { return Math.round((new Date(b+'T00:00:00') - new Date(a+'T00:00:00')) / 864e5); }
+function fmtD(s) { var p = s.split('-'); return p[2] + '/' + p[1]; }
+function fmt(n) { return Math.round(n * 100) / 100; }
+function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 </script>
 </body>
 </html>
