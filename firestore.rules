@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // User profiles: anyone logged in can read, only the owner can write
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && request.auth.uid == userId;
+
+      // Daily study logs: anyone logged in can read, only the owner can write
+      match /days/{dayId} {
+        allow read: if request.auth != null;
+        allow create: if request.auth != null && request.auth.uid == userId;
+        allow update: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Round settings & voting: any logged-in user can read and write
+    match /settings/{doc} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+  }
+}
