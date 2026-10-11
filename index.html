@@ -540,6 +540,50 @@ select option, select optgroup { background: var(--surface); color: var(--text);
 .task-select-dot.on { opacity: 1; }
 .session-item .si-task { color: var(--accent); font-weight: 600; }
 
+/* ----- Lock-in Workspace ----- */
+.lockin-layout { display: grid; gap: 16px; }
+@media (min-width: 768px) {
+  .lockin-layout { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
+  .lockin-layout .timer-card { grid-row: 1 / 3; }
+}
+.focus-card { border-left: 4px solid var(--accent); }
+.focus-card .focus-inner { display: flex; align-items: center; gap: 12px; }
+.focus-card .focus-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+.focus-card .focus-title { font-weight: 700; font-size: 15px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.focus-card .focus-proj { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.focus-card .focus-time { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+.focus-empty { color: var(--text-muted); font-size: 13px; text-align: center; padding: 12px 0; line-height: 1.6; }
+.ws-section .card-body { padding-bottom: 12px; }
+.ws-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.ws-filter-tabs { display: flex; gap: 0; background: var(--accent-dim); border-radius: 8px; overflow: hidden; }
+.ws-filter-tabs button { background: none; border: none; color: var(--text-secondary); font-size: 12px; font-weight: 600; padding: 5px 12px; cursor: pointer; transition: all 0.15s; }
+.ws-filter-tabs button.active { background: var(--accent); color: #fff; }
+.ws-task-list { display: flex; flex-direction: column; gap: 4px; max-height: 340px; overflow-y: auto; scrollbar-width: thin; }
+.ws-task-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--bg); border: 2px solid transparent; border-radius: 10px; cursor: pointer; transition: all 0.15s; }
+.ws-task-item:hover { border-color: var(--accent-dim); }
+.ws-task-item.selected { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--bg)); }
+.ws-task-item.done { opacity: 0.55; }
+.ws-task-item .wt-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.ws-task-item .wt-body { flex: 1; min-width: 0; }
+.ws-task-item .wt-title { font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ws-task-item.done .wt-title { text-decoration: line-through; }
+.ws-task-item .wt-meta { font-size: 11px; color: var(--text-muted); margin-top: 1px; display: flex; gap: 8px; align-items: center; }
+.ws-task-item .wt-pri { font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+.ws-task-item .wt-pri.high { color: var(--red); background: color-mix(in srgb, var(--red) 12%, transparent); }
+.ws-task-item .wt-pri.medium { color: var(--yellow); background: color-mix(in srgb, var(--yellow) 12%, transparent); }
+.ws-task-item .wt-pri.low { color: var(--green); background: color-mix(in srgb, var(--green) 12%, transparent); }
+.ws-task-item .wt-edit { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; border-radius: 6px; transition: all 0.15s; opacity: 0; flex-shrink: 0; }
+.ws-task-item:hover .wt-edit { opacity: 1; }
+.ws-task-item .wt-edit:hover { color: var(--accent); background: var(--accent-dim); }
+.quick-add-row { display: flex; gap: 8px; margin-top: 10px; }
+.quick-add-row input { flex: 1; min-width: 0; }
+.ws-proj-filter { display: flex; gap: 6px; flex-wrap: wrap; }
+.ws-proj-btn { display: inline-flex; align-items: center; gap: 5px; background: var(--accent-dim); border: 1.5px solid transparent; border-radius: 7px; padding: 4px 10px; font-size: 11px; font-weight: 600; color: var(--text-secondary); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.ws-proj-btn:hover { border-color: var(--accent-dim); }
+.ws-proj-btn.active { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--card-bg)); }
+.ws-proj-btn .proj-dot { width: 8px; height: 8px; }
+.ws-empty { text-align: center; color: var(--text-muted); font-size: 13px; padding: 24px 8px; }
+
 /* ----- Analytics: time by project (donut) ----- */
 .donut-wrap { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
 .donut-svg { width: 150px; height: 150px; flex-shrink: 0; display: block; }
@@ -712,66 +756,92 @@ select option, select optgroup { background: var(--surface); color: var(--text);
     </button>
   </nav>
 
-  <!-- TAB: LOCK-IN -->
+  <!-- TAB: LOCK-IN (Digital Working Space) -->
   <div id="tabLockin" class="tab-panel active">
-    <div class="card timer-card">
-      <div class="card-head">
-        <div class="icon-box blue"><span class="icon"><svg><use href="#i-clock"/></svg></span></div>
-        <div class="card-head-title">Study Timer</div>
+    <div class="lockin-layout">
+      <!-- TIMER -->
+      <div class="card timer-card">
+        <div class="card-head">
+          <div class="icon-box blue"><span class="icon"><svg><use href="#i-clock"/></svg></span></div>
+          <div class="card-head-title">Study Timer</div>
+        </div>
+        <div class="card-body">
+          <div class="timer-mode-toggle">
+            <button class="btn btn-sm sel" onclick="setTimerMode('digital')">Digital</button>
+            <button class="btn btn-sm" onclick="setTimerMode('circular')">Circle</button>
+          </div>
+          <!-- Hidden select for backward compat -->
+          <select id="timerTaskSelect" onchange="onTimerTaskChange()" style="display:none" aria-hidden="true"><option value="">Select task...</option></select>
+          <!-- Focus card: shows currently selected task -->
+          <div id="focusCard"></div>
+          <div class="timer-presets">
+            <button class="btn btn-sm" onclick="setPreset(this,30)">30m</button>
+            <button class="btn btn-sm" onclick="setPreset(this,60)">60m</button>
+            <button class="btn btn-sm" onclick="setPreset(this,90)">90m</button>
+            <button class="btn btn-sm" onclick="setPreset(this,120)">120m</button>
+          </div>
+          <div class="timer-input-row">
+            <input type="number" id="timerInput" value="30" min="1" max="480">
+            <span>min</span>
+          </div>
+          <div class="digital-wrap" id="digitalWrap">
+            <div id="timerDisplay" class="timer-display">00:00</div>
+            <div class="timer-progress"><div id="timerProgress" class="timer-progress-fill"></div></div>
+          </div>
+          <div class="circular-wrap" id="circularWrap">
+            <svg viewBox="0 0 280 280" width="280" height="280">
+              <circle cx="140" cy="140" r="120" class="circular-bg"/>
+              <circle cx="140" cy="140" r="120" class="circular-fg" id="circFg" stroke-dasharray="753.98" stroke-dashoffset="0"/>
+            </svg>
+            <div class="circular-time" id="circTime">00:00</div>
+          </div>
+          <div class="mxh-row">
+            <input type="checkbox" id="mxhPledge">
+            <label for="mxhPledge">No social media pledge</label>
+          </div>
+          <div class="timer-btns">
+            <button id="btnStart" class="btn btn-primary btn-sm" onclick="startTimer()"><span class="icon"><svg><use href="#i-play"/></svg></span> Start</button>
+            <button id="btnPause" class="btn btn-sm" onclick="togglePause()" style="display:none"><span class="icon"><svg><use href="#i-pause"/></svg></span> Pause</button>
+            <button id="btnEnd" class="btn btn-danger btn-sm" onclick="endSession()" style="display:none"><span class="icon"><svg><use href="#i-stop"/></svg></span> Stop</button>
+          </div>
+        </div>
       </div>
-      <div class="card-body">
-        <div class="timer-mode-toggle">
-          <button class="btn btn-sm sel" onclick="setTimerMode('digital')">Digital</button>
-          <button class="btn btn-sm" onclick="setTimerMode('circular')">Circle</button>
+
+      <!-- TASK WORKSPACE -->
+      <div class="card ws-section">
+        <div class="card-head">
+          <div class="icon-box purple"><span class="icon"><svg><use href="#i-tasks"/></svg></span></div>
+          <div class="card-head-title">Task Workspace</div>
         </div>
-        <div class="task-select-wrap">
-          <span class="task-select-dot" id="timerTaskDot"></span>
-          <select id="timerTaskSelect" onchange="onTimerTaskChange()" aria-label="Task for this session">
-            <option value="">Select task...</option>
-          </select>
-        </div>
-        <div class="timer-presets">
-          <button class="btn btn-sm" onclick="setPreset(this,30)">30m</button>
-          <button class="btn btn-sm" onclick="setPreset(this,60)">60m</button>
-          <button class="btn btn-sm" onclick="setPreset(this,90)">90m</button>
-          <button class="btn btn-sm" onclick="setPreset(this,120)">120m</button>
-        </div>
-        <div class="timer-input-row">
-          <input type="number" id="timerInput" value="30" min="1" max="480">
-          <span>min</span>
-        </div>
-        <div class="digital-wrap" id="digitalWrap">
-          <div id="timerDisplay" class="timer-display">00:00</div>
-          <div class="timer-progress"><div id="timerProgress" class="timer-progress-fill"></div></div>
-        </div>
-        <div class="circular-wrap" id="circularWrap">
-          <svg viewBox="0 0 280 280" width="280" height="280">
-            <circle cx="140" cy="140" r="120" class="circular-bg"/>
-            <circle cx="140" cy="140" r="120" class="circular-fg" id="circFg" stroke-dasharray="753.98" stroke-dashoffset="0"/>
-          </svg>
-          <div class="circular-time" id="circTime">00:00</div>
-        </div>
-        <div class="mxh-row">
-          <input type="checkbox" id="mxhPledge">
-          <label for="mxhPledge">No social media pledge</label>
-        </div>
-        <div class="timer-btns">
-          <button id="btnStart" class="btn btn-primary btn-sm" onclick="startTimer()"><span class="icon"><svg><use href="#i-play"/></svg></span> Start</button>
-          <button id="btnPause" class="btn btn-sm" onclick="togglePause()" style="display:none"><span class="icon"><svg><use href="#i-pause"/></svg></span> Pause</button>
-          <button id="btnEnd" class="btn btn-danger btn-sm" onclick="endSession()" style="display:none"><span class="icon"><svg><use href="#i-stop"/></svg></span> Stop</button>
+        <div class="card-body">
+          <div class="ws-header">
+            <div id="wsProjFilter" class="ws-proj-filter"></div>
+            <div id="wsViewTabs" class="ws-filter-tabs">
+              <button class="active" onclick="setWsView('open')" data-wsview="open">Open</button>
+              <button onclick="setWsView('done')" data-wsview="done">Done</button>
+              <button onclick="setWsView('all')" data-wsview="all">All</button>
+            </div>
+          </div>
+          <div id="wsTaskList" class="ws-task-list"></div>
+          <div class="quick-add-row">
+            <input type="text" id="wsQuickAdd" placeholder="Quick add task..." onkeydown="if(event.key==='Enter')quickAddTask()">
+            <button class="btn btn-sm btn-primary" onclick="quickAddTask()">Add</button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="card">
-      <div class="card-head">
-        <div class="icon-box green"><span class="icon"><svg><use href="#i-chart"/></svg></span></div>
-        <div class="card-head-title">Today</div>
-      </div>
-      <div class="card-body">
-        <div class="today-stat"><span>Total Time</span><span class="val" id="todayMin">0 min</span></div>
-        <div class="today-stat"><span>Sections</span><span class="val" id="todaySec">0</span></div>
-        <div class="today-stat"><span>Today's Points</span><span class="val" id="todayPts">0</span></div>
-        <div id="sessionList" class="session-list"></div>
+
+      <!-- TODAY STATS -->
+      <div class="card">
+        <div class="card-head">
+          <div class="icon-box green"><span class="icon"><svg><use href="#i-chart"/></svg></span></div>
+          <div class="card-head-title">Today</div>
+        </div>
+        <div class="card-body">
+          <div class="today-stat"><span>Total Time</span><span class="val" id="todayMin">0 min</span></div>
+          <div class="today-stat"><span>Sections</span><span class="val" id="todaySec">0</span></div>
+          <div class="today-stat"><span>Today's Points</span><span class="val" id="todayPts">0</span></div>
+          <div id="sessionList" class="session-list"></div>
+        </div>
       </div>
     </div>
   </div>
