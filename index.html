@@ -1703,7 +1703,7 @@ function checkRecovery() {
     document.getElementById('recStreak').textContent = myData.currentStreak;
     document.getElementById('recCost').textContent = '-' + cost + ' pts';
     var m = lastStreakMs(myData.currentStreak);
-    document.getElementById('recExplain').textContent = '(1.2\u00d7 ' + m.bonus + ' bonus for day ' + m.days + ' milestone)';
+    document.getElementById('recExplain').textContent = '(1.2× ' + m.bonus + ' bonus for day ' + m.days + ' milestone)';
     document.getElementById('recoveryModal').classList.add('show');
   } else if (diff > 2) {
     var lost = myData.currentStreak;
@@ -3014,7 +3014,7 @@ function renderWeeklyGoals() {
           <div class="onboard-step-text"><strong>Compete with friends</strong><span>Climb the leaderboard. Loser buys coffee!</span></div>
         </div>
       </div>
-      <button class="btn btn-primary btn-block" onclick="dismissOnboard()" style="background:var(--gradient);border:none;font-weight:600;font-size:15px;padding:14px">Let’s go!</button>
+      <button class="btn btn-primary btn-block" onclick="dismissOnboard()" style="background:var(--gradient);border:none;font-weight:600;font-size:15px;padding:14px">Let's go!</button>
     </div>
   </div>
 </body>
