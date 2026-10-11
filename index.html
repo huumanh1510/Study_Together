@@ -824,6 +824,7 @@ function avatarSvg(avId) {
 var me = null, myData = null, users = [], round = null;
 var tmrInterval = null, tmrRunning = false, tmrPaused = false;
 var tmrRemain = 0, tmrTotal = 0, tmrElapsed = 0;
+var tmrStartTime = 0, tmrPausedTime = 0, tmrPauseStart = 0;
 var recoveryDone = false, lbMode = 'round', unsubs = [];
 var timerMode = 'digital'; // 'digital' or 'circular'
 var chartFilter = 'day', chartOffset = 0;
@@ -969,6 +970,7 @@ function startTimer() {
   var m = parseInt(document.getElementById('timerInput').value);
   if (!m || m <= 0) return;
   tmrTotal = m * 60; tmrRemain = tmrTotal; tmrElapsed = 0;
+  tmrStartTime = Date.now(); tmrPausedTime = 0;
   tmrRunning = true; tmrPaused = false;
   updTmrBtns();
   document.getElementById('timerInput').disabled = true;
@@ -979,7 +981,8 @@ function startTimer() {
 
 function tick() {
   if (tmrPaused) return;
-  tmrRemain--; tmrElapsed++;
+  tmrElapsed = Math.floor((Date.now() - tmrStartTime - tmrPausedTime) / 1000);
+  tmrRemain = Math.max(0, tmrTotal - tmrElapsed);
   showTmr();
   var pct = tmrTotal > 0 ? ((tmrTotal - tmrRemain) / tmrTotal * 100) : 0;
   document.getElementById('timerProgress').style.width = pct + '%';
@@ -996,6 +999,11 @@ function tick() {
 }
 
 function togglePause() {
+  if (!tmrPaused) {
+    tmrPauseStart = Date.now();
+  } else {
+    tmrPausedTime += Date.now() - tmrPauseStart;
+  }
   tmrPaused = !tmrPaused;
   document.getElementById('btnPause').innerHTML = tmrPaused
     ? '<span class="icon"><svg><use href="#i-play"/></svg></span> Tiep tuc'
@@ -1005,6 +1013,11 @@ function togglePause() {
 function endSession() {
   if (!tmrRunning) return;
   clearInterval(tmrInterval); tmrRunning = false;
+  if (tmrPaused) {
+    tmrPausedTime += Date.now() - tmrPauseStart;
+    tmrPaused = false;
+  }
+  tmrElapsed = Math.floor((Date.now() - tmrStartTime - tmrPausedTime) / 1000);
   updTmrBtns();
   document.getElementById('timerInput').disabled = false;
   document.getElementById('tmrDot').style.display = 'none';
