@@ -371,11 +371,10 @@ input::placeholder { color: var(--text-muted); }
 /* ===== ONBOARDING OVERLAY ===== */
 .onboard-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-  z-index: 9999; display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  z-index: 9999; display: none; align-items: center; justify-content: center;
   backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
 }
-.onboard-overlay.show { opacity: 1; pointer-events: auto; }
+.onboard-overlay.show { display: flex; }
 .onboard-card {
   background: var(--surface); border-radius: 20px; padding: 36px 28px 28px;
   max-width: 400px; width: 90%; text-align: center;
@@ -939,6 +938,12 @@ var cachedDays = null, cachedDaysUid = null;
 var roundHistory = [];
 
 /* ===== INIT ===== */
+if (typeof firebase === 'undefined') {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.body.innerHTML = '<div style="text-align:center;padding:60px 20px;font-family:sans-serif;"><h2>Loading Error</h2><p>Firebase SDK failed to load. Please check your internet connection and reload the page.</p><button onclick="location.reload()" style="padding:10px 24px;font-size:16px;cursor:pointer;border-radius:8px;border:1px solid #ccc;margin-top:12px;">Reload</button></div>';
+  });
+  throw new Error('Firebase SDK not loaded');
+}
 firebase.initializeApp(FIREBASE_CONFIG);
 var auth = firebase.auth();
 var db = firebase.firestore();
@@ -1050,13 +1055,13 @@ function boot() {
     listen();
     checkRecovery();
     renderMs();
-  });
+  }).catch(function(err) { console.error('boot error:', err); toast('Connection error. Please reload.'); });
 }
 
 function listen() {
   killListeners();
   unsubs.push(db.collection('users').onSnapshot(function(snap) {
-    users = []; snap.forEach(function(d) { users.push({id:d.id, ...d.data()}); });
+    users = []; snap.forEach(function(d) { var ud = d.data(); ud.id = d.id; users.push(ud); });
     renderLb();
     var m = users.find(function(u) { return u.id === me.uid; });
     if (m) myData = m;
@@ -1442,13 +1447,13 @@ function loadRound() {
   db.collection('settings').doc('round').get().then(function(d) {
     if (d.exists) { round = d.data(); renderRound(); checkRoundEnd(); }
     else createFirst();
-  });
+  }).catch(function(err) { console.error('loadRound error:', err); });
 }
 
 function createFirst() {
   var t = todayStr(), e = dateOffFrom(t, DEFAULT_ROUND);
   round = {number:1,startDate:t,endDate:e,duration:DEFAULT_ROUND,status:'active',votes:{}};
-  db.collection('settings').doc('round').set(round).then(function() { renderRound(); });
+  db.collection('settings').doc('round').set(round).then(function() { renderRound(); }).catch(function(err) { console.error('createFirst error:', err); });
 }
 
 function checkRoundEnd() {
