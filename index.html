@@ -332,6 +332,79 @@ input::placeholder { color: var(--text-muted); }
   .ach-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
   .profile-stats { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* ===== SKELETON LOADING ===== */
+@keyframes shimmer {
+  0% { background-position: -400px 0 }
+  100% { background-position: 400px 0 }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--card) 25%, rgba(139,92,246,0.06) 50%, var(--card) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+.skel-line { height: 14px; margin-bottom: 10px; border-radius: 6px; }
+.skel-line.w60 { width: 60%; }
+.skel-line.w80 { width: 80%; }
+.skel-line.w40 { width: 40%; }
+.skel-lb-item {
+  display: flex; align-items: center; gap: 10px; padding: 10px 0;
+  border-bottom: 1px solid rgba(139,92,246,0.06);
+}
+.skel-circle { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; }
+.skel-bar { height: 14px; border-radius: 6px; flex: 1; }
+.skel-badge { width: 48px; height: 14px; border-radius: 6px; flex-shrink: 0; }
+
+/* ===== STUDY-LIVE DOT ===== */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+.study-live {
+  display: inline-block; width: 8px; height: 8px;
+  background: var(--green); border-radius: 50%;
+  animation: pulse-dot 1.4s ease-in-out infinite;
+  margin-left: 4px; vertical-align: middle;
+}
+
+/* ===== ONBOARDING OVERLAY ===== */
+.onboard-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  z-index: 9999; display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s ease;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.onboard-overlay.show { opacity: 1; }
+.onboard-card {
+  background: var(--surface); border-radius: 20px; padding: 36px 28px 28px;
+  max-width: 400px; width: 90%; text-align: center;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.onboard-title {
+  font-size: 22px; font-weight: 700; margin-bottom: 6px;
+  background: var(--gradient); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; background-clip: text;
+}
+.onboard-sub { color: var(--text-secondary); font-size: 14px; margin-bottom: 28px; }
+.onboard-steps { display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px; text-align: left; }
+.onboard-step {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card); padding: 14px 16px; border-radius: var(--radius-sm);
+  border: 1px solid var(--card-border);
+}
+.onboard-num {
+  width: 32px; height: 32px; border-radius: 50%; display: flex;
+  align-items: center; justify-content: center; font-weight: 700;
+  font-size: 14px; flex-shrink: 0;
+}
+.onboard-num.n1 { background: var(--accent-dim); color: var(--accent); }
+.onboard-num.n2 { background: var(--amber-dim); color: var(--amber); }
+.onboard-num.n3 { background: var(--green-dim); color: var(--green); }
+.onboard-step-text { font-size: 14px; line-height: 1.4; }
+.onboard-step-text strong { color: var(--text); }
+.onboard-step-text span { color: var(--text-secondary); display: block; font-size: 12px; margin-top: 2px; }
 </style>
 </head>
 <body>
@@ -527,6 +600,7 @@ input::placeholder { color: var(--text-muted); }
       <div class="card-body">
         <div id="streakBig" class="streak-big">0</div>
         <div class="streak-label">days in a row</div>
+        <div style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:2px">Min. 30 min (1 section) to count</div>
         <div id="streakNext" class="streak-next"></div>
       </div>
     </div>
@@ -585,7 +659,12 @@ input::placeholder { color: var(--text-muted); }
       </div>
       <div class="card-body">
         <div id="roundCountdown" class="round-countdown"></div>
-        <div id="roundContent" style="font-size:13px;color:var(--text-secondary)">Loading...</div>
+        <div id="roundContent">
+          <div class="skeleton skel-line w60"></div>
+          <div class="skeleton skel-line w80"></div>
+          <div class="skeleton skel-line w40"></div>
+          <div class="skeleton skel-line w60"></div>
+        </div>
       </div>
     </div>
     <div class="card">
@@ -598,7 +677,11 @@ input::placeholder { color: var(--text-muted); }
           <button class="lb-tab active" onclick="showLbTab(this,'round')">This Round</button>
           <button class="lb-tab" onclick="showLbTab(this,'all')">All Time</button>
         </div>
-        <div id="lbList"><div style="font-size:13px;color:var(--text-secondary)">Loading...</div></div>
+        <div id="lbList">
+          <div class="skel-lb-item"><div class="skeleton skel-circle"></div><div class="skeleton skel-bar"></div><div class="skeleton skel-badge"></div></div>
+          <div class="skel-lb-item"><div class="skeleton skel-circle"></div><div class="skeleton skel-bar w80"></div><div class="skeleton skel-badge"></div></div>
+          <div class="skel-lb-item"><div class="skeleton skel-circle"></div><div class="skeleton skel-bar w60"></div><div class="skeleton skel-badge"></div></div>
+        </div>
       </div>
     </div>
     <div class="card">
@@ -873,6 +956,7 @@ auth.onAuthStateChanged(function(u) {
     document.getElementById('userName').textContent = u.displayName || u.email;
     boot();
   } else {
+    if (me) db.collection('users').doc(me.uid).update({isStudying: false}).catch(function(){});
     me = null; myData = null;
     killListeners();
     showScreen('auth');
@@ -942,11 +1026,26 @@ function switchTab(name) {
 }
 
 /* ===== BOOT ===== */
+
+/* ===== ONBOARDING ===== */
+function checkOnboard() {
+  try {
+    if (localStorage.getItem('ssb_onboard_done')) return;
+  } catch(e) {}
+  setTimeout(function() {
+    document.getElementById('onboardOverlay').classList.add('show');
+  }, 600);
+}
+function dismissOnboard() {
+  document.getElementById('onboardOverlay').classList.remove('show');
+  try { localStorage.setItem('ssb_onboard_done', '1'); } catch(e) {}
+}
 function boot() {
   recoveryDone = false; cachedDays = null; cachedDaysUid = null;
   db.collection('users').doc(me.uid).get().then(function(doc) {
     if (doc.exists) myData = doc.data();
     renderProfile(); renderHeaderAvatar();
+    checkOnboard();
     loadRound();
     listen();
     checkRecovery();
@@ -997,6 +1096,7 @@ function startTimer() {
   tmrStartTime = Date.now(); tmrPausedTime = 0;
   tmrRunning = true; tmrPaused = false;
   updTmrBtns();
+  if (me) db.collection('users').doc(me.uid).update({isStudying: true}).catch(function(){});
   document.getElementById('timerInput').disabled = true;
   document.getElementById('tmrDot').style.display = 'inline-block';
   tmrInterval = setInterval(tick, 1000);
@@ -1017,6 +1117,7 @@ function tick() {
     document.getElementById('timerInput').disabled = false;
     document.getElementById('timerProgress').style.width = '100%';
     document.getElementById('tmrDot').style.display = 'none';
+    if (me) db.collection('users').doc(me.uid).update({isStudying: false}).catch(function(){});
     logSession(tmrElapsed);
     beep();
   }
@@ -1045,6 +1146,7 @@ function endSession() {
   updTmrBtns();
   document.getElementById('timerInput').disabled = false;
   document.getElementById('tmrDot').style.display = 'none';
+  if (me) db.collection('users').doc(me.uid).update({isStudying: false}).catch(function(){});
   if (tmrElapsed >= 60) logSession(tmrElapsed);
   else toast('Session under 1 min — not recorded.');
   tmrRemain = 0; showTmr();
@@ -1140,7 +1242,7 @@ function recalc() {
       var x = d.data();
       totMin += x.minutes || 0;
       totSec += x.sections || 0;
-      if (x.date) dates.push(x.date);
+      if (x.date && (x.sections || 0) >= 1) dates.push(x.date);
       if (x.minutes > maxDayMinutes) maxDayMinutes = x.minutes;
       if (x.sections > maxDaySections) maxDaySections = x.sections;
       var log = x.sessionLog || [];
@@ -1505,6 +1607,7 @@ function renderLb() {
         '<span class="lb-name">'+esc(s.displayName)+(s.id===me.uid?' (you)':'')+'</span>' +
         '<span class="lb-pts">'+fmt(s.pts)+'d</span>' +
         '<span class="lb-streak">'+svgIcon('flame',12)+' '+(s.currentStreak||0)+'</span>' +
+        (s.isStudying ? '<span class="study-live" title="Studying now"></span>' : '') +
         '</div>';
     }).join('');
   });
@@ -1560,7 +1663,7 @@ function renderMs() {
 function renderRound() {
   var el = document.getElementById('roundContent');
   var cd = document.getElementById('roundCountdown');
-  if (!round) { el.innerHTML = 'Loading...'; cd.innerHTML = ''; return; }
+  if (!round) { el.innerHTML = '<div class="skeleton skel-line w60"></div><div class="skeleton skel-line w80"></div><div class="skeleton skel-line w40"></div>'; cd.innerHTML = ''; return; }
   var passed = daysBtw(round.startDate, todayStr());
   var rem = Math.max(0, round.duration - passed);
   var pct = Math.min(100, Math.round(passed / round.duration * 100));
@@ -1895,5 +1998,28 @@ function fmtD(s) { var p = s.split('-'); return p[2] + '/' + p[1]; }
 function fmt(n) { return Math.round(n * 100) / 100; }
 function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 </script>
+
+  <!-- ONBOARDING -->
+  <div class="onboard-overlay" id="onboardOverlay">
+    <div class="onboard-card">
+      <div class="onboard-title">Welcome to Study Streak!</div>
+      <div class="onboard-sub">Here's how to get the most out of it</div>
+      <div class="onboard-steps">
+        <div class="onboard-step">
+          <div class="onboard-num n1">1</div>
+          <div class="onboard-step-text"><strong>Start a study session</strong><span>Set a timer and lock in. Every 30 min = 1 section.</span></div>
+        </div>
+        <div class="onboard-step">
+          <div class="onboard-num n2">2</div>
+          <div class="onboard-step-text"><strong>Keep your streak alive</strong><span>Study at least 30 min daily. Miss a day? You can recover — for a price.</span></div>
+        </div>
+        <div class="onboard-step">
+          <div class="onboard-num n3">3</div>
+          <div class="onboard-step-text"><strong>Compete with friends</strong><span>Climb the leaderboard. Loser buys coffee!</span></div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="dismissOnboard()" style="background:var(--gradient);border:none;font-weight:600;font-size:15px;padding:14px">Let’s go!</button>
+    </div>
+  </div>
 </body>
 </html>
