@@ -372,10 +372,10 @@ input::placeholder { color: var(--text-muted); }
 .onboard-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.7);
   z-index: 9999; display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: opacity 0.3s ease;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
   backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
 }
-.onboard-overlay.show { opacity: 1; }
+.onboard-overlay.show { opacity: 1; pointer-events: auto; }
 .onboard-card {
   background: var(--surface); border-radius: 20px; padding: 36px 28px 28px;
   max-width: 400px; width: 90%; text-align: center;
