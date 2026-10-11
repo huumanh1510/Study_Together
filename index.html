@@ -1,31 +1,35 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Study Streak Battle</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
-/* ===== V2 DESIGN TOKENS ===== */
+/* ===== DESIGN TOKENS ===== */
 :root {
-  --bg: #0b0f1a; --surface: #111827; --card: #1a2236;
-  --card-border: rgba(255,255,255,0.06); --card-hover: #1f2a42;
-  --text: #e8eaf0; --text-secondary: #8b95a8; --text-muted: #5a6478;
+  --bg: #0c0a14; --surface: #151221; --card: #1e1a2e;
+  --card-border: rgba(139,92,246,0.08); --card-hover: #262040;
+  --text: #e8e4f0; --text-secondary: #9088a8; --text-muted: #5c5478;
+  --accent: #8b5cf6; --accent-dim: rgba(139,92,246,0.12);
+  --accent-glow: rgba(139,92,246,0.25);
+  --gradient: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
   --green: #22c55e; --green-dim: rgba(34,197,94,0.12);
   --blue: #3b82f6; --blue-dim: rgba(59,130,246,0.12);
   --amber: #f59e0b; --amber-dim: rgba(245,158,11,0.12);
   --red: #ef4444; --red-dim: rgba(239,68,68,0.12);
   --purple: #a855f7; --purple-dim: rgba(168,85,247,0.12);
-  --radius: 12px; --radius-sm: 8px; --radius-pill: 999px;
+  --radius: 14px; --radius-sm: 10px; --radius-pill: 999px;
   --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
-    --bg: #f0f2f5; --surface: #ffffff; --card: #ffffff;
-    --card-border: rgba(0,0,0,0.08); --card-hover: #f8f9fb;
-    --text: #111827; --text-secondary: #6b7280; --text-muted: #9ca3af;
+    --bg: #f5f3fa; --surface: #ffffff; --card: #ffffff;
+    --card-border: rgba(139,92,246,0.1); --card-hover: #f8f6fc;
+    --text: #1a1530; --text-secondary: #6b6280; --text-muted: #9a93af;
+    --accent-dim: rgba(139,92,246,0.08); --accent-glow: rgba(139,92,246,0.15);
     --green-dim: rgba(34,197,94,0.08); --blue-dim: rgba(59,130,246,0.08);
     --amber-dim: rgba(245,158,11,0.08); --red-dim: rgba(239,68,68,0.08);
     --purple-dim: rgba(168,85,247,0.08);
@@ -33,9 +37,10 @@
   }
 }
 :root[data-theme="light"] {
-  --bg: #f0f2f5; --surface: #ffffff; --card: #ffffff;
-  --card-border: rgba(0,0,0,0.08); --card-hover: #f8f9fb;
-  --text: #111827; --text-secondary: #6b7280; --text-muted: #9ca3af;
+  --bg: #f5f3fa; --surface: #ffffff; --card: #ffffff;
+  --card-border: rgba(139,92,246,0.1); --card-hover: #f8f6fc;
+  --text: #1a1530; --text-secondary: #6b6280; --text-muted: #9a93af;
+  --accent-dim: rgba(139,92,246,0.08); --accent-glow: rgba(139,92,246,0.15);
   --green-dim: rgba(34,197,94,0.08); --blue-dim: rgba(59,130,246,0.08);
   --amber-dim: rgba(245,158,11,0.08); --red-dim: rgba(239,68,68,0.08);
   --purple-dim: rgba(168,85,247,0.08);
@@ -62,7 +67,8 @@ body {
 .screen.active { display: flex; }
 
 /* ===== CARD ===== */
-.card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; }
+.card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
 .card-head { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--card-border); }
 .card-head-title { font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px; }
 .card-body { padding: 18px; }
@@ -70,13 +76,13 @@ body {
 /* ===== AUTH ===== */
 .auth-screen { min-height: 100vh; align-items: center; justify-content: center; flex-direction: column; padding: 16px; background: var(--bg); }
 .auth-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.auth-logo-icon { width: 48px; height: 48px; border-radius: var(--radius); background: var(--green-dim); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+.auth-logo-icon { width: 48px; height: 48px; border-radius: var(--radius); background: var(--accent-dim); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 24px; }
 .auth-title { font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 800; letter-spacing: -0.5px; }
 .auth-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 32px; text-align: center; }
 .auth-box { width: 100%; max-width: 400px; }
 .auth-tabs { display: flex; gap: 2px; margin-bottom: 2px; }
 .auth-tab { flex: 1; padding: 12px; font-family: var(--font); font-size: 13px; font-weight: 600; background: var(--surface); border: 1px solid var(--card-border); border-bottom: none; border-radius: var(--radius-sm) var(--radius-sm) 0 0; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
-.auth-tab.active { background: var(--card); color: var(--green); border-color: var(--card-border); }
+.auth-tab.active { background: var(--card); color: var(--accent); border-color: var(--card-border); }
 .auth-form-wrap { background: var(--card); border: 1px solid var(--card-border); border-radius: 0 0 var(--radius) var(--radius); padding: 24px; }
 .auth-form { display: none; }
 .auth-form.active { display: block; }
@@ -86,7 +92,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="num
   width: 100%; font-family: var(--font); font-size: 14px; padding: 11px 14px; background: var(--surface);
   border: 1px solid var(--card-border); border-radius: var(--radius-sm); color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s;
 }
-input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,0.15); }
+input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
 input::placeholder { color: var(--text-muted); }
 .auth-error { font-size: 13px; color: var(--red); margin-top: 10px; min-height: 20px; }
 
@@ -94,8 +100,8 @@ input::placeholder { color: var(--text-muted); }
 .btn { font-family: var(--font); font-size: 13px; font-weight: 600; padding: 9px 18px; border: 1px solid var(--card-border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 .btn:hover { background: var(--card-hover); border-color: rgba(255,255,255,0.1); }
 .btn:active { transform: scale(0.97); }
-.btn-primary { background: var(--green); border-color: var(--green); color: #fff; font-weight: 700; }
-.btn-primary:hover { background: #1aab50; border-color: #1aab50; }
+.btn-primary { background: var(--gradient); border-color: var(--accent); color: #fff; font-weight: 700; }
+.btn-primary:hover { filter: brightness(1.12); border-color: var(--accent); }
 .btn-danger { border-color: rgba(239,68,68,0.2); color: var(--red); background: var(--red-dim); }
 .btn-danger:hover { background: rgba(239,68,68,0.18); }
 .btn-sm { font-size: 12px; padding: 7px 14px; }
@@ -103,11 +109,11 @@ input::placeholder { color: var(--text-muted); }
 
 /* ===== APP LAYOUT ===== */
 .app-screen { flex-direction: column; min-height: 100vh; }
-.app-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; background: var(--surface); border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 50; }
+.app-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; background: var(--surface); border-bottom: 2px solid transparent; border-image: var(--gradient) 1; position: sticky; top: 0; z-index: 50; }
 .app-logo { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: var(--text); }
-.app-logo .icon { font-size: 20px; color: var(--green); }
+.app-logo .icon { font-size: 20px; color: var(--accent); }
 .app-user-mini { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-.app-user-mini .av-circle { width: 32px; height: 32px; border-radius: 50%; overflow: hidden; border: 2px solid var(--green); flex-shrink: 0; }
+.app-user-mini .av-circle { width: 32px; height: 32px; border-radius: 50%; overflow: hidden; border: 2px solid var(--accent); flex-shrink: 0; }
 .app-user-mini .av-circle svg { width: 100%; height: 100%; display: block; }
 .app-user-mini span { font-size: 13px; color: var(--text-secondary); }
 
@@ -115,60 +121,61 @@ input::placeholder { color: var(--text-muted); }
 .tab-bar { display: flex; background: var(--surface); border-bottom: 1px solid var(--card-border); position: sticky; top: 48px; z-index: 40; overflow-x: auto; }
 .tab-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 8px; font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--text-muted); background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; transition: all 0.2s; white-space: nowrap; min-width: 0; }
 .tab-btn .icon { font-size: 18px; }
-.tab-btn.active { color: var(--green); border-bottom-color: var(--green); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 .tab-btn:hover:not(.active) { color: var(--text-secondary); }
-.tab-btn .tmr-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 1.5s infinite; display: none; }
+.tab-btn .tmr-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s infinite; display: none; }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
 /* ===== TAB PANELS ===== */
-.tab-panel { display: none; padding: 16px; max-width: 700px; margin: 0 auto; width: 100%; }
-.tab-panel.active { display: block; }
+.tab-panel { display: none; padding: 16px 20px; max-width: 960px; margin: 0 auto; width: 100%; }
+.tab-panel.active { display: block; animation: tabFadeIn 0.3s ease; }
+@keyframes tabFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .tab-panel .card { margin-bottom: 16px; }
 
 /* ===== TIMER ===== */
 .timer-mode-toggle { display: flex; gap: 4px; margin-bottom: 14px; justify-content: center; }
-.timer-mode-toggle .btn.sel { background: var(--green); border-color: var(--green); color: #fff; }
-.timer-display { font-family: var(--font-mono); font-size: clamp(2.4rem, 10vw, 3.4rem); font-weight: 700; text-align: center; padding: 12px 0 4px; letter-spacing: 2px; color: var(--text); font-variant-numeric: tabular-nums; }
+.timer-mode-toggle .btn.sel { background: var(--accent); border-color: var(--accent); color: #fff; }
+.timer-display { font-family: var(--font-mono); font-size: clamp(4rem, 16vw, 7rem); font-weight: 700; text-align: center; padding: 24px 0 8px; letter-spacing: 4px; color: var(--text); font-variant-numeric: tabular-nums; text-shadow: 0 0 40px var(--accent-glow); }
 .timer-presets { display: flex; gap: 6px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
-.timer-presets .btn.sel { background: var(--green); border-color: var(--green); color: #fff; }
+.timer-presets .btn.sel { background: var(--accent); border-color: var(--accent); color: #fff; }
 .timer-input-row { display: flex; gap: 8px; align-items: center; justify-content: center; margin-bottom: 8px; }
 .timer-input-row input[type="number"] { width: 80px; text-align: center; font-family: var(--font-mono); font-weight: 600; }
 .timer-input-row span { font-size: 13px; color: var(--text-secondary); }
 .timer-progress { width: 100%; height: 5px; background: rgba(255,255,255,0.05); border-radius: 3px; margin: 12px 0 16px; overflow: hidden; }
-.timer-progress-fill { height: 100%; background: var(--green); border-radius: 3px; transition: width 1s linear; width: 0%; }
+.timer-progress-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 1s linear; width: 0%; }
 .timer-btns { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
 .mxh-row { display: flex; align-items: center; gap: 10px; justify-content: center; margin-top: 14px; font-size: 13px; color: var(--text-secondary); }
-.mxh-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--green); border-radius: 4px; }
+.mxh-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); border-radius: 4px; }
 
 /* Circular Timer */
-.circular-wrap { display: none; position: relative; width: 220px; height: 220px; margin: 10px auto 16px; }
+.circular-wrap { display: none; position: relative; width: 280px; height: 280px; margin: 16px auto 24px; }
 .circular-wrap.active { display: block; }
 .digital-wrap { display: block; }
 .digital-wrap.hidden { display: none; }
 .circular-bg { fill: none; stroke: var(--surface); stroke-width: 8; }
-.circular-fg { fill: none; stroke: var(--green); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1s linear, stroke 0.5s; transform: rotate(-90deg); transform-origin: center; }
+.circular-fg { fill: none; stroke: var(--accent); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1s linear, stroke 0.5s; transform: rotate(-90deg); transform-origin: center; }
 .circular-fg.warn { stroke: var(--red); }
-.circular-time { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--font-mono); font-size: 2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.circular-time { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--font-mono); font-size: 2.8rem; font-weight: 700; font-variant-numeric: tabular-nums; text-shadow: 0 0 30px var(--accent-glow); }
 
 /* ===== TODAY ===== */
 .today-stat { display: flex; justify-content: space-between; align-items: center; font-size: 14px; padding: 10px 0; border-bottom: 1px solid var(--card-border); }
 .today-stat:last-of-type { border-bottom: none; }
-.today-stat .val { font-family: var(--font-mono); font-weight: 700; color: var(--green); font-variant-numeric: tabular-nums; }
+.today-stat .val { font-family: var(--font-mono); font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
 .session-list { margin-top: 10px; }
 .session-item { font-size: 12px; color: var(--text-secondary); padding: 6px 10px; border-radius: 6px; background: var(--surface); margin-bottom: 4px; }
 
 /* ===== LEADERBOARD ===== */
 .lb-tabs { display: flex; gap: 2px; margin-bottom: 14px; background: var(--surface); border-radius: var(--radius-sm); padding: 3px; }
 .lb-tab { font-family: var(--font); font-size: 12px; font-weight: 600; padding: 7px 14px; border: none; border-radius: 6px; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s; flex: 1; text-align: center; }
-.lb-tab.active { background: var(--green-dim); color: var(--green); }
+.lb-tab.active { background: var(--accent-dim); color: var(--accent); }
 .lb-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--radius-sm); margin-bottom: 4px; font-size: 14px; background: var(--surface); cursor: pointer; transition: background 0.15s; }
 .lb-item:hover { background: var(--card-hover); }
-.lb-item.lb-first { background: var(--green-dim); border: 1px solid rgba(34,197,94,0.15); }
+.lb-item.lb-first { background: var(--accent-dim); border: 1px solid rgba(139,92,246,0.15); }
 .lb-rank { width: 30px; height: 30px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; background: var(--surface); color: var(--text-muted); font-family: var(--font-mono); }
 .lb-av { width: 28px; height: 28px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
 .lb-av svg { width: 100%; height: 100%; display: block; }
 .lb-name { flex: 1; min-width: 0; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.lb-pts { font-family: var(--font-mono); font-weight: 700; font-size: 14px; color: var(--green); min-width: 50px; text-align: right; font-variant-numeric: tabular-nums; }
+.lb-pts { font-family: var(--font-mono); font-weight: 700; font-size: 14px; color: var(--accent); min-width: 50px; text-align: right; font-variant-numeric: tabular-nums; }
 .lb-streak { font-size: 12px; color: var(--amber); min-width: 40px; text-align: right; display: flex; align-items: center; gap: 3px; justify-content: flex-end; }
 
 /* ===== CONTRIBUTION GRAPH ===== */
@@ -181,7 +188,7 @@ input::placeholder { color: var(--text-muted); }
 /* ===== BAR CHART ===== */
 .chart-filters { display: flex; gap: 2px; margin-bottom: 14px; background: var(--surface); border-radius: var(--radius-sm); padding: 3px; }
 .chart-filter { font-family: var(--font); font-size: 12px; font-weight: 600; padding: 7px 14px; border: none; border-radius: 6px; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s; flex: 1; text-align: center; }
-.chart-filter.active { background: var(--blue-dim); color: var(--blue); }
+.chart-filter.active { background: var(--accent-dim); color: var(--accent); }
 .chart-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .chart-nav-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
 .chart-nav .btn { padding: 5px 10px; }
@@ -198,7 +205,7 @@ input::placeholder { color: var(--text-muted); }
 .ach-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
 .ach-badge { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px; border: 1px solid var(--card-border); border-radius: var(--radius); background: var(--surface); text-align: center; transition: all 0.3s; }
 .ach-badge.locked { opacity: 0.35; filter: grayscale(0.8); }
-.ach-badge.unlocked { border-color: rgba(34,197,94,0.25); }
+.ach-badge.unlocked { border-color: rgba(139,92,246,0.25); }
 .ach-badge .ach-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
 .ach-badge .ach-name { font-size: 11px; font-weight: 600; color: var(--text); line-height: 1.3; }
 .ach-badge .ach-desc { font-size: 10px; color: var(--text-muted); line-height: 1.2; }
@@ -209,9 +216,9 @@ input::placeholder { color: var(--text-muted); }
 .streak-big { font-family: var(--font-mono); font-size: clamp(2.2rem, 8vw, 3.2rem); font-weight: 700; text-align: center; padding: 8px 0 2px; color: var(--amber); font-variant-numeric: tabular-nums; }
 .streak-label { text-align: center; font-size: 13px; color: var(--text-secondary); margin-bottom: 14px; }
 .streak-next { font-size: 13px; text-align: center; color: var(--text-secondary); border-top: 1px solid var(--card-border); padding-top: 12px; margin-top: 8px; }
-.streak-next .hl { color: var(--green); font-weight: 600; }
+.streak-next .hl { color: var(--accent); font-weight: 600; }
 .streak-bar { height: 5px; background: rgba(255,255,255,0.05); border-radius: 3px; margin-top: 8px; overflow: hidden; }
-.streak-bar-fill { height: 100%; background: var(--green); border-radius: 3px; transition: width 0.4s ease; }
+.streak-bar-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.4s ease; }
 
 /* ===== ROUND ===== */
 .round-info { font-size: 14px; }
@@ -231,14 +238,14 @@ input::placeholder { color: var(--text-muted); }
 
 /* ===== PROFILE ===== */
 .profile-header { text-align: center; padding: 24px 18px; }
-.profile-av { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; margin: 0 auto 12px; border: 3px solid var(--green); cursor: pointer; transition: transform 0.2s; }
+.profile-av { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; margin: 0 auto 12px; border: 3px solid var(--accent); cursor: pointer; transition: transform 0.2s; }
 .profile-av:hover { transform: scale(1.05); }
 .profile-av svg { width: 100%; height: 100%; display: block; }
 .profile-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
 .profile-email { font-size: 13px; color: var(--text-muted); }
 .profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--card-border); margin: 18px 0; border-radius: var(--radius-sm); overflow: hidden; }
 .profile-stat { background: var(--surface); padding: 14px 8px; text-align: center; }
-.profile-stat .ps-val { font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700; color: var(--green); font-variant-numeric: tabular-nums; }
+.profile-stat .ps-val { font-family: var(--font-mono); font-size: 1.2rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
 .profile-stat .ps-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 .profile-section { padding: 14px 18px; border-top: 1px solid var(--card-border); }
 .profile-section-title { font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -260,12 +267,12 @@ input::placeholder { color: var(--text-muted); }
 .stalk-panel.open { right: 0; }
 .stalk-close { position: absolute; top: 12px; right: 12px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 20px; padding: 4px; }
 .stalk-header { text-align: center; padding: 32px 20px 16px; border-bottom: 1px solid var(--card-border); }
-.stalk-av { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; margin: 0 auto 10px; border: 2px solid var(--green); }
+.stalk-av { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; margin: 0 auto 10px; border: 2px solid var(--accent); }
 .stalk-av svg { width: 100%; height: 100%; display: block; }
 .stalk-name { font-size: 18px; font-weight: 700; }
 .stalk-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--card-border); margin: 16px; border-radius: var(--radius-sm); overflow: hidden; }
 .stalk-stat { background: var(--card); padding: 12px 6px; text-align: center; }
-.stalk-stat .ss-val { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; color: var(--green); }
+.stalk-stat .ss-val { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; color: var(--accent); }
 .stalk-stat .ss-label { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
 .stalk-section { padding: 14px 16px; }
 .stalk-section-title { font-size: 11px; font-weight: 700; color: var(--text-secondary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -288,10 +295,10 @@ input::placeholder { color: var(--text-muted); }
 /* ===== RULES ===== */
 .rules-btn { position: fixed; bottom: 20px; left: 20px; z-index: 50; border-radius: var(--radius-pill); padding: 9px 16px; }
 .rules-content { font-size: 13px; text-align: left; max-height: 60vh; overflow-y: auto; line-height: 1.7; }
-.rules-content h3 { color: var(--green); margin: 18px 0 8px; font-size: 14px; font-weight: 700; }
+.rules-content h3 { color: var(--accent); margin: 18px 0 8px; font-size: 14px; font-weight: 700; }
 .rules-content table { width: 100%; border-collapse: collapse; margin: 8px 0; }
 .rules-content th, .rules-content td { border: 1px solid var(--card-border); padding: 8px 10px; text-align: left; font-size: 12px; }
-.rules-content th { background: var(--green-dim); color: var(--green); font-weight: 600; }
+.rules-content th { background: var(--accent-dim); color: var(--accent); font-weight: 600; }
 .rules-content td { color: var(--text-secondary); }
 .rules-content p { color: var(--text-secondary); margin: 6px 0; }
 
@@ -301,6 +308,23 @@ input::placeholder { color: var(--text-muted); }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.12); }
+
+/* ===== TIMER HERO CARD ===== */
+.timer-card { border: none; background: transparent; box-shadow: none; }
+.timer-card:hover { transform: none; box-shadow: none; }
+.timer-card .card-head { border-bottom: none; justify-content: center; }
+.timer-card .card-body { padding: 8px 18px 28px; }
+
+/* ===== PERFORMANCE 2-COL GRID ===== */
+@media (min-width: 680px) {
+  #tabPerformance { display: none; }
+  #tabPerformance.active { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+  #tabPerformance .card:nth-child(1) { grid-column: 1; }
+  #tabPerformance .card:nth-child(2) { grid-column: 2; }
+  #tabPerformance .card:nth-child(3) { grid-column: 1 / -1; }
+  #tabPerformance .card:nth-child(4) { grid-column: 1 / -1; }
+}
+
 @media (max-width: 500px) {
   .tab-btn { font-size: 12px; gap: 4px; padding: 12px 4px; }
   .tab-btn .icon { font-size: 16px; }
@@ -385,24 +409,24 @@ input::placeholder { color: var(--text-muted); }
     <div class="auth-logo-icon"><span class="icon"><svg><use href="#i-flame"/></svg></span></div>
     <div class="auth-title">Study Streak Battle</div>
   </div>
-  <div class="auth-sub">Ai thua mua cà phê!</div>
+  <div class="auth-sub">Loser buys coffee!</div>
   <div class="auth-box">
     <div class="auth-tabs">
-      <button class="auth-tab active" onclick="showAuthTab('login')">Đăng nhập</button>
-      <button class="auth-tab" onclick="showAuthTab('register')">Đăng ký</button>
+      <button class="auth-tab active" onclick="showAuthTab('login')">Sign In</button>
+      <button class="auth-tab" onclick="showAuthTab('register')">Sign Up</button>
     </div>
     <div class="auth-form-wrap">
       <form id="loginForm" class="auth-form active" onsubmit="return handleLogin(event)">
         <div class="form-group"><label>Email</label><input type="email" id="loginEmail" required placeholder="email@example.com"></div>
-        <div class="form-group"><label>Mật khẩu</label><input type="password" id="loginPass" required placeholder="••••••"></div>
-        <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+        <div class="form-group"><label>Password</label><input type="password" id="loginPass" required placeholder="••••••"></div>
+        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
         <div id="loginError" class="auth-error"></div>
       </form>
       <form id="registerForm" class="auth-form" onsubmit="return handleRegister(event)">
-        <div class="form-group"><label>Tên hiển thị</label><input type="text" id="regName" required maxlength="20" placeholder="Tên của bạn"></div>
+        <div class="form-group"><label>Display Name</label><input type="text" id="regName" required maxlength="20" placeholder="Your name"></div>
         <div class="form-group"><label>Email</label><input type="email" id="regEmail" required placeholder="email@example.com"></div>
-        <div class="form-group"><label>Mật khẩu</label><input type="password" id="regPass" required minlength="6" placeholder="Tối thiểu 6 ký tự"></div>
-        <button type="submit" class="btn btn-primary btn-block">Đăng ký</button>
+        <div class="form-group"><label>Password</label><input type="password" id="regPass" required minlength="6" placeholder="At least 6 characters"></div>
+        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
         <div id="regError" class="auth-error"></div>
       </form>
     </div>
@@ -418,7 +442,7 @@ input::placeholder { color: var(--text-muted); }
       <div class="av-circle" id="headerAvatar"></div>
     </div>
   </header>
-  <div id="setupWarn" class="setup-warn" style="display:none">Chưa cấu hình Firebase!</div>
+  <div id="setupWarn" class="setup-warn" style="display:none">Firebase not configured!</div>
 
   <nav class="tab-bar">
     <button class="tab-btn active" onclick="switchTab('lockin')" data-tab="lockin">
@@ -428,66 +452,66 @@ input::placeholder { color: var(--text-muted); }
       <span class="icon"><svg><use href="#i-chart"/></svg></span> Performance
     </button>
     <button class="tab-btn" onclick="switchTab('round')" data-tab="round">
-      <span class="icon"><svg><use href="#i-trophy"/></svg></span> Vòng đấu
+      <span class="icon"><svg><use href="#i-trophy"/></svg></span> Rounds
     </button>
     <button class="tab-btn" onclick="switchTab('profile')" data-tab="profile">
-      <span class="icon"><svg><use href="#i-user"/></svg></span> Hồ sơ
+      <span class="icon"><svg><use href="#i-user"/></svg></span> Profile
     </button>
   </nav>
 
   <!-- TAB: LOCK-IN -->
   <div id="tabLockin" class="tab-panel active">
-    <div class="card">
+    <div class="card timer-card">
       <div class="card-head">
         <div class="icon-box blue"><span class="icon"><svg><use href="#i-clock"/></svg></span></div>
-        <div class="card-head-title">Đồng hồ học bài</div>
+        <div class="card-head-title">Study Timer</div>
       </div>
       <div class="card-body">
         <div class="timer-mode-toggle">
-          <button class="btn btn-sm sel" onclick="setTimerMode('digital')">Số</button>
-          <button class="btn btn-sm" onclick="setTimerMode('circular')">Tròn</button>
+          <button class="btn btn-sm sel" onclick="setTimerMode('digital')">Digital</button>
+          <button class="btn btn-sm" onclick="setTimerMode('circular')">Circle</button>
         </div>
         <div class="timer-presets">
-          <button class="btn btn-sm" onclick="setPreset(this,30)">30p</button>
-          <button class="btn btn-sm" onclick="setPreset(this,60)">60p</button>
-          <button class="btn btn-sm" onclick="setPreset(this,90)">90p</button>
-          <button class="btn btn-sm" onclick="setPreset(this,120)">120p</button>
+          <button class="btn btn-sm" onclick="setPreset(this,30)">30m</button>
+          <button class="btn btn-sm" onclick="setPreset(this,60)">60m</button>
+          <button class="btn btn-sm" onclick="setPreset(this,90)">90m</button>
+          <button class="btn btn-sm" onclick="setPreset(this,120)">120m</button>
         </div>
         <div class="timer-input-row">
           <input type="number" id="timerInput" value="30" min="1" max="480">
-          <span>phút</span>
+          <span>min</span>
         </div>
         <div class="digital-wrap" id="digitalWrap">
           <div id="timerDisplay" class="timer-display">00:00</div>
           <div class="timer-progress"><div id="timerProgress" class="timer-progress-fill"></div></div>
         </div>
         <div class="circular-wrap" id="circularWrap">
-          <svg viewBox="0 0 220 220" width="220" height="220">
-            <circle cx="110" cy="110" r="96" class="circular-bg"/>
-            <circle cx="110" cy="110" r="96" class="circular-fg" id="circFg" stroke-dasharray="603.19" stroke-dashoffset="0"/>
+          <svg viewBox="0 0 280 280" width="280" height="280">
+            <circle cx="140" cy="140" r="120" class="circular-bg"/>
+            <circle cx="140" cy="140" r="120" class="circular-fg" id="circFg" stroke-dasharray="753.98" stroke-dashoffset="0"/>
           </svg>
           <div class="circular-time" id="circTime">00:00</div>
         </div>
         <div class="mxh-row">
           <input type="checkbox" id="mxhPledge">
-          <label for="mxhPledge">Cam kết không mở MXH</label>
+          <label for="mxhPledge">No social media pledge</label>
         </div>
         <div class="timer-btns">
-          <button id="btnStart" class="btn btn-primary btn-sm" onclick="startTimer()"><span class="icon"><svg><use href="#i-play"/></svg></span> Bắt đầu</button>
-          <button id="btnPause" class="btn btn-sm" onclick="togglePause()" style="display:none"><span class="icon"><svg><use href="#i-pause"/></svg></span> Tạm dừng</button>
-          <button id="btnEnd" class="btn btn-danger btn-sm" onclick="endSession()" style="display:none"><span class="icon"><svg><use href="#i-stop"/></svg></span> Kết thúc</button>
+          <button id="btnStart" class="btn btn-primary btn-sm" onclick="startTimer()"><span class="icon"><svg><use href="#i-play"/></svg></span> Start</button>
+          <button id="btnPause" class="btn btn-sm" onclick="togglePause()" style="display:none"><span class="icon"><svg><use href="#i-pause"/></svg></span> Pause</button>
+          <button id="btnEnd" class="btn btn-danger btn-sm" onclick="endSession()" style="display:none"><span class="icon"><svg><use href="#i-stop"/></svg></span> Stop</button>
         </div>
       </div>
     </div>
     <div class="card">
       <div class="card-head">
         <div class="icon-box green"><span class="icon"><svg><use href="#i-chart"/></svg></span></div>
-        <div class="card-head-title">Hôm nay</div>
+        <div class="card-head-title">Today</div>
       </div>
       <div class="card-body">
-        <div class="today-stat"><span>Tổng thời gian</span><span class="val" id="todayMin">0 phut</span></div>
+        <div class="today-stat"><span>Total Time</span><span class="val" id="todayMin">0 min</span></div>
         <div class="today-stat"><span>Sections</span><span class="val" id="todaySec">0</span></div>
-        <div class="today-stat"><span>Điểm hôm nay</span><span class="val" id="todayPts">0</span></div>
+        <div class="today-stat"><span>Today's Points</span><span class="val" id="todayPts">0</span></div>
         <div id="sessionList" class="session-list"></div>
       </div>
     </div>
@@ -498,45 +522,45 @@ input::placeholder { color: var(--text-muted); }
     <div class="card">
       <div class="card-head">
         <div class="icon-box red"><span class="icon"><svg><use href="#i-flame"/></svg></span></div>
-        <div class="card-head-title">Chuỗi ngày</div>
+        <div class="card-head-title">Streak</div>
       </div>
       <div class="card-body">
         <div id="streakBig" class="streak-big">0</div>
-        <div class="streak-label">ngày liên tiếp</div>
+        <div class="streak-label">days in a row</div>
         <div id="streakNext" class="streak-next"></div>
       </div>
     </div>
     <div class="card">
       <div class="card-head">
         <div class="icon-box green"><span class="icon"><svg><use href="#i-target"/></svg></span></div>
-        <div class="card-head-title">Biểu đồ hoạt động</div>
+        <div class="card-head-title">Activity Chart</div>
       </div>
       <div class="card-body">
         <div class="contrib-wrap" id="contribWrap"></div>
         <div class="contrib-legend">
-          <span>Ít</span>
-          <span class="cbox" style="background:rgba(34,197,94,0.1)"></span>
-          <span class="cbox" style="background:rgba(34,197,94,0.3)"></span>
-          <span class="cbox" style="background:rgba(34,197,94,0.6)"></span>
-          <span class="cbox" style="background:rgba(34,197,94,0.9)"></span>
-          <span>Nhiều</span>
+          <span>Less</span>
+          <span class="cbox" style="background:rgba(139,92,246,0.1)"></span>
+          <span class="cbox" style="background:rgba(139,92,246,0.3)"></span>
+          <span class="cbox" style="background:rgba(139,92,246,0.6)"></span>
+          <span class="cbox" style="background:rgba(139,92,246,0.9)"></span>
+          <span>More</span>
         </div>
       </div>
     </div>
     <div class="card">
       <div class="card-head">
         <div class="icon-box blue"><span class="icon"><svg><use href="#i-chart"/></svg></span></div>
-        <div class="card-head-title">Thời gian học</div>
+        <div class="card-head-title">Study Time</div>
       </div>
       <div class="card-body">
         <div class="chart-filters">
-          <button class="chart-filter active" onclick="setChartFilter('day')">Ngày</button>
-          <button class="chart-filter" onclick="setChartFilter('week')">Tuần</button>
-          <button class="chart-filter" onclick="setChartFilter('month')">Tháng</button>
+          <button class="chart-filter active" onclick="setChartFilter('day')">Day</button>
+          <button class="chart-filter" onclick="setChartFilter('week')">Week</button>
+          <button class="chart-filter" onclick="setChartFilter('month')">Month</button>
         </div>
         <div class="chart-nav">
           <button class="btn btn-sm" onclick="chartPrev()"><span class="icon"><svg><use href="#i-chevL"/></svg></span></button>
-          <span class="chart-nav-label" id="chartLabel">Hôm nay</span>
+          <span class="chart-nav-label" id="chartLabel">Today</span>
           <button class="btn btn-sm" onclick="chartNext()"><span class="icon"><svg><use href="#i-chevR"/></svg></span></button>
         </div>
         <div class="chart-summary" id="chartSummary"></div>
@@ -546,7 +570,7 @@ input::placeholder { color: var(--text-muted); }
     <div class="card">
       <div class="card-head">
         <div class="icon-box amber"><span class="icon"><svg><use href="#i-award"/></svg></span></div>
-        <div class="card-head-title">Thành tựu</div>
+        <div class="card-head-title">Achievements</div>
       </div>
       <div class="card-body" id="achievementsWrap"></div>
     </div>
@@ -557,46 +581,46 @@ input::placeholder { color: var(--text-muted); }
     <div class="card">
       <div class="card-head">
         <div class="icon-box purple"><span class="icon"><svg><use href="#i-target"/></svg></span></div>
-        <div class="card-head-title">Vòng hiện tại</div>
+        <div class="card-head-title">Current Round</div>
       </div>
       <div class="card-body">
         <div id="roundCountdown" class="round-countdown"></div>
-        <div id="roundContent" style="font-size:13px;color:var(--text-secondary)">Đang tải...</div>
+        <div id="roundContent" style="font-size:13px;color:var(--text-secondary)">Loading...</div>
       </div>
     </div>
     <div class="card">
       <div class="card-head">
         <div class="icon-box amber"><span class="icon"><svg><use href="#i-trophy"/></svg></span></div>
-        <div class="card-head-title">Bảng xếp hạng</div>
+        <div class="card-head-title">Leaderboard</div>
       </div>
       <div class="card-body">
         <div class="lb-tabs">
-          <button class="lb-tab active" onclick="showLbTab(this,'round')">Vòng này</button>
-          <button class="lb-tab" onclick="showLbTab(this,'all')">Tích lũy</button>
+          <button class="lb-tab active" onclick="showLbTab(this,'round')">This Round</button>
+          <button class="lb-tab" onclick="showLbTab(this,'all')">All Time</button>
         </div>
-        <div id="lbList"><div style="font-size:13px;color:var(--text-secondary)">Đang tải...</div></div>
+        <div id="lbList"><div style="font-size:13px;color:var(--text-secondary)">Loading...</div></div>
       </div>
     </div>
     <div class="card">
       <div class="card-head">
         <div class="icon-box blue"><span class="icon"><svg><use href="#i-edit"/></svg></span></div>
-        <div class="card-head-title">Tạo vòng mới</div>
+        <div class="card-head-title">Create New Round</div>
       </div>
       <div class="card-body">
-        <div class="form-group"><label>Ngày bắt đầu</label><input type="date" id="propStart"></div>
-        <div class="form-group"><label>Ngày kết thúc</label><input type="date" id="propEnd"></div>
-        <button class="btn btn-primary btn-block" onclick="proposeRound()"><span class="icon"><svg><use href="#i-play"/></svg></span> Đề xuất</button>
+        <div class="form-group"><label>Start Date</label><input type="date" id="propStart"></div>
+        <div class="form-group"><label>End Date</label><input type="date" id="propEnd"></div>
+        <button class="btn btn-primary btn-block" onclick="proposeRound()"><span class="icon"><svg><use href="#i-play"/></svg></span> Propose</button>
         <div id="proposalStatus" style="font-size:12px;color:var(--text-secondary);margin-top:10px"></div>
       </div>
     </div>
     <div class="card">
       <div class="card-head">
         <div class="icon-box red"><span class="icon"><svg><use href="#i-history"/></svg></span></div>
-        <div class="card-head-title">Lịch sử & Hall of Shame</div>
+        <div class="card-head-title">History & Hall of Shame</div>
       </div>
       <div class="card-body">
         <div id="shameSection" class="shame-card" style="display:none"></div>
-        <div id="roundHistoryList" style="font-size:13px;color:var(--text-secondary)">Chưa có lịch sử</div>
+        <div id="roundHistoryList" style="font-size:13px;color:var(--text-secondary)">No history yet</div>
       </div>
     </div>
   </div>
@@ -609,28 +633,28 @@ input::placeholder { color: var(--text-muted); }
         <div class="profile-name" id="profileName"></div>
         <div class="profile-email" id="profileEmail"></div>
         <div class="profile-stats">
-          <div class="profile-stat"><div class="ps-val" id="psTotalMin">0</div><div class="ps-label">phút</div></div>
+          <div class="profile-stat"><div class="ps-val" id="psTotalMin">0</div><div class="ps-label">min</div></div>
           <div class="profile-stat"><div class="ps-val" id="psTotalSec">0</div><div class="ps-label">sections</div></div>
           <div class="profile-stat"><div class="ps-val" id="psLongest">0</div><div class="ps-label">streak max</div></div>
         </div>
       </div>
       <div class="profile-section">
-        <div class="profile-section-title">Chỉnh sửa hồ sơ</div>
-        <div class="form-group"><label>Tên hiển thị</label>
-          <div style="display:flex;gap:8px"><input type="text" id="editName" maxlength="20"><button class="btn btn-sm" onclick="changeName()">Lưu</button></div>
+        <div class="profile-section-title">Edit Profile</div>
+        <div class="form-group"><label>Display Name</label>
+          <div style="display:flex;gap:8px"><input type="text" id="editName" maxlength="20"><button class="btn btn-sm" onclick="changeName()">Save</button></div>
         </div>
-        <div class="form-group"><label>Mật khẩu mới</label>
-          <div style="display:flex;gap:8px"><input type="password" id="editPass" minlength="6" placeholder="Tối thiểu 6 ký tự"><button class="btn btn-sm" onclick="changePass()">Đổi</button></div>
+        <div class="form-group"><label>New Password</label>
+          <div style="display:flex;gap:8px"><input type="password" id="editPass" minlength="6" placeholder="At least 6 characters"><button class="btn btn-sm" onclick="changePass()">Change</button></div>
         </div>
         <div id="profileMsg" style="font-size:12px;margin-top:8px;min-height:18px"></div>
       </div>
       <div class="profile-section">
-        <button class="btn btn-danger btn-block" onclick="handleLogout()"><span class="icon"><svg><use href="#i-log-out"/></svg></span> Đăng xuất</button>
+        <button class="btn btn-danger btn-block" onclick="handleLogout()"><span class="icon"><svg><use href="#i-log-out"/></svg></span> Sign Out</button>
       </div>
     </div>
   </div>
 
-  <button class="btn btn-sm rules-btn" onclick="toggleRules()"><span class="icon"><svg><use href="#i-scroll"/></svg></span> Luật chơi</button>
+  <button class="btn btn-sm rules-btn" onclick="toggleRules()"><span class="icon"><svg><use href="#i-scroll"/></svg></span> Rules</button>
 </div>
 
 <!-- STALK PANEL -->
@@ -643,11 +667,11 @@ input::placeholder { color: var(--text-muted); }
   </div>
   <div class="stalk-stats" id="stalkStats"></div>
   <div class="stalk-section">
-    <div class="stalk-section-title">Biểu đồ hoạt động</div>
+    <div class="stalk-section-title">Activity Chart</div>
     <div id="stalkContrib"></div>
   </div>
   <div class="stalk-section">
-    <div class="stalk-section-title">Khung giờ học</div>
+    <div class="stalk-section-title">Study Hours</div>
     <div id="stalkHourly"></div>
   </div>
 </div>
@@ -657,32 +681,32 @@ input::placeholder { color: var(--text-muted); }
   <div class="modal">
     <div class="card-head"><div class="icon-box red"><span class="icon"><svg><use href="#i-shield"/></svg></span></div><div class="card-head-title">Streak Recovery</div></div>
     <div class="card-body" style="text-align:center">
-      <p>Bạn đã bỏ lỡ 1 ngày học!</p>
-      <p>Chuỗi hiện tại: <span id="recStreak" style="color:var(--amber);font-weight:700"></span> ngay</p>
-      <p>Chi phí chuộc:</p>
+      <p>You missed a day of studying!</p>
+      <p>Current streak: <span id="recStreak" style="color:var(--amber);font-weight:700"></span> days</p>
+      <p>Recovery cost:</p>
       <div class="cost" id="recCost"></div>
       <p style="font-size:12px;color:var(--text-muted)" id="recExplain"></p>
       <div class="modal-btns">
-        <button class="btn btn-primary btn-sm" onclick="useRecovery()">Chuộc streak</button>
-        <button class="btn btn-danger btn-sm" onclick="skipRecovery()">Bỏ qua</button>
+        <button class="btn btn-primary btn-sm" onclick="useRecovery()">Recover Streak</button>
+        <button class="btn btn-danger btn-sm" onclick="skipRecovery()">Skip</button>
       </div>
     </div>
   </div>
 </div>
 <div id="voteModal" class="modal-overlay">
   <div class="modal">
-    <div class="card-head"><div class="icon-box green"><span class="icon"><svg><use href="#i-vote"/></svg></span></div><div class="card-head-title">Bỏ phiếu vòng mới</div></div>
+    <div class="card-head"><div class="icon-box green"><span class="icon"><svg><use href="#i-vote"/></svg></span></div><div class="card-head-title">Vote for New Round</div></div>
     <div class="card-body vote-wrap" style="text-align:center">
-      <div id="voteTitle" style="font-size:16px;font-weight:700;color:var(--amber);margin-bottom:12px">Vòng đã kết thúc!</div>
-      <p>Chọn thời lượng vòng tiếp:</p>
+      <div id="voteTitle" style="font-size:16px;font-weight:700;color:var(--amber);margin-bottom:12px">Round has ended!</div>
+      <p>Choose next round duration:</p>
       <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0">
-        <button class="btn btn-sm" onclick="castVote(3)">3 ngay</button>
-        <button class="btn btn-sm" onclick="castVote(5)">5 ngay</button>
-        <button class="btn btn-sm" onclick="castVote(7)">7 ngay</button>
-        <button class="btn btn-sm" onclick="castVote(10)">10 ngay</button>
-        <button class="btn btn-sm" onclick="castVote(14)">14 ngay</button>
-        <button class="btn btn-sm" onclick="castVote(21)">21 ngay</button>
-        <button class="btn btn-sm" onclick="castVote(30)">30 ngay</button>
+        <button class="btn btn-sm" onclick="castVote(3)">3 days</button>
+        <button class="btn btn-sm" onclick="castVote(5)">5 days</button>
+        <button class="btn btn-sm" onclick="castVote(7)">7 days</button>
+        <button class="btn btn-sm" onclick="castVote(10)">10 days</button>
+        <button class="btn btn-sm" onclick="castVote(14)">14 days</button>
+        <button class="btn btn-sm" onclick="castVote(21)">21 days</button>
+        <button class="btn btn-sm" onclick="castVote(30)">30 days</button>
       </div>
       <div id="voteStatus" style="font-size:13px;color:var(--text-secondary);margin-top:10px;line-height:1.8"></div>
     </div>
@@ -690,39 +714,39 @@ input::placeholder { color: var(--text-muted); }
 </div>
 <div id="rulesModal" class="modal-overlay">
   <div class="modal" style="max-width:520px">
-    <div class="card-head"><div class="icon-box blue"><span class="icon"><svg><use href="#i-scroll"/></svg></span></div><div class="card-head-title">Luật chơi</div></div>
+    <div class="card-head"><div class="icon-box blue"><span class="icon"><svg><use href="#i-scroll"/></svg></span></div><div class="card-head-title">Rules</div></div>
     <div class="card-body rules-content">
-      <h3>Tính điểm</h3>
-      <table><tr><th>Hành động</th><th>Điểm</th></tr>
-      <tr><td>1 section (30 phút)</td><td>+10</td></tr>
-      <tr><td>Cam kết không MXH</td><td>+5/section</td></tr>
-      <tr><td>Phút lẻ cuối ngày</td><td>(phut/30) x 10</td></tr></table>
-      <h3>Chuỗi ngày (Streak)</h3>
-      <table><tr><th>Ngày</th><th>Bonus</th></tr>
+      <h3>Scoring</h3>
+      <table><tr><th>Action</th><th>Points</th></tr>
+      <tr><td>1 section (30 min)</td><td>+10</td></tr>
+      <tr><td>No social media pledge</td><td>+5/section</td></tr>
+      <tr><td>Remaining minutes</td><td>(min/30) &times; 10</td></tr></table>
+      <h3>Streak</h3>
+      <table><tr><th>Day</th><th>Bonus</th></tr>
       <tr><td>2</td><td>+5</td></tr><tr><td>5</td><td>+15</td></tr>
       <tr><td>7</td><td>+30</td></tr><tr><td>14</td><td>+60</td></tr>
       <tr><td>30</td><td>+120</td></tr><tr><td>40</td><td>+200</td></tr>
       <tr><td>50</td><td>+350</td></tr><tr><td>60</td><td>+550</td></tr>
-      <tr><td>Sau 60</td><td>+20/ngay</td></tr></table>
-      <p>Recovery: bỏ lỡ 1 ngày = trả 1.2x bonus gần nhất để giữ streak. Bỏ 2+ ngày = mất streak.</p>
-      <h3>Cột mốc sections</h3>
-      <table><tr><th>Tổng</th><th>Bonus</th></tr>
+      <tr><td>60+</td><td>+20/day</td></tr></table>
+      <p>Recovery: miss 1 day = pay 1.2&times; latest milestone bonus to keep your streak. Miss 2+ days = streak lost.</p>
+      <h3>Section Milestones</h3>
+      <table><tr><th>Total</th><th>Bonus</th></tr>
       <tr><td>1</td><td>+5</td></tr><tr><td>10</td><td>+30</td></tr>
       <tr><td>25</td><td>+60</td></tr><tr><td>50</td><td>+120</td></tr>
       <tr><td>75</td><td>+180</td></tr><tr><td>100</td><td>+300</td></tr>
       <tr><td>150</td><td>+450</td></tr><tr><td>200</td><td>+700</td></tr></table>
-      <h3>Vòng đấu</h3>
-      <p>Bất kỳ ai cũng có thể đề xuất vòng mới với ngày bắt đầu/kết thúc. Cuối vòng, người cuối bảng mua cà phê!</p>
-      <div style="margin-top:20px;text-align:center"><button class="btn btn-sm" onclick="toggleRules()">Đóng</button></div>
+      <h3>Rounds</h3>
+      <p>Anyone can propose a new round with start/end dates. At the end of each round, the last-place player buys coffee!</p>
+      <div style="margin-top:20px;text-align:center"><button class="btn btn-sm" onclick="toggleRules()">Close</button></div>
     </div>
   </div>
 </div>
 <div id="avatarModal" class="modal-overlay">
   <div class="modal" style="max-width:400px">
-    <div class="card-head"><div class="icon-box green"><span class="icon"><svg><use href="#i-user"/></svg></span></div><div class="card-head-title">Chọn avatar</div></div>
+    <div class="card-head"><div class="icon-box green"><span class="icon"><svg><use href="#i-user"/></svg></span></div><div class="card-head-title">Choose Avatar</div></div>
     <div class="card-body">
       <div class="av-picker-grid" id="avPickerGrid"></div>
-      <div style="margin-top:14px;text-align:center"><button class="btn btn-sm" onclick="closeAvatarPicker()">Đóng</button></div>
+      <div style="margin-top:14px;text-align:center"><button class="btn btn-sm" onclick="closeAvatarPicker()">Close</button></div>
     </div>
   </div>
 </div>
@@ -757,53 +781,53 @@ const SECTION_MS = [
   {sec:75,bonus:180},{sec:100,bonus:300},{sec:150,bonus:450},{sec:200,bonus:700}
 ];
 const DEFAULT_ROUND = 5;
-const CIRC = 2 * Math.PI * 96; // ~603.19 for circular timer
+const CIRC = 2 * Math.PI * 120; // ~753.98 for circular timer
 
 /* ===== AVATARS ===== */
 const AVATARS = [
-  {id:'cat',name:'Mèo',color:'#f59e0b',unlockAt:0},
-  {id:'dog',name:'Chó',color:'#3b82f6',unlockAt:0},
-  {id:'panda',name:'Gấu trúc',color:'#6b7280',unlockAt:0},
-  {id:'penguin',name:'Chim cánh cụt',color:'#0ea5e9',unlockAt:0},
-  {id:'rabbit',name:'Thỏ',color:'#ec4899',unlockAt:0},
-  {id:'fox',name:'Cáo',color:'#f97316',unlockAt:3},
-  {id:'owl',name:'Cú',color:'#8b5cf6',unlockAt:3},
-  {id:'bear',name:'Gấu',color:'#92400e',unlockAt:3},
-  {id:'lion',name:'Sư tử',color:'#eab308',unlockAt:6},
-  {id:'wolf',name:'Sói',color:'#64748b',unlockAt:6},
-  {id:'eagle',name:'Đại bàng',color:'#b91c1c',unlockAt:6},
-  {id:'dragon',name:'Rồng',color:'#dc2626',unlockAt:10},
-  {id:'shark',name:'Cá mập',color:'#0284c7',unlockAt:10},
-  {id:'phoenix',name:'Phượng hoàng',color:'#ea580c',unlockAt:10},
-  {id:'unicorn',name:'Kỳ lân',color:'#d946ef',unlockAt:15},
-  {id:'crown-av',name:'Vương miện',color:'#ca8a04',unlockAt:20}
+  {id:'cat',name:'Cat',color:'#f59e0b',unlockAt:0},
+  {id:'dog',name:'Dog',color:'#3b82f6',unlockAt:0},
+  {id:'panda',name:'Panda',color:'#6b7280',unlockAt:0},
+  {id:'penguin',name:'Penguin',color:'#0ea5e9',unlockAt:0},
+  {id:'rabbit',name:'Rabbit',color:'#ec4899',unlockAt:0},
+  {id:'fox',name:'Fox',color:'#f97316',unlockAt:3},
+  {id:'owl',name:'Owl',color:'#8b5cf6',unlockAt:3},
+  {id:'bear',name:'Bear',color:'#92400e',unlockAt:3},
+  {id:'lion',name:'Lion',color:'#eab308',unlockAt:6},
+  {id:'wolf',name:'Wolf',color:'#64748b',unlockAt:6},
+  {id:'eagle',name:'Eagle',color:'#b91c1c',unlockAt:6},
+  {id:'dragon',name:'Dragon',color:'#dc2626',unlockAt:10},
+  {id:'shark',name:'Shark',color:'#0284c7',unlockAt:10},
+  {id:'phoenix',name:'Phoenix',color:'#ea580c',unlockAt:10},
+  {id:'unicorn',name:'Unicorn',color:'#d946ef',unlockAt:15},
+  {id:'crown-av',name:'Crown',color:'#ca8a04',unlockAt:20}
 ];
 
 /* ===== ACHIEVEMENTS ===== */
 const ACHIEVEMENTS = [
   // Streak
-  {id:'s2',cat:'streak',name:'Khởi đầu',desc:'Streak 2 ngày',icon:'flame',color:'amber',check:d=>d.currentStreak>=2},
-  {id:'s5',cat:'streak',name:'Kiên trì',desc:'Streak 5 ngày',icon:'flame',color:'amber',check:d=>d.currentStreak>=5||d.longestStreak>=5},
-  {id:'s7',cat:'streak',name:'Một tuần',desc:'Streak 7 ngày',icon:'flame',color:'amber',check:d=>d.longestStreak>=7},
-  {id:'s14',cat:'streak',name:'Hai tuần',desc:'Streak 14 ngày',icon:'flame',color:'amber',check:d=>d.longestStreak>=14},
-  {id:'s30',cat:'streak',name:'Kỷ luật',desc:'Streak 30 ngày',icon:'flame',color:'red',check:d=>d.longestStreak>=30},
-  {id:'s50',cat:'streak',name:'Huyền thoại',desc:'Streak 50 ngày',icon:'flame',color:'red',check:d=>d.longestStreak>=50},
-  {id:'s60',cat:'streak',name:'Bất tử',desc:'Streak 60 ngày',icon:'crown',color:'amber',check:d=>d.longestStreak>=60},
+  {id:'s2',cat:'streak',name:'First Spark',desc:'2-day streak',icon:'flame',color:'amber',check:d=>d.currentStreak>=2},
+  {id:'s5',cat:'streak',name:'Persistent',desc:'5-day streak',icon:'flame',color:'amber',check:d=>d.currentStreak>=5||d.longestStreak>=5},
+  {id:'s7',cat:'streak',name:'One Week',desc:'7-day streak',icon:'flame',color:'amber',check:d=>d.longestStreak>=7},
+  {id:'s14',cat:'streak',name:'Two Weeks',desc:'14-day streak',icon:'flame',color:'amber',check:d=>d.longestStreak>=14},
+  {id:'s30',cat:'streak',name:'Disciplined',desc:'30-day streak',icon:'flame',color:'red',check:d=>d.longestStreak>=30},
+  {id:'s50',cat:'streak',name:'Legendary',desc:'50-day streak',icon:'flame',color:'red',check:d=>d.longestStreak>=50},
+  {id:'s60',cat:'streak',name:'Immortal',desc:'60-day streak',icon:'crown',color:'amber',check:d=>d.longestStreak>=60},
   // Sections
-  {id:'x1',cat:'section',name:'Phiên đầu',desc:'1 section',icon:'star',color:'green',check:d=>d.totalSections>=1},
-  {id:'x10',cat:'section',name:'Chạy đà',desc:'10 sections',icon:'star',color:'green',check:d=>d.totalSections>=10},
-  {id:'x25',cat:'section',name:'Tăng tốc',desc:'25 sections',icon:'star',color:'green',check:d=>d.totalSections>=25},
-  {id:'x50',cat:'section',name:'Nửa trăm',desc:'50 sections',icon:'star',color:'blue',check:d=>d.totalSections>=50},
-  {id:'x100',cat:'section',name:'Trăm phiên',desc:'100 sections',icon:'star',color:'blue',check:d=>d.totalSections>=100},
-  {id:'x200',cat:'section',name:'Bậc thầy',desc:'200 sections',icon:'crown',color:'green',check:d=>d.totalSections>=200},
+  {id:'x1',cat:'section',name:'First Step',desc:'1 section',icon:'star',color:'green',check:d=>d.totalSections>=1},
+  {id:'x10',cat:'section',name:'Warming Up',desc:'10 sections',icon:'star',color:'green',check:d=>d.totalSections>=10},
+  {id:'x25',cat:'section',name:'Accelerating',desc:'25 sections',icon:'star',color:'green',check:d=>d.totalSections>=25},
+  {id:'x50',cat:'section',name:'Half Century',desc:'50 sections',icon:'star',color:'blue',check:d=>d.totalSections>=50},
+  {id:'x100',cat:'section',name:'Centurion',desc:'100 sections',icon:'star',color:'blue',check:d=>d.totalSections>=100},
+  {id:'x200',cat:'section',name:'Grandmaster',desc:'200 sections',icon:'crown',color:'green',check:d=>d.totalSections>=200},
   // Special
-  {id:'night',cat:'special',name:'Cú đêm',desc:'5 phiên sau 22h',icon:'moon',color:'purple',check:d=>(d.nightSessions||0)>=5},
-  {id:'early',cat:'special',name:'Chim sớm',desc:'5 phiên trước 8h',icon:'sun',color:'amber',check:d=>(d.earlySessions||0)>=5},
-  {id:'marathon',cat:'special',name:'Marathon',desc:'3h+ trong 1 ngày',icon:'zap',color:'red',check:d=>(d.maxDayMinutes||0)>=180},
-  {id:'diligent',cat:'special',name:'Chăm chỉ',desc:'4+ sections/ngày',icon:'target',color:'green',check:d=>(d.maxDaySections||0)>=4},
-  {id:'nomxh',cat:'special',name:'Kháng MXH',desc:'20 phiên no MXH',icon:'shield',color:'blue',check:d=>(d.mxhSessions||0)>=20},
-  {id:'winner',cat:'special',name:'Bất bại',desc:'Thắng 3 vòng',icon:'trophy',color:'amber',check:d=>(d.roundsWon||0)>=3},
-  {id:'loser',cat:'special',name:'Kẻ thua',desc:'Thua 3 vòng',icon:'coffee',color:'red',check:d=>(d.roundsLost||0)>=3},
+  {id:'night',cat:'special',name:'Night Owl',desc:'5 sessions after 10pm',icon:'moon',color:'purple',check:d=>(d.nightSessions||0)>=5},
+  {id:'early',cat:'special',name:'Early Bird',desc:'5 sessions before 8am',icon:'sun',color:'amber',check:d=>(d.earlySessions||0)>=5},
+  {id:'marathon',cat:'special',name:'Marathon',desc:'3h+ in one day',icon:'zap',color:'red',check:d=>(d.maxDayMinutes||0)>=180},
+  {id:'diligent',cat:'special',name:'Diligent',desc:'4+ sections/day',icon:'target',color:'green',check:d=>(d.maxDaySections||0)>=4},
+  {id:'nomxh',cat:'special',name:'Social Detox',desc:'20 no-social sessions',icon:'shield',color:'blue',check:d=>(d.mxhSessions||0)>=20},
+  {id:'winner',cat:'special',name:'Undefeated',desc:'Won 3 rounds',icon:'trophy',color:'amber',check:d=>(d.roundsWon||0)>=3},
+  {id:'loser',cat:'special',name:'Coffee Buyer',desc:'Lost 3 rounds',icon:'coffee',color:'red',check:d=>(d.roundsLost||0)>=3},
 ];
 
 /* ===== SVG HELPERS ===== */
@@ -871,7 +895,7 @@ function handleLogin(e) {
     document.getElementById('loginEmail').value.trim(),
     document.getElementById('loginPass').value
   ).catch(function(err) {
-    el.textContent = err.code==='auth/invalid-credential' ? 'Sai email hoặc mật khẩu' : err.message;
+    el.textContent = err.code==='auth/invalid-credential' ? 'Wrong email or password' : err.message;
   });
   return false;
 }
@@ -896,13 +920,13 @@ function handleRegister(e) {
       });
     });
   }).catch(function(err) {
-    el.textContent = err.code==='auth/email-already-in-use' ? 'Email đã được sử dụng' : err.message;
+    el.textContent = err.code==='auth/email-already-in-use' ? 'Email already in use' : err.message;
   });
   return false;
 }
 
 function handleLogout() {
-  if (tmrRunning && !confirm('Timer đang chạy! Thoát?')) return;
+  if (tmrRunning && !confirm('Timer is running! Leave?')) return;
   if (tmrInterval) clearInterval(tmrInterval);
   tmrRunning = false;
   auth.signOut();
@@ -952,7 +976,7 @@ function killListeners() { unsubs.forEach(function(f) { f(); }); unsubs = []; }
 /* ===== TIMER ===== */
 function setTimerMode(mode) {
   timerMode = mode;
-  document.querySelectorAll('.timer-mode-toggle .btn').forEach(function(b) { b.classList.toggle('sel', b.textContent.trim() === (mode==='digital'?'Số':'Tròn')); });
+  document.querySelectorAll('.timer-mode-toggle .btn').forEach(function(b) { b.classList.toggle('sel', b.textContent.trim() === (mode==='digital'?'Digital':'Circle')); });
   document.getElementById('digitalWrap').classList.toggle('hidden', mode === 'circular');
   var cw = document.getElementById('circularWrap');
   cw.classList.toggle('active', mode === 'circular');
@@ -1006,8 +1030,8 @@ function togglePause() {
   }
   tmrPaused = !tmrPaused;
   document.getElementById('btnPause').innerHTML = tmrPaused
-    ? '<span class="icon"><svg><use href="#i-play"/></svg></span> Tiep tuc'
-    : '<span class="icon"><svg><use href="#i-pause"/></svg></span> Tam dung';
+    ? '<span class="icon"><svg><use href="#i-play"/></svg></span> Resume'
+    : '<span class="icon"><svg><use href="#i-pause"/></svg></span> Pause';
 }
 
 function endSession() {
@@ -1022,7 +1046,7 @@ function endSession() {
   document.getElementById('timerInput').disabled = false;
   document.getElementById('tmrDot').style.display = 'none';
   if (tmrElapsed >= 60) logSession(tmrElapsed);
-  else toast('Phiên < 1 phút, không ghi nhận.');
+  else toast('Session under 1 min — not recorded.');
   tmrRemain = 0; showTmr();
   document.getElementById('timerProgress').style.width = '0%';
   if (timerMode === 'circular') updateCircular();
@@ -1048,7 +1072,7 @@ function updTmrBtns() {
   document.getElementById('btnPause').style.display = tmrRunning ? '' : 'none';
   document.getElementById('btnEnd').style.display = tmrRunning ? '' : 'none';
   if (tmrRunning) {
-    document.getElementById('btnPause').innerHTML = '<span class="icon"><svg><use href="#i-pause"/></svg></span> Tam dung';
+    document.getElementById('btnPause').innerHTML = '<span class="icon"><svg><use href="#i-pause"/></svg></span> Pause';
     tmrPaused = false;
   }
 }
@@ -1084,7 +1108,7 @@ function logSession(sec) {
       d.minutes += min;
       d.sessionCount = (d.sessionCount || 0) + 1;
       if (!d.sessionLog) d.sessionLog = [];
-      d.sessionLog.push({min: min, mxh: mxh, time: new Date().toLocaleTimeString('vi-VN'), startHour: startHour});
+      d.sessionLog.push({min: min, mxh: mxh, time: new Date().toLocaleTimeString('en-US'), startHour: startHour});
       d.mxhPledge = d.mxhPledge || mxh;
 
       var full = Math.floor(d.minutes / 30);
@@ -1100,7 +1124,7 @@ function logSession(sec) {
     cachedDays = null;
     return recalc();
   }).then(function() {
-    toast('+' + min + ' phút đã ghi nhận!');
+    toast('+' + min + ' min recorded!');
   });
 }
 
@@ -1137,7 +1161,7 @@ function recalc() {
       STREAK_MS.forEach(function(m) {
         if (streak >= m.days && !smsR.includes(m.days)) {
           smsR.push(m.days); bp += m.bonus; newBonus += m.bonus;
-          toast(svgIcon('flame',14) + ' Streak ' + m.days + ' ngày! +' + m.bonus);
+          toast(svgIcon('flame',14) + ' ' + m.days + '-day streak! +' + m.bonus);
         }
       });
       if (streak > 60) {
@@ -1200,7 +1224,7 @@ function finishRecalc(uRef, totMin, totSec, streak, smsR, secR, bp, newBonus,
     var allAch = oldAch.concat(newAch);
     newAch.forEach(function(aid) {
       var a = ACHIEVEMENTS.find(function(x) { return x.id === aid; });
-      if (a) toast(svgIcon(a.icon,14) + ' Thành tựu: ' + a.name + '!');
+      if (a) toast(svgIcon(a.icon,14) + ' Achievement: ' + a.name + '!');
     });
 
     return uRef.update({
@@ -1235,9 +1259,9 @@ function checkRecovery() {
   if (diff === 2) {
     var cost = recoveryCost(myData.currentStreak);
     document.getElementById('recStreak').textContent = myData.currentStreak;
-    document.getElementById('recCost').textContent = '-' + cost + ' điểm';
+    document.getElementById('recCost').textContent = '-' + cost + ' pts';
     var m = lastStreakMs(myData.currentStreak);
-    document.getElementById('recExplain').textContent = '(1.2 x ' + m.bonus + ' bonus mốc ngày ' + m.days + ')';
+    document.getElementById('recExplain').textContent = '(1.2\u00d7 ' + m.bonus + ' bonus for day ' + m.days + ' milestone)';
     document.getElementById('recoveryModal').classList.add('show');
   } else if (diff > 2) {
     var lost = myData.currentStreak;
@@ -1248,7 +1272,7 @@ function checkRecovery() {
     }).then(function() {
       myData.currentStreak = 0; myData.streakMs = [];
       myData.bonusPts = (myData.bonusPts || 0) - lostBonus;
-      toast('Streak ' + lost + ' ngày đã mất!' + (lostBonus ? (' -' + lostBonus + ' bonus') : ''));
+      toast(lost + '-day streak lost!' + (lostBonus ? (' -' + lostBonus + ' bonus') : ''));
       renderMs();
     });
   }
@@ -1284,7 +1308,7 @@ function useRecovery() {
     return db.collection('users').doc(uid).update({ bonusPts: firebase.firestore.FieldValue.increment(-cost) });
   }).then(function() {
     myData.bonusPts = (myData.bonusPts||0) - cost;
-    toast('Đã chuộc streak! -' + cost + ' điểm');
+    toast('Streak recovered! -' + cost + ' pts');
     cachedDays = null;
     return recalc();
   });
@@ -1300,7 +1324,7 @@ function skipRecovery() {
   }).then(function() {
     myData.currentStreak = 0; myData.streakMs = [];
     myData.bonusPts = (myData.bonusPts||0) - lostBonus;
-    toast('Streak ' + lost + ' ngày đã mất.' + (lostBonus ? (' -' + lostBonus + ' bonus') : ''));
+    toast(lost + '-day streak lost.' + (lostBonus ? (' -' + lostBonus + ' bonus') : ''));
     renderMs();
   });
 }
@@ -1331,7 +1355,7 @@ function checkRoundEnd() {
     round.status = 'voting';
     db.collection('settings').doc('round').update({status: 'voting'});
     saveRoundResult();
-    document.getElementById('voteTitle').textContent = 'Vòng ' + round.number + ' đã kết thúc!';
+    document.getElementById('voteTitle').textContent = 'Round ' + round.number + ' has ended!';
     document.getElementById('voteModal').classList.add('show');
     updVoteStatus();
   }
@@ -1361,7 +1385,7 @@ function castVote(days) {
   var v = round.votes || {};
   v[me.uid] = days;
   db.collection('settings').doc('round').update({votes: v}).then(function() {
-    toast('Đã bỏ phiếu: ' + days + ' ngày');
+    toast('Voted: ' + days + ' days');
     round.votes = v;
     var total = users.length, voted = Object.keys(v).length;
     if (voted >= total && total >= 2) nextRound(v);
@@ -1371,8 +1395,8 @@ function castVote(days) {
 
 function updVoteStatus() {
   var v = round.votes || {};
-  var h = 'Đã bỏ phiếu: ' + Object.keys(v).length + '/' + users.length + '<br>';
-  users.forEach(function(u) { h += esc(u.displayName) + ': ' + (v[u.id] ? v[u.id] + ' ngày' : 'chưa') + '<br>'; });
+  var h = 'Voted: ' + Object.keys(v).length + '/' + users.length + '<br>';
+  users.forEach(function(u) { h += esc(u.displayName) + ': ' + (v[u.id] ? v[u.id] + ' days' : 'pending') + '<br>'; });
   document.getElementById('voteStatus').innerHTML = h;
   if (v[me.uid]) {
     document.querySelectorAll('#voteModal .btn-sm').forEach(function(b) { b.disabled = true; b.style.opacity = '.5'; });
@@ -1387,7 +1411,7 @@ function nextRound(v) {
   db.collection('settings').doc('round').set(round).then(function() {
     document.getElementById('voteModal').classList.remove('show');
     document.querySelectorAll('#voteModal .btn-sm').forEach(function(b) { b.disabled = false; b.style.opacity = '1'; });
-    toast('Vòng ' + round.number + ' bắt đầu! (' + win + ' ngày)');
+    toast('Round ' + round.number + ' started! (' + win + ' days)');
     renderRound();
   });
 }
@@ -1403,14 +1427,14 @@ function calcWin(vals) {
 function proposeRound() {
   var s = document.getElementById('propStart').value;
   var e = document.getElementById('propEnd').value;
-  if (!s || !e) { toast('Chọn ngày bắt đầu và kết thúc'); return; }
-  if (e <= s) { toast('Ngày kết thúc phải sau ngày bắt đầu'); return; }
+  if (!s || !e) { toast('Select start and end dates'); return; }
+  if (e <= s) { toast('End date must be after start date'); return; }
   var dur = daysBtw(s, e);
   round = {number: (round ? (round.number||0) : 0) + 1, startDate: s, endDate: e, duration: dur, status: 'active', votes: {}};
   db.collection('settings').doc('round').set(round).then(function() {
-    toast('Vòng ' + round.number + ' đã được tạo! (' + dur + ' ngày)');
+    toast('Round ' + round.number + ' created! (' + dur + ' days)');
     renderRound();
-    document.getElementById('proposalStatus').textContent = 'Đã tạo vòng mới thành công!';
+    document.getElementById('proposalStatus').textContent = 'New round created successfully!';
   });
 }
 
@@ -1425,7 +1449,7 @@ function loadRoundHistory() {
 function renderRoundHistory() {
   var el = document.getElementById('roundHistoryList');
   var shame = document.getElementById('shameSection');
-  if (!roundHistory.length) { el.innerHTML = '<div style="font-size:13px;color:var(--text-secondary)">Chưa có lịch sử</div>'; shame.style.display = 'none'; return; }
+  if (!roundHistory.length) { el.innerHTML = '<div style="font-size:13px;color:var(--text-secondary)">No history yet</div>'; shame.style.display = 'none'; return; }
 
   // Hall of Shame
   var loseCounts = {};
@@ -1436,8 +1460,8 @@ function renderRoundHistory() {
   if (shameEntries.length) {
     shame.style.display = 'block';
     shame.innerHTML = svgIcon('coffee',20) + '<div class="shame-name">' + esc(shameEntries[0][0]) + '</div>' +
-      '<div class="shame-count">Mua cà phê' + shameEntries[0][1] + ' lần</div>' +
-      '<div style="font-size:11px;color:var(--text-muted);margin-top:6px">Người thua nhiều nhất</div>';
+      '<div class="shame-count">Bought coffee ' + shameEntries[0][1] + ' times</div>' +
+      '<div style="font-size:11px;color:var(--text-muted);margin-top:6px">Most losses</div>';
   }
 
   el.innerHTML = roundHistory.map(function(r) {
@@ -1459,7 +1483,7 @@ function showLbTab(el, mode) {
 
 function renderLb() {
   var el = document.getElementById('lbList');
-  if (!users.length) { el.innerHTML = '<div style="font-size:13px;color:var(--text-secondary)">Chưa có ai</div>'; return; }
+  if (!users.length) { el.innerHTML = '<div style="font-size:13px;color:var(--text-secondary)">No one yet</div>'; return; }
   var promises = users.map(function(u) {
     var fn = lbMode === 'round' ? roundPts : allPts;
     return fn(u.id).then(function(pts) { return Object.assign({}, u, {pts: pts}); });
@@ -1478,7 +1502,7 @@ function renderLb() {
       return '<div class="lb-item'+(i===0?' lb-first':'')+'" onclick="openStalk(\''+s.id+'\')">' +
         '<span class="lb-rank" style="'+rstyle+'">'+rankContent+'</span>' +
         '<span class="lb-av">' + avatarSvg(s.avatarId) + '</span>' +
-        '<span class="lb-name">'+esc(s.displayName)+(s.id===me.uid?' (bạn)':'')+'</span>' +
+        '<span class="lb-name">'+esc(s.displayName)+(s.id===me.uid?' (you)':'')+'</span>' +
         '<span class="lb-pts">'+fmt(s.pts)+'d</span>' +
         '<span class="lb-streak">'+svgIcon('flame',12)+' '+(s.currentStreak||0)+'</span>' +
         '</div>';
@@ -1500,19 +1524,19 @@ function allPts(uid) {
 /* ===== TODAY UI ===== */
 function renderToday(d) {
   if (!d) {
-    document.getElementById('todayMin').textContent = '0 phút';
+    document.getElementById('todayMin').textContent = '0 min';
     document.getElementById('todaySec').textContent = '0';
     document.getElementById('todayPts').textContent = '0';
     document.getElementById('sessionList').innerHTML = '';
     return;
   }
-  document.getElementById('todayMin').textContent = d.minutes + ' phút';
+  document.getElementById('todayMin').textContent = d.minutes + ' min';
   var leftMin = d.minutes % 30;
-  document.getElementById('todaySec').textContent = d.sections + (leftMin > 0 ? ' (+' + leftMin + 'p lẻ)' : '');
+  document.getElementById('todaySec').textContent = d.sections + (leftMin > 0 ? ' (+' + leftMin + 'm left)' : '');
   document.getElementById('todayPts').textContent = fmt(d.dayPoints || 0);
   var log = d.sessionLog || [];
   document.getElementById('sessionList').innerHTML = log.map(function(s, i) {
-    return '<div class="session-item">Phiên ' + (i+1) + ': ' + s.min + ' phút' + (s.mxh ? ' ' + svgIcon('check',12) + ' MXH' : '') + ' (' + s.time + ')</div>';
+    return '<div class="session-item">Session ' + (i+1) + ': ' + s.min + ' min' + (s.mxh ? ' ' + svgIcon('check',12) + ' Social' : '') + ' (' + s.time + ')</div>';
   }).join('');
 }
 
@@ -1525,10 +1549,10 @@ function renderMs() {
   var nEl = document.getElementById('streakNext');
   if (next) {
     var pct = Math.min(100, Math.round(streak / next.days * 100));
-    nEl.innerHTML = 'Tiếp: ngày <span class="hl">' + next.days + '</span> → <span class="hl">+' + next.bonus + '</span>' +
+    nEl.innerHTML = 'Next: day <span class="hl">' + next.days + '</span> → <span class="hl">+' + next.bonus + '</span>' +
       '<div class="streak-bar"><div class="streak-bar-fill" style="width:' + pct + '%"></div></div>';
   } else if (streak >= 60) {
-    nEl.innerHTML = '<span class="hl">+' + STREAK_DAILY_POST60 + '/ngày</span> (sau ngày 60)';
+    nEl.innerHTML = '<span class="hl">+' + STREAK_DAILY_POST60 + '/day</span> (past day 60)';
   } else { nEl.innerHTML = ''; }
 }
 
@@ -1536,16 +1560,16 @@ function renderMs() {
 function renderRound() {
   var el = document.getElementById('roundContent');
   var cd = document.getElementById('roundCountdown');
-  if (!round) { el.innerHTML = 'Đang tải...'; cd.innerHTML = ''; return; }
+  if (!round) { el.innerHTML = 'Loading...'; cd.innerHTML = ''; return; }
   var passed = daysBtw(round.startDate, todayStr());
   var rem = Math.max(0, round.duration - passed);
   var pct = Math.min(100, Math.round(passed / round.duration * 100));
-  cd.innerHTML = '<div class="big">' + rem + ' ngày</div><div class="sub">còn lại trong vòng ' + round.number + '</div>';
+  cd.innerHTML = '<div class="big">' + rem + ' days</div><div class="sub">remaining in round ' + round.number + '</div>';
   el.innerHTML = '<div class="round-info">' +
-    '<div class="row"><span>Vòng</span><span class="val">' + round.number + '</span></div>' +
-    '<div class="row"><span>Thời lượng</span><span class="val">' + round.duration + ' ngày</span></div>' +
-    '<div class="row"><span>Bắt đầu</span><span class="val">' + fmtD(round.startDate) + '</span></div>' +
-    '<div class="row"><span>Kết thúc</span><span class="val">' + fmtD(round.endDate) + '</span></div>' +
+    '<div class="row"><span>Round</span><span class="val">' + round.number + '</span></div>' +
+    '<div class="row"><span>Duration</span><span class="val">' + round.duration + ' days</span></div>' +
+    '<div class="row"><span>Start</span><span class="val">' + fmtD(round.startDate) + '</span></div>' +
+    '<div class="row"><span>End</span><span class="val">' + fmtD(round.endDate) + '</span></div>' +
     '<div class="streak-bar" style="margin-top:8px"><div class="streak-bar-fill" style="width:' + pct + '%"></div></div>' +
     '</div>';
 }
@@ -1575,7 +1599,7 @@ function renderContribGraph() {
         var day = days[ds];
         var mins = day ? (day.minutes || 0) : 0;
         var level = mins === 0 ? 0 : mins < 30 ? 1 : mins < 90 ? 2 : mins < 180 ? 3 : 4;
-        var fills = ['rgba(255,255,255,0.04)', 'rgba(34,197,94,0.15)', 'rgba(34,197,94,0.35)', 'rgba(34,197,94,0.6)', 'rgba(34,197,94,0.9)'];
+        var fills = ['rgba(139,92,246,0.04)', 'rgba(139,92,246,0.15)', 'rgba(139,92,246,0.35)', 'rgba(139,92,246,0.6)', 'rgba(139,92,246,0.9)'];
         var x = (weeks - 1 - w) * size, y = d * size;
         rects.push('<rect x="'+x+'" y="'+y+'" width="'+cellSize+'" height="'+cellSize+'" rx="2" fill="'+fills[level]+'" data-date="'+ds+'" data-min="'+mins+'" onmouseenter="showContribTip(event)" onmouseleave="hideContribTip()"/>');
       }
@@ -1588,7 +1612,7 @@ function renderContribGraph() {
 function showContribTip(e) {
   var t = document.getElementById('contribTooltip');
   var r = e.target;
-  t.textContent = r.dataset.date + ': ' + r.dataset.min + ' phút';
+  t.textContent = r.dataset.date + ': ' + r.dataset.min + ' min';
   t.style.display = 'block';
   t.style.left = (e.clientX + 10) + 'px';
   t.style.top = (e.clientY - 30) + 'px';
@@ -1598,7 +1622,7 @@ function hideContribTip() { document.getElementById('contribTooltip').style.disp
 /* ===== BAR CHART ===== */
 function setChartFilter(f) {
   chartFilter = f; chartOffset = 0;
-  document.querySelectorAll('.chart-filter').forEach(function(b) { b.classList.toggle('active', b.textContent.trim() === (f==='day'?'Ngày':f==='week'?'Tuần':'Tháng')); });
+  document.querySelectorAll('.chart-filter').forEach(function(b) { b.classList.toggle('active', b.textContent.trim() === (f==='day'?'Day':f==='week'?'Week':'Month')); });
   renderBarChart();
 }
 
@@ -1613,7 +1637,7 @@ function renderBarChart() {
     if (chartFilter === 'day') {
       var d = new Date(today); d.setDate(d.getDate() - chartOffset);
       var ds = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-      title = chartOffset === 0 ? 'Hôm nay' : fmtD(ds);
+      title = chartOffset === 0 ? 'Today' : fmtD(ds);
       var day = days[ds];
       var hourly = new Array(24).fill(0);
       if (day && day.sessionLog) {
@@ -1624,12 +1648,12 @@ function renderBarChart() {
       }
       for (var h = 0; h < 24; h++) { labels.push(h + 'h'); values.push(hourly[h]); }
       var maxH = hourly.indexOf(Math.max.apply(null, hourly));
-      document.getElementById('chartSummary').innerHTML = (day && day.minutes) ? 'Tổng: <strong>' + day.minutes + ' phút</strong> | Khung giờ nhiều nhất: <strong>' + maxH + 'h</strong>' : 'Chưa có dữ liệu';
+      document.getElementById('chartSummary').innerHTML = (day && day.minutes) ? 'Total: <strong>' + day.minutes + ' min</strong> | Peak hour: <strong>' + maxH + 'h</strong>' : 'No data yet';
 
     } else if (chartFilter === 'week') {
       var weekStart = new Date(today);
       weekStart.setDate(weekStart.getDate() - weekStart.getDay() + 1 - chartOffset * 7);
-      var dayNames = ['T2','T3','T4','T5','T6','T7','CN'];
+      var dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
       var totalWeek = 0, maxDay = 0, maxDayName = '';
       for (var i = 0; i < 7; i++) {
         var wd = new Date(weekStart); wd.setDate(wd.getDate() + i);
@@ -1640,12 +1664,12 @@ function renderBarChart() {
         if (dm > maxDay) { maxDay = dm; maxDayName = dayNames[i]; }
       }
       title = fmtD(weekStart.getFullYear()+'-'+String(weekStart.getMonth()+1).padStart(2,'0')+'-'+String(weekStart.getDate()).padStart(2,'0'));
-      document.getElementById('chartSummary').innerHTML = totalWeek ? 'Tổng: <strong>' + totalWeek + ' phút</strong> | Ngày chăm nhất: <strong>' + maxDayName + '</strong>' : 'Chưa có dữ liệu';
+      document.getElementById('chartSummary').innerHTML = totalWeek ? 'Total: <strong>' + totalWeek + ' min</strong> | Best day: <strong>' + maxDayName + '</strong>' : 'No data yet';
 
     } else {
       var year = today.getFullYear() - chartOffset;
       title = String(year);
-      var monthNames = ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'];
+      var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
       var totalYear = 0, maxMonth = 0, maxMonthName = '';
       for (var m = 0; m < 12; m++) {
         labels.push(monthNames[m]);
@@ -1657,23 +1681,23 @@ function renderBarChart() {
         totalYear += monthMin;
         if (monthMin > maxMonth) { maxMonth = monthMin; maxMonthName = monthNames[m]; }
       }
-      document.getElementById('chartSummary').innerHTML = totalYear ? 'Tổng: <strong>' + Math.round(totalYear/60) + ' giờ</strong> | Tháng chăm nhất: <strong>' + maxMonthName + '</strong>' : 'Chưa có dữ liệu';
+      document.getElementById('chartSummary').innerHTML = totalYear ? 'Total: <strong>' + Math.round(totalYear/60) + ' hrs</strong> | Best month: <strong>' + maxMonthName + '</strong>' : 'No data yet';
     }
 
     document.getElementById('chartLabel').textContent = title;
-    drawBarChart(labels, values, chartFilter === 'month' ? 'giờ' : 'phút');
+    drawBarChart(labels, values, chartFilter === 'month' ? 'hrs' : 'min');
   });
 }
 
 function drawBarChart(labels, values, unit) {
-  var w = Math.max(labels.length * 28, 300), h = 160, pad = 30, barW = 16;
+  var w = Math.max(labels.length * 28, 300), h = 190, pad = 40, barW = 16;
   var maxV = Math.max.apply(null, values.concat([1]));
   var chartH = h - pad - 10;
   var bars = labels.map(function(l, i) {
     var bh = (values[i] / maxV) * chartH;
     var x = pad + i * ((w - pad) / labels.length) + ((w - pad) / labels.length - barW) / 2;
     var y = h - pad - bh;
-    var fill = values[i] > 0 ? 'var(--green)' : 'rgba(255,255,255,0.04)';
+    var fill = values[i] > 0 ? 'var(--accent)' : 'rgba(139,92,246,0.04)';
     var opacity = values[i] > 0 ? (0.4 + 0.6 * values[i] / maxV) : 1;
     return '<rect x="'+x+'" y="'+y+'" width="'+barW+'" height="'+Math.max(bh,1)+'" rx="3" fill="'+fill+'" opacity="'+opacity+'"/>' +
       (values[i] > 0 ? '<text x="'+(x+barW/2)+'" y="'+(y-4)+'" text-anchor="middle" class="bar-val">'+values[i]+'</text>' : '') +
@@ -1688,7 +1712,7 @@ function drawBarChart(labels, values, unit) {
 function renderAchievements() {
   if (!myData) return;
   var ach = myData.achievements || [];
-  var cats = {streak: 'Chuỗi ngày', section: 'Sections', special: 'Đặc biệt'};
+  var cats = {streak: 'Streaks', section: 'Sections', special: 'Special'};
   var html = '';
   Object.keys(cats).forEach(function(cat) {
     var items = ACHIEVEMENTS.filter(function(a) { return a.cat === cat; });
@@ -1744,7 +1768,7 @@ function selectAvatar(id) {
     myData.avatarId = id;
     renderProfile(); renderHeaderAvatar();
     closeAvatarPicker();
-    toast('Đã đổi avatar!');
+    toast('Avatar changed!');
   });
 }
 
@@ -1764,7 +1788,7 @@ function changeName() {
 
 function changePass() {
   var pass = document.getElementById('editPass').value;
-  if (!pass || pass.length < 6) { document.getElementById('profileMsg').innerHTML = '<span style="color:var(--red)">Mật khẩu tối thiểu 6 ký tự</span>'; return; }
+  if (!pass || pass.length < 6) { document.getElementById('profileMsg').innerHTML = '<span style="color:var(--red)">Password must be at least 6 characters</span>'; return; }
   me.updatePassword(pass).then(function() {
     document.getElementById('editPass').value = '';
     document.getElementById('profileMsg').innerHTML = '<span style="color:var(--green)">Da doi mat khau!</span>';
@@ -1783,7 +1807,7 @@ function openStalk(uid) {
   document.getElementById('stalkStats').innerHTML =
     '<div class="stalk-stat"><div class="ss-val">' + (u.totalSections||0) + '</div><div class="ss-label">sections</div></div>' +
     '<div class="stalk-stat"><div class="ss-val">' + (u.currentStreak||0) + '</div><div class="ss-label">streak</div></div>' +
-    '<div class="stalk-stat"><div class="ss-val">' + (u.totalMinutes||0) + '</div><div class="ss-label">phút</div></div>';
+    '<div class="stalk-stat"><div class="ss-val">' + (u.totalMinutes||0) + '</div><div class="ss-label">minutes</div></div>';
 
   document.getElementById('stalkPanel').classList.add('open');
   document.getElementById('stalkOverlay').classList.add('open');
@@ -1814,7 +1838,7 @@ function renderStalkContrib(days) {
       var day = days[ds];
       var mins = day ? (day.minutes||0) : 0;
       var level = mins === 0 ? 0 : mins < 30 ? 1 : mins < 90 ? 2 : 3;
-      var fills = ['rgba(255,255,255,0.04)','rgba(34,197,94,0.2)','rgba(34,197,94,0.5)','rgba(34,197,94,0.85)'];
+      var fills = ['rgba(139,92,246,0.04)','rgba(139,92,246,0.2)','rgba(139,92,246,0.5)','rgba(139,92,246,0.85)'];
       rects.push('<rect x="'+((weeks-1-w)*sz)+'" y="'+(d*sz)+'" width="'+cellSize+'" height="'+cellSize+'" rx="2" fill="'+fills[level]+'"/>');
     }
   }
@@ -1834,7 +1858,7 @@ function renderStalkHourly(days) {
   var bars = hourly.map(function(v, i) {
     var bh = (v/maxV) * 60;
     var x = i * (w/24) + (w/24 - barW)/2;
-    return '<rect x="'+x+'" y="'+(h-10-bh)+'" width="'+barW+'" height="'+Math.max(bh,1)+'" rx="2" fill="var(--green)" opacity="'+(v>0?0.3+0.7*v/maxV:0.1)+'"/>' +
+    return '<rect x="'+x+'" y="'+(h-10-bh)+'" width="'+barW+'" height="'+Math.max(bh,1)+'" rx="2" fill="var(--accent)" opacity="'+(v>0?0.3+0.7*v/maxV:0.1)+'"/>' +
       (i%4===0 ? '<text x="'+(x+barW/2)+'" y="'+(h-1)+'" text-anchor="middle" style="font-size:8px;fill:var(--text-muted)">'+i+'h</text>' : '');
   }).join('');
   document.getElementById('stalkHourly').innerHTML = '<svg width="'+w+'" height="'+h+'" style="display:block">' + bars + '</svg>';
