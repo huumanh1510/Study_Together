@@ -1323,6 +1323,7 @@ var projects = [], tasks = [];                 // live from Firestore (users/{ui
 var selectedTaskId = '';                       // task chosen in the timer dropdown
 var tmrTaskId = '';                            // task locked in when the running session started
 var taskFilterProject = 'all', taskView = 'open';
+var wsFilterProject = 'all', wsView = 'open';  // Lock-in workspace filters
 var editingProjectId = null, editingTaskId = null;
 var draftProjectColor = PROJECT_COLORS[0], draftPriority = 'medium', draftSubtasks = [];
 var pieMode = 'round';                         // 'round' | 'all'
@@ -1416,6 +1417,7 @@ function handleLogout() {
 function switchTab(name) {
   document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.tab === name); });
   document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.toggle('active', p.id === 'tab' + name.charAt(0).toUpperCase() + name.slice(1)); });
+  if (name === 'lockin') { renderLockinTasks(); renderFocusCard(); }
   if (name === 'tasks') { renderTasksTab(); }
   if (name === 'performance') {
     renderContribGraph(); renderBarChart(); renderAchievements();
@@ -2470,6 +2472,8 @@ function listenTasks() {
 
 function onTaskDataChanged() {
   renderTimerTaskSelect();
+  var lp = document.getElementById('tabLockin');
+  if (lp && lp.classList.contains('active')) renderLockinTasks();
   var tp = document.getElementById('tabTasks');
   if (tp && tp.classList.contains('active')) renderTasksTab();
   var pp = document.getElementById('tabPerformance');
@@ -2480,6 +2484,7 @@ function resetTaskState() {
   projects = []; tasks = [];
   selectedTaskId = ''; tmrTaskId = '';
   taskFilterProject = 'all'; taskView = 'open';
+  wsFilterProject = 'all'; wsView = 'open';
   editingProjectId = null; editingTaskId = null; draftSubtasks = [];
   taskListenErrShown = false;
   ['projectModal', 'taskModal'].forEach(function(id) {
@@ -2513,6 +2518,7 @@ function renderTimerTaskSelect() {
   if (sel.value !== selectedTaskId) { selectedTaskId = ''; sel.value = ''; }
   sel.disabled = !!tmrRunning; // the task is locked in while a session is running
   updateTimerTaskDot();
+  renderFocusCard();
 }
 
 function onTimerTaskChange() {
@@ -2541,6 +2547,151 @@ function logTaskTime(tk, min) {
     console.error('logTaskTime error:', err);
     toast('Could not add time to the task.');
   });
+}
+
+/* ----- Lock-in workspace: focus card + task list ----- */
+function renderFocusCard() {
+  var el = document.getElementById('focusCard');
+  if (!el) return;
+  var t = selectedTaskId ? getTask(selectedTaskId) : null;
+  if (!t) {
+    el.innerHTML = '<div class="focus-card card" style="border-left-color:var(--text-muted);margin-bottom:10px"><div class="card-body"><div class="focus-empty">' +
+      svgIcon('target', 16) + '<br>Select a task below to focus on</div></div></div>';
+    return;
+  }
+  var p = getProject(t.projectId);
+  var col = p ? safeColor(p.color) : '#9088a8';
+  var est = t.estimatedMinutes || 0, act = t.actualMinutes || 0;
+  var pct = taskProgress(t);
+  var subs = t.subtasks || [];
+  var subDone = subs.filter(function(s) { return s.completed; }).length;
+  var h = '<div class="focus-card card" style="border-left-color:' + col + ';margin-bottom:10px"><div class="card-body">' +
+    '<div class="focus-inner">' +
+    '<div class="focus-dot" style="background:' + col + '"></div>' +
+    '<div style="flex:1;min-width:0">' +
+    '<div class="focus-title">' + esc(t.title) + '</div>' +
+    '<div class="focus-proj">' + (p ? esc(p.name) : 'No project') + '</div>' +
+    '<div class="focus-time">' + svgIcon('clock', 11) + ' ' + fmtMin(act) +
+    (est > 0 ? ' / ' + fmtMin(est) : '') +
+    (subs.length ? ' &middot; ' + subDone + '/' + subs.length + ' subtasks' : '') +
+    ' &middot; ' + pct + '%</div>' +
+    '</div>' +
+    (!tmrRunning ? '<button class="btn icon-btn" onclick="clearFocusTask()" title="Clear selection" aria-label="Clear">' + svgIcon('x', 14) + '</button>' : '') +
+    '</div></div></div>';
+  el.innerHTML = h;
+}
+
+function clearFocusTask() {
+  if (tmrRunning) return;
+  selectedTaskId = '';
+  renderTimerTaskSelect();
+  renderWsTaskList();
+}
+
+function renderLockinTasks() {
+  renderWsProjFilter();
+  renderWsTaskList();
+}
+
+function renderWsProjFilter() {
+  var el = document.getElementById('wsProjFilter');
+  if (!el) return;
+  var html = '<button class="ws-proj-btn' + (wsFilterProject === 'all' ? ' active' : '') + '" onclick="setWsFilter(\'all\')">All</button>';
+  projects.forEach(function(p) {
+    html += '<button class="ws-proj-btn' + (wsFilterProject === p.id ? ' active' : '') + '" onclick="setWsFilter(\'' + p.id + '\')">' +
+      '<span class="proj-dot" style="background:' + safeColor(p.color) + '"></span>' + esc(p.name) + '</button>';
+  });
+  el.innerHTML = html;
+}
+
+function setWsFilter(id) {
+  wsFilterProject = id;
+  renderWsProjFilter();
+  renderWsTaskList();
+}
+
+function setWsView(v) {
+  wsView = v;
+  document.querySelectorAll('#wsViewTabs button').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.wsview === v);
+  });
+  renderWsTaskList();
+}
+
+function renderWsTaskList() {
+  var el = document.getElementById('wsTaskList');
+  if (!el) return;
+
+  var list = sortTasks(tasks.filter(function(t) {
+    if (wsFilterProject !== 'all' && (t.projectId || '') !== wsFilterProject) return false;
+    if (wsView === 'open') return !t.completed;
+    if (wsView === 'done') return !!t.completed;
+    return true;
+  }));
+
+  if (!list.length) {
+    var msg = !tasks.length ? 'No tasks yet. Quick add one below!' : (wsView === 'done' ? 'No completed tasks.' : 'All done! Add a new task below.');
+    el.innerHTML = '<div class="ws-empty">' + msg + '</div>';
+    return;
+  }
+
+  el.innerHTML = list.map(function(t) {
+    var p = getProject(t.projectId);
+    var col = p ? safeColor(p.color) : '#9088a8';
+    var pri = PRI_ORDER[t.priority] != null ? t.priority : 'medium';
+    var est = t.estimatedMinutes || 0, act = t.actualMinutes || 0;
+    var isSelected = t.id === selectedTaskId;
+    var subs = t.subtasks || [];
+    var subDone = subs.filter(function(s) { return s.completed; }).length;
+
+    var h = '<div class="ws-task-item' + (isSelected ? ' selected' : '') + (t.completed ? ' done' : '') + '" onclick="selectTaskForFocus(\'' + t.id + '\')">';
+    h += '<span class="wt-dot" style="background:' + col + '"></span>';
+    h += '<div class="wt-body">';
+    h += '<div class="wt-title">' + esc(t.title) + '</div>';
+    h += '<div class="wt-meta">';
+    h += '<span>' + (p ? esc(p.name) : 'No project') + '</span>';
+    if (est > 0) h += '<span>' + fmtMin(act) + '/' + fmtMin(est) + '</span>';
+    else if (act > 0) h += '<span>' + fmtMin(act) + '</span>';
+    if (subs.length) h += '<span>' + subDone + '/' + subs.length + '</span>';
+    h += '</div></div>';
+    h += '<span class="wt-pri ' + pri + '">' + pri.charAt(0).toUpperCase() + '</span>';
+    h += '<button class="wt-edit" onclick="event.stopPropagation();openTaskModal(\'' + t.id + '\')" title="Edit task">' + svgIcon('edit', 13) + '</button>';
+    h += '</div>';
+    return h;
+  }).join('');
+}
+
+function selectTaskForFocus(id) {
+  if (tmrRunning) { toast('Timer is running. Stop it to switch tasks.'); return; }
+  var t = getTask(id);
+  if (!t) return;
+  if (t.completed) { openTaskModal(id); return; }
+  selectedTaskId = (selectedTaskId === id) ? '' : id;
+  renderTimerTaskSelect();
+  renderWsTaskList();
+  if (selectedTaskId) toast(svgIcon('target', 14) + ' Focusing: ' + esc(t.title));
+}
+
+function quickAddTask() {
+  var inp = document.getElementById('wsQuickAdd');
+  if (!inp) return;
+  var title = inp.value.trim();
+  if (!title) return;
+  var data = {
+    title: title,
+    projectId: wsFilterProject !== 'all' ? wsFilterProject : '',
+    priority: 'medium',
+    estimatedMinutes: 0,
+    dueDate: '',
+    subtasks: [],
+    actualMinutes: 0,
+    completed: false,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+  inp.value = '';
+  userCol('tasks').add(data)
+    .then(function() { toast('Task added'); })
+    .catch(function(err) { console.error('quickAddTask error:', err); toast('Could not add task.'); });
 }
 
 /* ----- Projects: filter, chips, info ----- */
@@ -2758,7 +2909,7 @@ function toggleTaskDone(id) {
   if (!t) return;
   var done = !t.completed;
   t.completed = done; // optimistic; the snapshot listener confirms
-  renderTaskList(); renderProjectChips(); renderTimerTaskSelect();
+  renderTaskList(); renderProjectChips(); renderTimerTaskSelect(); renderWsTaskList();
   userCol('tasks').doc(id).update({completed: done}).catch(function(err) {
     console.error('toggleTaskDone error:', err); toast('Could not update task.');
   });
@@ -2780,6 +2931,7 @@ function focusTask(id) {
   if (tmrRunning) { toast('Timer is running. Stop it to switch tasks.'); return; }
   selectedTaskId = id;
   renderTimerTaskSelect();
+  renderWsTaskList();
   switchTab('lockin');
   toast(svgIcon('target', 14) + ' Task selected for your next session');
 }
