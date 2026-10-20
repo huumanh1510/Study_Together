@@ -1167,6 +1167,7 @@ function BarChart({
   height = 190,
   style
 }) {
+  const [hoverIdx, setHoverIdx] = React.useState(-1);
   const max = Math.max(...series.map(s => s.value), 0.001);
   const peak = series.reduce((a, s, i) => s.value > (series[a] ? series[a].value : -1) ? i : a, 0);
   const cols = series.length || 1;
@@ -1254,9 +1255,13 @@ function BarChart({
     }
   }, series.map((s, i) => {
     const h = Math.max(s.value / max * (height - 28), s.value > 0 ? 3 : 2);
+    const isDay = range === 'Day';
+    const tipText = isDay ? s.value + 'm' : s.value + 'h';
+    const showTip = hoverIdx === i && s.value > 0;
     return /*#__PURE__*/React.createElement("div", {
       key: i,
-      title: s.label + ': ' + s.value + unit,
+      onMouseEnter: () => setHoverIdx(i),
+      onMouseLeave: () => setHoverIdx(-1),
       style: {
         flex: 1,
         minWidth: 0,
@@ -1265,21 +1270,36 @@ function BarChart({
         justifyContent: 'flex-end',
         alignItems: 'center',
         gap: 6,
-        height: '100%'
+        height: '100%',
+        position: 'relative'
       }
-    }, s.value > 0 && i === peak ? /*#__PURE__*/React.createElement("span", {
+    }, showTip ? /*#__PURE__*/React.createElement("span", {
+      style: {
+        position: 'absolute',
+        top: Math.max(0, (1 - s.value / max) * (height - 28) - 30),
+        background: 'var(--ink)',
+        color: 'var(--paper)',
+        fontFamily: 'var(--font-mono)',
+        fontSize: 11,
+        padding: '3px 8px',
+        borderRadius: 6,
+        whiteSpace: 'nowrap',
+        pointerEvents: 'none',
+        zIndex: 10
+      }
+    }, tipText) : (s.value > 0 && i === peak ? /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-mono)',
         fontSize: 10,
         color: 'var(--ink-secondary)'
       }
-    }, s.value, unit) : null, /*#__PURE__*/React.createElement("span", {
+    }, s.value, unit) : null), /*#__PURE__*/React.createElement("span", {
       style: {
         width: '100%',
         height: h,
         borderRadius: '4px 4px 0 0',
         background: s.value > 0 ? 'var(--green)' : 'var(--surface-sunken)',
-        opacity: s.value > 0 ? i === peak ? 1 : 0.78 : 1,
+        opacity: s.value > 0 ? hoverIdx === i ? 1 : i === peak ? 1 : 0.78 : 1,
         transition: 'height var(--dur-bar) var(--ease)'
       }
     }));
@@ -5724,7 +5744,7 @@ function PerformanceScreenReal() {
       });
       return hours.map((v, i) => ({
         label: String(i).padStart(2, '0'),
-        value: Math.round(v / 6) / 10
+        value: Math.round(v)
       }));
     }
     if (range === 'Week') {
@@ -5924,7 +5944,8 @@ function PerformanceScreenReal() {
   }, "→"))), /*#__PURE__*/React.createElement(BarChart, {
     series: barData,
     ranges: [],
-    unit: "h"
+    range: range,
+    unit: range === 'Day' ? 'm' : 'h'
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
@@ -5933,7 +5954,7 @@ function PerformanceScreenReal() {
       marginTop: 8,
       textAlign: 'center'
     }
-  }, Math.round(totalBar * 10) / 10, "h total")), /*#__PURE__*/React.createElement("div", {
+  }, range === 'Day' ? Math.round(totalBar) + 'm total' : Math.round(totalBar * 10) / 10 + 'h total')), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -6228,6 +6249,80 @@ function ProfileScreenReal() {
 }
 
 /* ===== RAIL ===== */
+function MemberProfileModal({ member, onClose }) {
+  const __ds = window.StudyStreakBattleDesignSystem_d3751d;
+  const { Modal, Card, StatTile, BarChart, Avatar } = __ds;
+  const [loading, setLoading] = React.useState(true);
+  const [stats, setStats] = React.useState({ totalMin: 0, sessions: 0, streak: 0, bestStreak: 0, activeDays: 0, weekData: [] });
+
+  React.useEffect(() => {
+    if (!member) return;
+    const db = firebase.firestore();
+    db.collection('users').doc(member.id).collection('days').get().then(snap => {
+      let totalMin = 0, sessions = 0, dates = [];
+      const dayMap = {};
+      snap.forEach(d => {
+        const dd = d.data();
+        totalMin += dd.minutes || 0;
+        sessions += dd.sessionLog ? dd.sessionLog.length : (dd.minutes > 0 ? 1 : 0);
+        if (dd.minutes > 0) dates.push(d.id);
+        dayMap[d.id] = dd;
+      });
+      dates.sort();
+      let streak = 0, best = 0;
+      if (dates.length) {
+        const t = new Date(); const todayKey = t.getFullYear() + '-' + String(t.getMonth()+1).padStart(2,'0') + '-' + String(t.getDate()).padStart(2,'0');
+        const y = new Date(t); y.setDate(y.getDate()-1); const yKey = y.getFullYear() + '-' + String(y.getMonth()+1).padStart(2,'0') + '-' + String(y.getDate()).padStart(2,'0');
+        if (dates.includes(todayKey) || dates.includes(yKey)) {
+          let cur = dates.includes(todayKey) ? todayKey : yKey;
+          while (dates.includes(cur)) { streak++; const p = new Date(cur); p.setDate(p.getDate()-1); cur = p.getFullYear()+'-'+String(p.getMonth()+1).padStart(2,'0')+'-'+String(p.getDate()).padStart(2,'0'); }
+        }
+        let cs = 0;
+        for (let i = 0; i < dates.length; i++) {
+          cs++;
+          const nx = new Date(dates[i]); nx.setDate(nx.getDate()+1);
+          const nxKey = nx.getFullYear()+'-'+String(nx.getMonth()+1).padStart(2,'0')+'-'+String(nx.getDate()).padStart(2,'0');
+          if (!dates.includes(nxKey) || i === dates.length - 1) { best = Math.max(best, cs); cs = 0; }
+        }
+      }
+      const DOW = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+      const now = new Date(); const dow = (now.getDay()+6)%7;
+      const weekStart = new Date(now); weekStart.setDate(weekStart.getDate() - dow);
+      const weekData = Array.from({length:7}, (_,i) => {
+        const d = new Date(weekStart); d.setDate(d.getDate()+i);
+        const key = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+        const dd = dayMap[key];
+        return { label: DOW[i], value: Math.round((dd ? dd.minutes || 0 : 0) / 6) / 10 };
+      });
+      setStats({ totalMin, sessions, streak, bestStreak: Math.max(best, member.longestStreak || 0), activeDays: dates.length, weekData });
+      setLoading(false);
+    }).catch(() => setLoading(false));
+  }, [member]);
+
+  if (!member) return null;
+  const avatarId = member.avatarId || 'night-study';
+  return /*#__PURE__*/React.createElement(Modal, { title: member.displayName || '?', subtitle: loading ? 'Loading...' : stats.activeDays + ' active days', onClose: onClose, width: 520 },
+    /*#__PURE__*/React.createElement("div", { style: { padding: '20px 24px 24px', display: 'flex', flexDirection: 'column', gap: 18 } },
+      /*#__PURE__*/React.createElement("div", { style: { display: 'flex', alignItems: 'center', gap: 16 } },
+        /*#__PURE__*/React.createElement(Avatar, { id: avatarId, size: 56 }),
+        /*#__PURE__*/React.createElement("div", null,
+          /*#__PURE__*/React.createElement("div", { style: { fontSize: 18, fontWeight: 500, fontFamily: 'var(--font-display)', color: 'var(--ink)' } }, member.displayName || '?'),
+          /*#__PURE__*/React.createElement("div", { style: { fontSize: 13, color: 'var(--ink-muted)', fontFamily: 'var(--font-mono)', marginTop: 2 } },
+            member.totalPoints != null ? (member.totalPoints || 0) + ' pts total' : '')
+        )
+      ),
+      !loading && /*#__PURE__*/React.createElement("div", { style: { display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 } },
+        /*#__PURE__*/React.createElement(StatTile, { label: "Total hours", icon: "clock", value: (stats.totalMin / 60).toFixed(1), unit: "h" }),
+        /*#__PURE__*/React.createElement(StatTile, { label: "Sessions", icon: "tasks", value: String(stats.sessions) }),
+        /*#__PURE__*/React.createElement(StatTile, { label: "Streak", icon: "flame", value: String(stats.streak), unit: "d", note: stats.bestStreak + 'd best' })
+      ),
+      !loading && stats.weekData.length > 0 && /*#__PURE__*/React.createElement(Card, { title: "This week" },
+        /*#__PURE__*/React.createElement(BarChart, { series: stats.weekData, ranges: [], unit: "h", height: 120 })
+      )
+    )
+  );
+}
+
 function RailReal() {
   const data = useData();
   const {
@@ -6259,6 +6354,8 @@ function RailReal() {
     };
   });
 
+  const [selectedMember, setSelectedMember] = React.useState(null);
+
   // Members with round points
   const [memberPts, setMemberPts] = React.useState([]);
   React.useEffect(() => {
@@ -6268,7 +6365,7 @@ function RailReal() {
       pts: Math.round(pts)
     })))).then(setMemberPts);
   }, [allUsers, round]);
-  return /*#__PURE__*/React.createElement("aside", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("aside", {
     style: {
       flex: '1 1 300px',
       maxWidth: 360,
@@ -6324,8 +6421,12 @@ function RailReal() {
     key: m.id,
     name: m.displayName || '?',
     avatar: m.avatarId || 'night-study',
-    meta: (m.pts || 0) + ' pts'
-  })))));
+    meta: (m.pts || 0) + ' pts',
+    onClick: () => setSelectedMember(m)
+  }))))), selectedMember && /*#__PURE__*/React.createElement(MemberProfileModal, {
+    member: selectedMember,
+    onClose: () => setSelectedMember(null)
+  }));
 }
 
 /* ===== APP SHELL ===== */
