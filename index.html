@@ -3504,6 +3504,9 @@ function WorkspaceTaskItem({
   done,
   onClick,
   onEdit,
+  draggable,
+  onDragStart,
+  onDragEnd,
   style
 }) {
   const [hover, setHover] = React.useState(false);
@@ -3511,6 +3514,9 @@ function WorkspaceTaskItem({
     onClick: onClick,
     onMouseEnter: () => setHover(true),
     onMouseLeave: () => setHover(false),
+    draggable: draggable || false,
+    onDragStart: onDragStart,
+    onDragEnd: onDragEnd,
     style: {
       display: 'flex',
       alignItems: 'center',
@@ -4429,7 +4435,8 @@ function DataProvider({
         const x = d.data();
         totMin += x.minutes || 0;
         totSec += x.sections || 0;
-        if (x.date && (x.sections || 0) >= 1) dates.push(x.date);
+        const dayDate = x.date || d.id;
+        if (dayDate && (x.minutes || 0) >= 30) dates.push(dayDate);
         if (x.minutes > maxDM) maxDM = x.minutes;
         if (x.sections > maxDS) maxDS = x.sections;
         (x.sessionLog || []).forEach(s => {
@@ -4859,7 +4866,9 @@ function LockInScreenReal({ searchQuery = '' }) {
     setTmr,
     startTimer,
     pauseTimer,
-    endSession
+    endSession,
+    updateTask,
+    deleteTask
   } = data;
   const {
     Card,
@@ -4872,8 +4881,13 @@ function LockInScreenReal({ searchQuery = '' }) {
     FocusCard,
     ScheduleRow,
     WorkspaceTaskItem,
-    SegTabs
+    SegTabs,
+    Modal,
+    Input
   } = window.StudyStreakBattleDesignSystem_d3751d;
+  const [editModal, setEditModal] = React.useState(null);
+  const [editDraft, setEditDraft] = React.useState({ title: '', est: '', due: '' });
+  const [dragOver, setDragOver] = React.useState(false);
   const sq = searchQuery.toLowerCase();
   const openTasks = tasks.filter(t => !t.done).filter(t => {
     if (!sq) return true;
@@ -4897,7 +4911,7 @@ function LockInScreenReal({ searchQuery = '' }) {
   const total = tmr.preset * 60;
   const progress = total ? (total - tmr.remaining) / total * 100 : 0;
   const [mode, setMode] = React.useState('digital');
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Greeting, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Greeting, {
     eyebrow: dateStr,
     headline: greetWord + ', ' + userName + '.'
   }, "You have ", /*#__PURE__*/React.createElement("strong", {
@@ -4937,6 +4951,16 @@ function LockInScreenReal({ searchQuery = '' }) {
       gap: 20,
       alignItems: 'start'
     }
+  }, /*#__PURE__*/React.createElement("div", {
+    onDragOver: e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setDragOver(true); },
+    onDragLeave: () => setDragOver(false),
+    onDrop: e => {
+      e.preventDefault();
+      setDragOver(false);
+      const taskId = e.dataTransfer.getData('text/plain');
+      if (taskId) setTmr(s => ({ ...s, selectedTask: taskId }));
+    },
+    style: { borderRadius: 'var(--radius)', border: dragOver ? '2px dashed var(--green-line)' : '2px dashed transparent', transition: 'border-color 0.2s' }
   }, /*#__PURE__*/React.createElement(Card, {
     title: "Timer"
   }, selectedTask ? /*#__PURE__*/React.createElement(FocusCard, {
@@ -4946,7 +4970,7 @@ function LockInScreenReal({ searchQuery = '' }) {
     logged: (selectedTask.actualMinutes || 0) + ' / ' + (selectedTask.estMinutes || 60) + ' min',
     weight: selectedTask.priority === 'high' ? 4 : selectedTask.priority === 'low' ? 1 : 2
   }) : /*#__PURE__*/React.createElement(FocusCard, {
-    empty: "No task selected. Pick one from the list to lock in."
+    empty: dragOver ? "Drop here to select task!" : "No task selected. Pick one from the list to lock in."
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
@@ -5022,7 +5046,7 @@ function LockInScreenReal({ searchQuery = '' }) {
     size: "sm",
     icon: "stop",
     onClick: endSession
-  }, "Stop")))), /*#__PURE__*/React.createElement("div", {
+  }, "Stop"))))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       flexDirection: 'column',
@@ -5052,10 +5076,19 @@ function LockInScreenReal({ searchQuery = '' }) {
       color: p ? p.color : '#888',
       priority: t.priority,
       selected: tmr.selectedTask === t.id,
+      draggable: true,
+      onDragStart: e => {
+        e.dataTransfer.setData('text/plain', t.id);
+        e.dataTransfer.effectAllowed = 'move';
+      },
       onClick: () => setTmr(s => ({
         ...s,
         selectedTask: s.selectedTask === t.id ? '' : t.id
-      }))
+      })),
+      onEdit: () => {
+        setEditDraft({ title: t.title, est: t.estMinutes || '', due: t.dueDate || '' });
+        setEditModal(t);
+      }
     });
   }))), todayData && todayData.sessionLog && todayData.sessionLog.length > 0 && /*#__PURE__*/React.createElement(Card, {
     title: "Today's sessions"
@@ -5075,7 +5108,51 @@ function LockInScreenReal({ searchQuery = '' }) {
   }, s.time), /*#__PURE__*/React.createElement("span", null, s.min, " min ", s.taskTitle ? '· ' + s.taskTitle : ''), s.mxh && /*#__PURE__*/React.createElement(Tag, {
     tone: "green",
     mono: true
-  }, "📵")))))));
+  }, "📵"))))))),
+  editModal && /*#__PURE__*/React.createElement(Modal, {
+    title: "Edit Task",
+    onClose: () => setEditModal(null)
+  }, /*#__PURE__*/React.createElement("div", { style: { display: 'flex', flexDirection: 'column', gap: 12 } },
+    /*#__PURE__*/React.createElement(Input, {
+      label: "Title",
+      value: editDraft.title,
+      onChange: e => setEditDraft(d => ({ ...d, title: e.target.value }))
+    }),
+    /*#__PURE__*/React.createElement(Input, {
+      label: "Estimate (minutes)",
+      type: "number",
+      value: editDraft.est,
+      onChange: e => setEditDraft(d => ({ ...d, est: e.target.value }))
+    }),
+    /*#__PURE__*/React.createElement(Input, {
+      label: "Due date",
+      type: "date",
+      value: editDraft.due,
+      onChange: e => setEditDraft(d => ({ ...d, due: e.target.value }))
+    }),
+    /*#__PURE__*/React.createElement("div", { style: { display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 8 } },
+      /*#__PURE__*/React.createElement(Button, {
+        variant: "danger",
+        size: "sm",
+        onClick: () => {
+          if (confirm('Delete this task?')) {
+            deleteTask(editModal.id);
+            setEditModal(null);
+          }
+        }
+      }, "Delete"),
+      /*#__PURE__*/React.createElement(Button, {
+        variant: "primary",
+        size: "sm",
+        onClick: () => {
+          updateTask(editModal.id, {
+            title: editDraft.title,
+            estMinutes: editDraft.est ? Number(editDraft.est) : null,
+            dueDate: editDraft.due || null
+          });
+          setEditModal(null);
+        }
+      }, "Save")))));
 }
 
 /* ===== TASKS SCREEN ===== */
@@ -5997,7 +6074,8 @@ function PerformanceScreenReal() {
   })), donutData.length > 0 && /*#__PURE__*/React.createElement(Card, {
     title: "Time by goal"
   }, /*#__PURE__*/React.createElement(DonutChart, {
-    segments: donutData
+    segments: donutData,
+    total: (donutData.reduce((a, d) => a + d.minutes, 0) / 60).toFixed(1) + 'h'
   }))), /*#__PURE__*/React.createElement(Card, {
     title: "Streak",
     style: {
@@ -6281,18 +6359,18 @@ function MemberProfileModal({ member, onClose }) {
   const __ds = window.StudyStreakBattleDesignSystem_d3751d;
   const { Modal, Card, StatTile, BarChart, Avatar } = __ds;
   const [loading, setLoading] = React.useState(true);
-  const [stats, setStats] = React.useState({ totalMin: 0, sessions: 0, streak: 0, bestStreak: 0, activeDays: 0, weekData: [] });
+  const [stats, setStats] = React.useState({ totalMin: 0, sections: 0, streak: 0, bestStreak: 0, activeDays: 0, weekData: [] });
 
   React.useEffect(() => {
     if (!member) return;
     const db = firebase.firestore();
     db.collection('users').doc(member.id).collection('days').get().then(snap => {
-      let totalMin = 0, sessions = 0, dates = [];
+      let totalMin = 0, sections = 0, dates = [];
       const dayMap = {};
       snap.forEach(d => {
         const dd = d.data();
         totalMin += dd.minutes || 0;
-        sessions += dd.sessionLog ? dd.sessionLog.length : (dd.minutes > 0 ? 1 : 0);
+        sections += dd.sections || Math.floor((dd.minutes || 0) / 30);
         if (dd.minutes > 0) dates.push(d.id);
         dayMap[d.id] = dd;
       });
@@ -6322,7 +6400,7 @@ function MemberProfileModal({ member, onClose }) {
         const dd = dayMap[key];
         return { label: DOW[i], value: Math.round((dd ? dd.minutes || 0 : 0) / 6) / 10 };
       });
-      setStats({ totalMin, sessions, streak, bestStreak: Math.max(best, member.longestStreak || 0), activeDays: dates.length, weekData });
+      setStats({ totalMin, sections, streak, bestStreak: Math.max(best, member.longestStreak || 0), activeDays: dates.length, weekData });
       setLoading(false);
     }).catch(() => setLoading(false));
   }, [member]);
@@ -6341,7 +6419,7 @@ function MemberProfileModal({ member, onClose }) {
       ),
       !loading && /*#__PURE__*/React.createElement("div", { style: { display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 } },
         /*#__PURE__*/React.createElement(StatTile, { label: "Total hours", icon: "clock", value: (stats.totalMin / 60).toFixed(1), unit: "h" }),
-        /*#__PURE__*/React.createElement(StatTile, { label: "Sessions", icon: "tasks", value: String(stats.sessions) }),
+        /*#__PURE__*/React.createElement(StatTile, { label: "Sections", icon: "layers", value: String(stats.sections) }),
         /*#__PURE__*/React.createElement(StatTile, { label: "Streak", icon: "flame", value: String(stats.streak), unit: "d", note: stats.bestStreak + 'd best' })
       ),
       !loading && stats.weekData.length > 0 && /*#__PURE__*/React.createElement(Card, { title: "This week" },
@@ -6540,13 +6618,20 @@ function AppShell() {
     } : n),
     groups: projects.length ? [{
       label: 'Goals',
-      children: projects.map(p => /*#__PURE__*/React.createElement(GoalListItem, {
-        key: p.id,
-        name: p.name,
-        color: p.color,
-        percent: p.goalHoursWeekly > 0 ? Math.min(100, Math.round((p.totalMinutes || 0) / 60 / p.goalHoursWeekly * 100)) : 0,
-        onClick: () => setView('tasks')
-      }))
+      children: projects.map(p => {
+        const pTasks = tasks.filter(t => t.projectId === p.id);
+        const pDone = pTasks.filter(t => t.done).length;
+        const pct = p.goalHoursWeekly > 0
+          ? Math.min(100, Math.round((p.totalMinutes || 0) / 60 / p.goalHoursWeekly * 100))
+          : pTasks.length > 0 ? Math.round(pDone / pTasks.length * 100) : 0;
+        return /*#__PURE__*/React.createElement(GoalListItem, {
+          key: p.id,
+          name: p.name,
+          color: p.color,
+          percent: pct,
+          onClick: () => setView('tasks')
+        });
+      })
     }] : [],
     footer: /*#__PURE__*/React.createElement(MemberRow, {
       name: myData ? myData.displayName : '...',
